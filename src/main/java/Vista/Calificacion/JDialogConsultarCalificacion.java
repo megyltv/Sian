@@ -9,13 +9,13 @@ package Vista.Calificacion;
  *
  * @author Megan
  */
-public class JDialogConsultarCalificacion extends javax.swing.JDialog {
+public class JDialogConsultarCalificacion extends javax.swing.JInternalFrame{
 
     /**
      * Creates new form JDialogConsultarCalificacion
      */
     public JDialogConsultarCalificacion(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super("Consultar calificaciones");
         initComponents();
     }
 
@@ -32,14 +32,12 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
         lblBuscar = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtNombreReport = new javax.swing.JTextField();
         BoxPeriodoCal = new javax.swing.JComboBox<>();
+        BoxPeriodoCal1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReporte = new javax.swing.JTable();
         btnGuardar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pnlCabecReporte.setBackground(new java.awt.Color(255, 255, 255));
         pnlCabecReporte.setBorder(javax.swing.BorderFactory.createTitledBorder("Reporte"));
@@ -57,6 +55,8 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
 
         BoxPeriodoCal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        BoxPeriodoCal1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout pnlCabecReporteLayout = new javax.swing.GroupLayout(pnlCabecReporte);
         pnlCabecReporte.setLayout(pnlCabecReporteLayout);
         pnlCabecReporteLayout.setHorizontalGroup(
@@ -69,13 +69,13 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
                 .addGap(30, 30, 30)
                 .addGroup(pnlCabecReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCabecReporteLayout.createSequentialGroup()
-                        .addComponent(txtNombreReport, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                        .addComponent(BoxPeriodoCal1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar)
                         .addGap(51, 51, 51))
                     .addGroup(pnlCabecReporteLayout.createSequentialGroup()
                         .addComponent(BoxPeriodoCal, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(302, Short.MAX_VALUE))))
         );
         pnlCabecReporteLayout.setVerticalGroup(
             pnlCabecReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,8 +87,8 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCabecReporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombreReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(BoxPeriodoCal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCabecReporteLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
@@ -154,7 +154,7 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(17, Short.MAX_VALUE))
+                        .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -209,12 +209,12 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JDialogConsultarCalificacion dialog = new JDialogConsultarCalificacion(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
                 dialog.setVisible(true);
             }
         });
@@ -222,6 +222,7 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BoxPeriodoCal;
+    private javax.swing.JComboBox<String> BoxPeriodoCal1;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardar;
@@ -230,6 +231,5 @@ public class JDialogConsultarCalificacion extends javax.swing.JDialog {
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JPanel pnlCabecReporte;
     private javax.swing.JTable tblReporte;
-    private javax.swing.JTextField txtNombreReport;
     // End of variables declaration//GEN-END:variables
 }

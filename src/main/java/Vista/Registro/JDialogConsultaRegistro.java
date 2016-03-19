@@ -65,6 +65,7 @@ public class JDialogConsultaRegistro extends javax.swing.JDialog {
         lblSector = new javax.swing.JLabel();
         RadioButtonSi = new javax.swing.JRadioButton();
         btnActualizar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
         pnlEclesiast = new javax.swing.JPanel();
         lbl1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -180,6 +181,8 @@ public class JDialogConsultaRegistro extends javax.swing.JDialog {
 
         btnActualizar.setText("Actualizar");
 
+        btnConsultar.setText("Consultar");
+
         javax.swing.GroupLayout pnlPersonalLayout = new javax.swing.GroupLayout(pnlPersonal);
         pnlPersonal.setLayout(pnlPersonalLayout);
         pnlPersonalLayout.setHorizontalGroup(
@@ -220,21 +223,6 @@ public class JDialogConsultaRegistro extends javax.swing.JDialog {
                         .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPersonalLayout.createSequentialGroup()
                                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblConyuge)
-                                    .addComponent(lblHijos))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txthijos, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                        .addComponent(txtConyuge, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(62, 62, 62)
-                                        .addComponent(lblCreyente)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(RadioButtonSi)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(RadioButtonNo))))
-                            .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlPersonalLayout.createSequentialGroup()
                                         .addComponent(lblNombres)
                                         .addGap(18, 18, 18))
@@ -245,37 +233,57 @@ public class JDialogConsultaRegistro extends javax.swing.JDialog {
                                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                                     .addComponent(txtCedula))
                                 .addGap(18, 18, 18)
-                                .addComponent(lblApellido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                        .addComponent(lblApellido)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnConsultar, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addComponent(lblEmergencia)
                             .addGroup(pnlPersonalLayout.createSequentialGroup()
                                 .addComponent(lblNacimiento)
                                 .addGap(18, 18, 18)
                                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNombreE)
-                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                        .addGap(75, 75, 75)
-                                        .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                        .addComponent(lblTelefE)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(64, 64, 64)
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPersonalLayout.createSequentialGroup()
+                                    .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblNombreE)
+                                        .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                            .addGap(75, 75, 75)
+                                            .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                            .addComponent(lblTelefE)
+                                            .addGap(29, 29, 29)
+                                            .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnActualizar))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnGuardar)
-                                    .addComponent(btnActualizar))))
+                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                        .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblConyuge)
+                                            .addComponent(lblHijos))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txthijos, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                                .addComponent(txtConyuge, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(62, 62, 62)
+                                                .addComponent(lblCreyente)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(RadioButtonSi)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(RadioButtonNo)))))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlPersonalLayout.setVerticalGroup(
             pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPersonalLayout.createSequentialGroup()
-                .addGap(2, 2, 2)
+                .addGap(1, 1, 1)
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombres)
@@ -671,6 +679,7 @@ public class JDialogConsultaRegistro extends javax.swing.JDialog {
     private javax.swing.JRadioButton RadioButtonNo;
     private javax.swing.JRadioButton RadioButtonSi;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnGuardar;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
