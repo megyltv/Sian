@@ -1,5 +1,6 @@
 package Vista;
 
+import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
 import Vista.Registro.JInternalFrameConsultaRegistro;
 import Vista.Registro.JInternalFrameNuevoRegistro;
 import java.awt.Color;
@@ -8,6 +9,7 @@ import javax.swing.JDesktopPane;
 public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameNuevoRegistro internalFramenNuevoRegistro;
     JInternalFrameConsultaRegistro internalFrameConsultaRegistro;
+    JInternalFrameNuevaInscripcion internalFrameNuevaInscripcion;
     JDesktopPane dp=new JDesktopPane();
     public frmPrincipal() {
         initComponents();
@@ -85,6 +87,11 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuInscripcion.setText("Inscripción");
 
         itemInscripcion.setText("Nueva inscripción");
+        itemInscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemInscripcionActionPerformed(evt);
+            }
+        });
         menuInscripcion.add(itemInscripcion);
 
         MenuBarPrincipal.add(menuInscripcion);
@@ -149,6 +156,13 @@ public class frmPrincipal extends javax.swing.JFrame{
         pnlPrincipal.add(internalFrameConsultaRegistro);
         internalFrameConsultaRegistro.show();
     }//GEN-LAST:event_itemActualizarEActionPerformed
+
+    private void itemInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemInscripcionActionPerformed
+        internalFrameNuevaInscripcion = new JInternalFrameNuevaInscripcion();
+        internalFrameNuevaInscripcion.pack();
+        pnlPrincipal.add(internalFrameNuevaInscripcion);
+        internalFrameNuevaInscripcion.show();
+    }//GEN-LAST:event_itemInscripcionActionPerformed
 
     public static void main(String args[]){
         /* Set the Nimbus look and feel */
