@@ -1,8 +1,12 @@
 package Vista;
 
+import Vista.Academia.JInternalFrameAcademy;
+import Vista.Calificacion.JInternalFrameConsultaCalificacion;
+import Vista.Calificacion.JInternalFrameIngresaCalificacion;
 import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
 import Vista.Registro.JInternalFrameConsultaRegistro;
 import Vista.Registro.JInternalFrameNuevoRegistro;
+import Vista.Reporte.JInternalFrameGeneraReporte;
 import java.awt.Color;
 import javax.swing.JDesktopPane;
 
@@ -10,6 +14,10 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameNuevoRegistro internalFramenNuevoRegistro;
     JInternalFrameConsultaRegistro internalFrameConsultaRegistro;
     JInternalFrameNuevaInscripcion internalFrameNuevaInscripcion;
+    JInternalFrameIngresaCalificacion internalFrameIngresaCalificacion;
+    JInternalFrameConsultaCalificacion internalFrameConsultaCalificacion;
+    JInternalFrameGeneraReporte internalFrameGeneraReporte;
+    JInternalFrameAcademy internalFrameAcademia;
     JDesktopPane dp=new JDesktopPane();
     public frmPrincipal() {
         initComponents();
@@ -37,6 +45,7 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuReporte = new javax.swing.JMenu();
         itemReporte = new javax.swing.JMenuItem();
         menuAcademia = new javax.swing.JMenu();
+        itemReporte1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -50,16 +59,16 @@ public class frmPrincipal extends javax.swing.JFrame{
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                .addContainerGap(1106, Short.MAX_VALUE)
+                .addContainerGap(1097, Short.MAX_VALUE)
                 .addComponent(lblIcono)
-                .addContainerGap())
+                .addGap(19, 19, 19))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(25, 25, 25)
                 .addComponent(lblIcono)
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addContainerGap(569, Short.MAX_VALUE))
         );
 
         lblBarra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barra.jpg"))); // NOI18N
@@ -99,9 +108,19 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuCalificacion.setText("Calificaciones");
 
         itemNuevaCalif.setText("Ingresar calificaciones");
+        itemNuevaCalif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNuevaCalifActionPerformed(evt);
+            }
+        });
         menuCalificacion.add(itemNuevaCalif);
 
         itemConsultarCal.setText("Consultar/Actualizar Calificaciones");
+        itemConsultarCal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConsultarCalActionPerformed(evt);
+            }
+        });
         menuCalificacion.add(itemConsultarCal);
 
         MenuBarPrincipal.add(menuCalificacion);
@@ -109,11 +128,24 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuReporte.setText("Reporte");
 
         itemReporte.setText("Generar reporte");
+        itemReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporteActionPerformed(evt);
+            }
+        });
         menuReporte.add(itemReporte);
 
         MenuBarPrincipal.add(menuReporte);
 
         menuAcademia.setText("Academia Bíblica");
+
+        itemReporte1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemReporte1ActionPerformed(evt);
+            }
+        });
+        menuAcademia.add(itemReporte1);
+
         MenuBarPrincipal.add(menuAcademia);
 
         setJMenuBar(MenuBarPrincipal);
@@ -164,6 +196,36 @@ public class frmPrincipal extends javax.swing.JFrame{
         internalFrameNuevaInscripcion.show();
     }//GEN-LAST:event_itemInscripcionActionPerformed
 
+    private void itemNuevaCalifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevaCalifActionPerformed
+        internalFrameIngresaCalificacion = new JInternalFrameIngresaCalificacion();
+        internalFrameIngresaCalificacion.pack();
+        pnlPrincipal.add(internalFrameIngresaCalificacion);
+        internalFrameIngresaCalificacion.show();
+        
+    }//GEN-LAST:event_itemNuevaCalifActionPerformed
+
+    private void itemConsultarCalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultarCalActionPerformed
+       internalFrameConsultaCalificacion = new JInternalFrameConsultaCalificacion();
+       internalFrameConsultaCalificacion.pack();
+       pnlPrincipal.add(internalFrameConsultaCalificacion);
+       internalFrameConsultaCalificacion.show();
+               
+    }//GEN-LAST:event_itemConsultarCalActionPerformed
+
+    private void itemReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteActionPerformed
+       internalFrameGeneraReporte = new JInternalFrameGeneraReporte();
+       internalFrameGeneraReporte.pack();
+       pnlPrincipal.add(internalFrameGeneraReporte);
+       internalFrameGeneraReporte.show();
+    }//GEN-LAST:event_itemReporteActionPerformed
+
+    private void itemReporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporte1ActionPerformed
+       internalFrameAcademia = new JInternalFrameAcademy();
+       internalFrameAcademia.pack();
+       pnlPrincipal.add(internalFrameAcademia);
+       internalFrameAcademia.show();
+    }//GEN-LAST:event_itemReporte1ActionPerformed
+
     public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -204,6 +266,7 @@ public class frmPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenuItem itemNuevaCalif;
     private javax.swing.JMenuItem itemNuevoE;
     private javax.swing.JMenuItem itemReporte;
+    private javax.swing.JMenuItem itemReporte1;
     private javax.swing.JLabel lblBarra;
     private javax.swing.JLabel lblIcono;
     private javax.swing.JMenu menuAcademia;
