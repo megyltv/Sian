@@ -1,10 +1,13 @@
 package Vista;
 
+import Vista.Registro.JInternalFrameConsultaRegistro;
+import Vista.Registro.JInternalFrameNuevoRegistro;
 import java.awt.Color;
 import javax.swing.JDesktopPane;
 
 public class frmPrincipal extends javax.swing.JFrame{
-    JGenericInternalFrame internalFrame;
+    JInternalFrameNuevoRegistro internalFramenNuevoRegistro;
+    JInternalFrameConsultaRegistro internalFrameConsultaRegistro;
     JDesktopPane dp=new JDesktopPane();
     public frmPrincipal() {
         initComponents();
@@ -18,8 +21,8 @@ public class frmPrincipal extends javax.swing.JFrame{
     private void initComponents() {
 
         pnlPrincipal = new javax.swing.JPanel();
-        lblBarra = new javax.swing.JLabel();
         lblIcono = new javax.swing.JLabel();
+        lblBarra = new javax.swing.JLabel();
         MenuBarPrincipal = new javax.swing.JMenuBar();
         menuRegistro = new javax.swing.JMenu();
         itemNuevoE = new javax.swing.JMenuItem();
@@ -38,20 +41,26 @@ public class frmPrincipal extends javax.swing.JFrame{
 
         pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
+        lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logopeqM.jpg"))); // NOI18N
+
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1103, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
+                .addContainerGap(1106, Short.MAX_VALUE)
+                .addComponent(lblIcono)
+                .addContainerGap())
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblIcono)
+                .addContainerGap(571, Short.MAX_VALUE))
         );
 
         lblBarra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barra.jpg"))); // NOI18N
-
-        lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logopeqM.jpg"))); // NOI18N
 
         menuRegistro.setText("Registro de Estudiantes");
 
@@ -107,40 +116,38 @@ public class frmPrincipal extends javax.swing.JFrame{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblIcono))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(lblBarra)))
+                .addGap(176, 176, 176)
+                .addComponent(lblBarra)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIcono)
-                    .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblBarra))
         );
+
+        pnlPrincipal.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemNuevoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoEActionPerformed
-        internalFrame=new JGenericInternalFrame("itemNuevoE");
-        internalFrame.pack();
-        dp.add(internalFrame);
-        
+        internalFramenNuevoRegistro =new JInternalFrameNuevoRegistro();
+        internalFramenNuevoRegistro.pack();
+        pnlPrincipal.add(internalFramenNuevoRegistro);
+        internalFramenNuevoRegistro.show();
     }//GEN-LAST:event_itemNuevoEActionPerformed
 
     private void itemActualizarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemActualizarEActionPerformed
-        // TODO add your handling code here:
+        internalFrameConsultaRegistro = new JInternalFrameConsultaRegistro();
+        internalFrameConsultaRegistro.pack();
+        pnlPrincipal.add(internalFrameConsultaRegistro);
+        internalFrameConsultaRegistro.show();
     }//GEN-LAST:event_itemActualizarEActionPerformed
 
     public static void main(String args[]){

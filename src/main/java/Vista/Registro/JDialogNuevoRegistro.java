@@ -91,9 +91,11 @@ public class JDialogNuevoRegistro extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1103, 591));
 
         pnlPersonal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Personal"));
+        pnlPersonal.setPreferredSize(new java.awt.Dimension(580, 628));
 
         lblEstado.setText("Estado Civil:");
 
@@ -277,7 +279,7 @@ public class JDialogNuevoRegistro extends javax.swing.JDialog {
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCorreo)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblInstruccion)
                     .addComponent(ComboBoxInstruccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -320,6 +322,7 @@ public class JDialogNuevoRegistro extends javax.swing.JDialog {
 
         pnlEclesiast.setBackground(new java.awt.Color(255, 255, 255));
         pnlEclesiast.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Eclesiástica"));
+        pnlEclesiast.setPreferredSize(new java.awt.Dimension(580, 628));
 
         lbl1.setText("1. ¿Ha recibido a Jesús en su corazón como Salvador personal?");
 
@@ -454,7 +457,7 @@ public class JDialogNuevoRegistro extends javax.swing.JDialog {
                                 .addComponent(ButtonNo2)
                                 .addGap(77, 77, 77)
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                                 .addComponent(txtRazon2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlEclesiastLayout.createSequentialGroup()
                                 .addComponent(ButtonSi1)
@@ -555,7 +558,7 @@ public class JDialogNuevoRegistro extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlEclesiast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

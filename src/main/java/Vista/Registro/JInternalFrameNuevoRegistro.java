@@ -27,6 +27,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         pnlEclesiast = new javax.swing.JPanel();
         lbl1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -104,10 +105,13 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(null);
-        setPreferredSize(new java.awt.Dimension(1103, 580));
+        setPreferredSize(new java.awt.Dimension(1168, 647));
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(1168, 620));
 
         pnlEclesiast.setBackground(new java.awt.Color(255, 255, 255));
         pnlEclesiast.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Eclesiástica"));
+        pnlEclesiast.setPreferredSize(new java.awt.Dimension(580, 628));
 
         lbl1.setText("1. ¿Ha recibido a Jesús en su corazón como Salvador personal?");
 
@@ -117,22 +121,22 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonNo1.setText("No");
 
         ButtonSi1.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi1.setText("Sí");
+        ButtonSi1.setText("Si");
 
         jLabel2.setText("Fecha");
 
         ButtonSi2.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi2.setText("Sí");
+        ButtonSi2.setText("Si");
 
         ButtonNo2.setBackground(new java.awt.Color(255, 255, 255));
         ButtonNo2.setText("No");
 
-        jLabel3.setText("¿A cuál?");
+        jLabel3.setText("¿A cual?");
 
         jLabel4.setText("3. ¿Ha sido bautizado en una Iglesia Cristiana Evangélica?");
 
         ButtonSi3.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi3.setText("Sí");
+        ButtonSi3.setText("Si");
 
         ButtonNo3.setBackground(new java.awt.Color(255, 255, 255));
         ButtonNo3.setText("No");
@@ -144,7 +148,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         jLabel8.setText("4. ¿Asiste a un discipulado?");
 
         ButtonSi4.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi4.setText("Sí");
+        ButtonSi4.setText("Si");
 
         ButtonNo4.setBackground(new java.awt.Color(255, 255, 255));
         ButtonNo4.setText("No");
@@ -154,7 +158,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         jLabel10.setText("5. ¿Estás sirviendo en un ministerio de la IAN?");
 
         ButtonSi5.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi5.setText("Sí");
+        ButtonSi5.setText("Si");
 
         ButtonNo5.setBackground(new java.awt.Color(255, 255, 255));
         ButtonNo5.setText("No");
@@ -164,7 +168,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         jLabel12.setText("6. ¿Ha asistido al Encuentro de Sanidad de la IAN?");
 
         ButtonSi6.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi6.setText("Sí");
+        ButtonSi6.setText("Si");
 
         ButtonNo6.setBackground(new java.awt.Color(255, 255, 255));
         ButtonNo6.setText("No");
@@ -174,7 +178,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         jLabel14.setText("7. ¿Ha asistido al Encuentro de Libertad de la IAN?");
 
         ButtonSi7.setBackground(new java.awt.Color(255, 255, 255));
-        ButtonSi7.setText("Sí");
+        ButtonSi7.setText("Si");
 
         ButtonNo7.setBackground(new java.awt.Color(255, 255, 255));
         ButtonNo7.setText("No");
@@ -242,7 +246,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                                 .addComponent(ButtonNo2)
                                 .addGap(77, 77, 77)
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                                 .addComponent(txtRazon2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlEclesiastLayout.createSequentialGroup()
                                 .addComponent(ButtonSi1)
@@ -339,6 +343,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         pnlPersonal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Personal"));
+        pnlPersonal.setPreferredSize(new java.awt.Dimension(558, 590));
 
         lblEstado.setText("Estado Civil:");
 
@@ -417,13 +422,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPersonalLayout.createSequentialGroup()
-                        .addComponent(lblTelefE)
-                        .addGap(29, 29, 29)
-                        .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar)
-                        .addGap(70, 70, 70))
-                    .addGroup(pnlPersonalLayout.createSequentialGroup()
                         .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPersonalLayout.createSequentialGroup()
                                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -456,21 +454,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                         .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPersonalLayout.createSequentialGroup()
                                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblConyuge)
-                                    .addComponent(lblHijos))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txthijos, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                        .addComponent(txtConyuge, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(62, 62, 62)
-                                        .addComponent(lblCreyente)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(RadioButtonSi)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(RadioButtonNo))))
-                            .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlPersonalLayout.createSequentialGroup()
                                         .addComponent(lblNombres)
                                         .addGap(18, 18, 18))
@@ -485,15 +468,36 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblEmergencia)
-                            .addComponent(lblNombreE)
-                            .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlPersonalLayout.createSequentialGroup()
                                 .addComponent(lblNacimiento)
                                 .addGap(18, 18, 18)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblConyuge)
+                                    .addComponent(lblHijos))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txthijos, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                        .addComponent(txtConyuge, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(62, 62, 62)
+                                        .addComponent(lblCreyente)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RadioButtonSi)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(RadioButtonNo))))
+                            .addComponent(lblNombreE)
+                            .addGroup(pnlPersonalLayout.createSequentialGroup()
+                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPersonalLayout.createSequentialGroup()
+                                        .addComponent(lblTelefE)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(70, 70, 70)
+                                .addComponent(btnGuardar)))
+                        .addContainerGap(38, Short.MAX_VALUE))))
         );
         pnlPersonalLayout.setVerticalGroup(
             pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -522,7 +526,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCorreo)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblInstruccion)
                     .addComponent(ComboBoxInstruccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -560,7 +564,28 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                     .addComponent(lblTelefE)
                     .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar))
+                .addContainerGap(119, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlEclesiast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+                    .addComponent(pnlEclesiast, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -568,21 +593,15 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlEclesiast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlPersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlEclesiast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
+
+        jPanel2.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -639,6 +658,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbl1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCedula;
