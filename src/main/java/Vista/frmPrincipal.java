@@ -54,6 +54,8 @@ public class frmPrincipal extends javax.swing.JFrame{
         setResizable(false);
 
         pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        pnlPrincipal.setPreferredSize(new java.awt.Dimension(1168, 647));
+        pnlPrincipal.setRequestFocusEnabled(false);
 
         lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconoTransparente.png"))); // NOI18N
 
@@ -62,21 +64,20 @@ public class frmPrincipal extends javax.swing.JFrame{
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                .addContainerGap(1092, Short.MAX_VALUE)
+                .addContainerGap(1095, Short.MAX_VALUE)
                 .addComponent(lblIcono)
-                .addGap(24, 24, 24))
+                .addGap(26, 26, 26))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
+                .addContainerGap(574, Short.MAX_VALUE)
                 .addComponent(lblIcono)
-                .addContainerGap(553, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         lblBarra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barra.jpg"))); // NOI18N
 
-        menuRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconoTransparente.png"))); // NOI18N
         menuRegistro.setText("Registro de Estudiantes");
 
         itemNuevoE.setText("Nuevo estudiante");

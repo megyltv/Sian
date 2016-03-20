@@ -109,6 +109,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         setBorder(null);
         setPreferredSize(new java.awt.Dimension(1168, 647));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(1168, 620));
 
         pnlEclesiast.setBackground(new java.awt.Color(255, 255, 255));
