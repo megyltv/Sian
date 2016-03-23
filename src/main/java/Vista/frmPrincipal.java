@@ -9,6 +9,7 @@ import Vista.Registro.JInternalFrameNuevoRegistro;
 import Vista.Reporte.JInternalFrameGeneraReporte;
 import java.awt.Color;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
 public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameNuevoRegistro internalFramenNuevoRegistro;
@@ -182,56 +183,50 @@ public class frmPrincipal extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemNuevoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoEActionPerformed
+       
         internalFramenNuevoRegistro =new JInternalFrameNuevoRegistro();
-        internalFramenNuevoRegistro.pack();
-        pnlPrincipal.add(internalFramenNuevoRegistro);
-        internalFramenNuevoRegistro.show();
+        mostrarVentana(internalFramenNuevoRegistro);
+        
     }//GEN-LAST:event_itemNuevoEActionPerformed
 
     private void itemActualizarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemActualizarEActionPerformed
         internalFrameConsultaRegistro = new JInternalFrameConsultaRegistro();
-        internalFrameConsultaRegistro.pack();
-        pnlPrincipal.add(internalFrameConsultaRegistro);
-        internalFrameConsultaRegistro.show();
+        mostrarVentana(internalFrameConsultaRegistro);
     }//GEN-LAST:event_itemActualizarEActionPerformed
 
     private void itemInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemInscripcionActionPerformed
         internalFrameNuevaInscripcion = new JInternalFrameNuevaInscripcion();
-        internalFrameNuevaInscripcion.pack();
-        pnlPrincipal.add(internalFrameNuevaInscripcion);
-        internalFrameNuevaInscripcion.show();
+        mostrarVentana(internalFrameNuevaInscripcion);
     }//GEN-LAST:event_itemInscripcionActionPerformed
 
     private void itemNuevaCalifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevaCalifActionPerformed
         internalFrameIngresaCalificacion = new JInternalFrameIngresaCalificacion();
-        internalFrameIngresaCalificacion.pack();
-        pnlPrincipal.add(internalFrameIngresaCalificacion);
-        internalFrameIngresaCalificacion.show();
+        mostrarVentana(internalFrameIngresaCalificacion);
         
     }//GEN-LAST:event_itemNuevaCalifActionPerformed
 
     private void itemConsultarCalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultarCalActionPerformed
        internalFrameConsultaCalificacion = new JInternalFrameConsultaCalificacion();
-       internalFrameConsultaCalificacion.pack();
-       pnlPrincipal.add(internalFrameConsultaCalificacion);
-       internalFrameConsultaCalificacion.show();
+        mostrarVentana(internalFrameConsultaCalificacion);
                
     }//GEN-LAST:event_itemConsultarCalActionPerformed
 
     private void itemReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporteActionPerformed
        internalFrameGeneraReporte = new JInternalFrameGeneraReporte();
-       internalFrameGeneraReporte.pack();
-       pnlPrincipal.add(internalFrameGeneraReporte);
-       internalFrameGeneraReporte.show();
+        mostrarVentana(internalFrameGeneraReporte);
     }//GEN-LAST:event_itemReporteActionPerformed
 
     private void itemReporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporte1ActionPerformed
        internalFrameAcademia = new JInternalFrameAcademy();
-       internalFrameAcademia.pack();
-       pnlPrincipal.add(internalFrameAcademia);
-       internalFrameAcademia.show();
+        mostrarVentana(internalFrameAcademia); 
     }//GEN-LAST:event_itemReporte1ActionPerformed
-
+    
+    private void mostrarVentana(JInternalFrame frame ){
+        pnlPrincipal.removeAll();
+        frame.pack();
+        pnlPrincipal.add(frame);
+        frame.show();
+    }
     public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
