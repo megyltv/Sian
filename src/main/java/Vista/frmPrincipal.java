@@ -145,6 +145,7 @@ public class frmPrincipal extends javax.swing.JFrame{
 
         menuAcademia.setText("Academia Bíblica");
 
+        itemReporte1.setText("Nuevo periodo académico");
         itemReporte1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemReporte1ActionPerformed(evt);

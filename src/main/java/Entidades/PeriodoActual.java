@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,10 +24,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "periodo_actual")
+@Table(name = "periodo_actual", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PeriodoActual.findAll", query = "SELECT p FROM PeriodoActual p"),
@@ -53,9 +51,8 @@ public class PeriodoActual implements Serializable {
     @Column(name = "fechafin")
     @Temporal(TemporalType.DATE)
     private Date fechafin;
-    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
-    @ManyToOne(optional = false)
-    private Estudiante cedula;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperiodo")
+    private List<Inscripcion> inscripcionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperiodo")
     private List<Nivel> nivelList;
 
@@ -103,12 +100,13 @@ public class PeriodoActual implements Serializable {
         this.fechafin = fechafin;
     }
 
-    public Estudiante getCedula() {
-        return cedula;
+    @XmlTransient
+    public List<Inscripcion> getInscripcionList() {
+        return inscripcionList;
     }
 
-    public void setCedula(Estudiante cedula) {
-        this.cedula = cedula;
+    public void setInscripcionList(List<Inscripcion> inscripcionList) {
+        this.inscripcionList = inscripcionList;
     }
 
     @XmlTransient

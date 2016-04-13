@@ -23,10 +23,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "materia")
+@Table(name = "materia", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m"),
@@ -42,14 +42,14 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "materia")
     private String materia;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
+    private List<Horariomateria> horariomateriaList;
     @JoinColumn(name = "idinscripcion", referencedColumnName = "idinscripcion")
     @ManyToOne(optional = false)
     private Inscripcion idinscripcion;
     @JoinColumn(name = "idnivel", referencedColumnName = "idnivel")
     @ManyToOne(optional = false)
     private Nivel idnivel;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
-    private List<MateriaHorario> materiaHorarioList;
 
     public Materia() {
     }
@@ -79,6 +79,15 @@ public class Materia implements Serializable {
         this.materia = materia;
     }
 
+    @XmlTransient
+    public List<Horariomateria> getHorariomateriaList() {
+        return horariomateriaList;
+    }
+
+    public void setHorariomateriaList(List<Horariomateria> horariomateriaList) {
+        this.horariomateriaList = horariomateriaList;
+    }
+
     public Inscripcion getIdinscripcion() {
         return idinscripcion;
     }
@@ -93,15 +102,6 @@ public class Materia implements Serializable {
 
     public void setIdnivel(Nivel idnivel) {
         this.idnivel = idnivel;
-    }
-
-    @XmlTransient
-    public List<MateriaHorario> getMateriaHorarioList() {
-        return materiaHorarioList;
-    }
-
-    public void setMateriaHorarioList(List<MateriaHorario> materiaHorarioList) {
-        this.materiaHorarioList = materiaHorarioList;
     }
 
     @Override

@@ -21,10 +21,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "horario")
+@Table(name = "horario", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"),
@@ -44,7 +44,7 @@ public class Horario implements Serializable {
     @Column(name = "hora")
     private String hora;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
-    private List<MateriaHorario> materiaHorarioList;
+    private List<Horariomateria> horariomateriaList;
 
     public Horario() {
     }
@@ -83,12 +83,12 @@ public class Horario implements Serializable {
     }
 
     @XmlTransient
-    public List<MateriaHorario> getMateriaHorarioList() {
-        return materiaHorarioList;
+    public List<Horariomateria> getHorariomateriaList() {
+        return horariomateriaList;
     }
 
-    public void setMateriaHorarioList(List<MateriaHorario> materiaHorarioList) {
-        this.materiaHorarioList = materiaHorarioList;
+    public void setHorariomateriaList(List<Horariomateria> horariomateriaList) {
+        this.horariomateriaList = horariomateriaList;
     }
 
     @Override

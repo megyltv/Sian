@@ -23,10 +23,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "nivel")
+@Table(name = "nivel", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Nivel.findAll", query = "SELECT n FROM Nivel n"),

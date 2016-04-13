@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,10 +24,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "estudiante")
+@Table(name = "estudiante", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e"),
@@ -89,15 +87,12 @@ public class Estudiante implements Serializable {
     private String nombemerg;
     @Column(name = "telfemerg")
     private Integer telfemerg;
-    @JoinColumn(name = "idpreguntas", referencedColumnName = "idpreguntas")
-    @ManyToOne(optional = false)
-    private Preguntas idpreguntas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cedula")
     private List<Calificacion> calificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cedula")
     private List<Inscripcion> inscripcionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cedula")
-    private List<PeriodoActual> periodoActualList;
+    private List<Preguntas> preguntasList;
 
     public Estudiante() {
     }
@@ -240,14 +235,6 @@ public class Estudiante implements Serializable {
         this.telfemerg = telfemerg;
     }
 
-    public Preguntas getIdpreguntas() {
-        return idpreguntas;
-    }
-
-    public void setIdpreguntas(Preguntas idpreguntas) {
-        this.idpreguntas = idpreguntas;
-    }
-
     @XmlTransient
     public List<Calificacion> getCalificacionList() {
         return calificacionList;
@@ -267,12 +254,12 @@ public class Estudiante implements Serializable {
     }
 
     @XmlTransient
-    public List<PeriodoActual> getPeriodoActualList() {
-        return periodoActualList;
+    public List<Preguntas> getPreguntasList() {
+        return preguntasList;
     }
 
-    public void setPeriodoActualList(List<PeriodoActual> periodoActualList) {
-        this.periodoActualList = periodoActualList;
+    public void setPreguntasList(List<Preguntas> preguntasList) {
+        this.preguntasList = preguntasList;
     }
 
     @Override

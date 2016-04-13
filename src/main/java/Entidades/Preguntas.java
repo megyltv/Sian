@@ -6,25 +6,23 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "preguntas")
+@Table(name = "preguntas", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Preguntas.findAll", query = "SELECT p FROM Preguntas p"),
@@ -47,8 +45,9 @@ public class Preguntas implements Serializable {
     private int opcion;
     @Column(name = "respuesta")
     private String respuesta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpreguntas")
-    private List<Estudiante> estudianteList;
+    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    @ManyToOne(optional = false)
+    private Estudiante cedula;
 
     public Preguntas() {
     }
@@ -95,13 +94,12 @@ public class Preguntas implements Serializable {
         this.respuesta = respuesta;
     }
 
-    @XmlTransient
-    public List<Estudiante> getEstudianteList() {
-        return estudianteList;
+    public Estudiante getCedula() {
+        return cedula;
     }
 
-    public void setEstudianteList(List<Estudiante> estudianteList) {
-        this.estudianteList = estudianteList;
+    public void setCedula(Estudiante cedula) {
+        this.cedula = cedula;
     }
 
     @Override

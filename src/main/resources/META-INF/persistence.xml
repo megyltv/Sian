@@ -12,11 +12,12 @@
     <class>Entidades.MateriaHorario</class>
     <class>Entidades.Inscripcion</class>
     <class>Entidades.Usuario</class>
+    <class>Entidades.Horariomateria</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/SIAN"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/siand"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="postgres"/>
+      <property name="javax.persistence.jdbc.password" value="12345"/>
     </properties>
   </persistence-unit>
 </persistence>

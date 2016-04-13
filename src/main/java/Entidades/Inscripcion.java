@@ -23,51 +23,43 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nathy Cumbicos
+ * @author Megan
  */
 @Entity
-@Table(name = "inscripcion")
+@Table(name = "inscripcion", catalog = "siand", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Inscripcion.findAll", query = "SELECT i FROM Inscripcion i"),
-    @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion"),
-    @NamedQuery(name = "Inscripcion.findByObservacion", query = "SELECT i FROM Inscripcion i WHERE i.observacion = :observacion")})
+    @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion")})
 public class Inscripcion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "idinscripcion")
-    private Integer idinscripcion;
-    @Column(name = "observacion")
-    private String observacion;
+    private String idinscripcion;
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     @ManyToOne(optional = false)
     private Estudiante cedula;
+    @JoinColumn(name = "idperiodo", referencedColumnName = "idperiodo")
+    @ManyToOne(optional = false)
+    private PeriodoActual idperiodo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idinscripcion")
     private List<Materia> materiaList;
 
     public Inscripcion() {
     }
 
-    public Inscripcion(Integer idinscripcion) {
+    public Inscripcion(String idinscripcion) {
         this.idinscripcion = idinscripcion;
     }
 
-    public Integer getIdinscripcion() {
+    public String getIdinscripcion() {
         return idinscripcion;
     }
 
-    public void setIdinscripcion(Integer idinscripcion) {
+    public void setIdinscripcion(String idinscripcion) {
         this.idinscripcion = idinscripcion;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
     }
 
     public Estudiante getCedula() {
@@ -76,6 +68,14 @@ public class Inscripcion implements Serializable {
 
     public void setCedula(Estudiante cedula) {
         this.cedula = cedula;
+    }
+
+    public PeriodoActual getIdperiodo() {
+        return idperiodo;
+    }
+
+    public void setIdperiodo(PeriodoActual idperiodo) {
+        this.idperiodo = idperiodo;
     }
 
     @XmlTransient
