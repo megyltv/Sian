@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -17,6 +15,8 @@ import Entidades.Horario;
 import Entidades.Horariomateria;
 import Entidades.HorariomateriaPK;
 import Entidades.Materia;
+import JpaControllers.exceptions.NonexistentEntityException;
+import JpaControllers.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,8 +40,8 @@ public class HorariomateriaJpaController implements Serializable {
         if (horariomateria.getHorariomateriaPK() == null) {
             horariomateria.setHorariomateriaPK(new HorariomateriaPK());
         }
-        horariomateria.getHorariomateriaPK().setIdmateria(horariomateria.getMateria().getIdmateria());
         horariomateria.getHorariomateriaPK().setIdhorario(horariomateria.getHorario().getIdhorario());
+        horariomateria.getHorariomateriaPK().setIdmateria(horariomateria.getMateria().getIdmateria());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -88,8 +88,8 @@ public class HorariomateriaJpaController implements Serializable {
     }
 
     public void edit(Horariomateria horariomateria) throws NonexistentEntityException, Exception {
-        horariomateria.getHorariomateriaPK().setIdmateria(horariomateria.getMateria().getIdmateria());
         horariomateria.getHorariomateriaPK().setIdhorario(horariomateria.getHorario().getIdhorario());
+        horariomateria.getHorariomateriaPK().setIdmateria(horariomateria.getMateria().getIdmateria());
         EntityManager em = null;
         try {
             em = getEntityManager();

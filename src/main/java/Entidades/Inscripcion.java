@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,9 +37,10 @@ public class Inscripcion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idinscripcion")
-    private String idinscripcion;
+    private Integer idinscripcion;
     @JoinColumn(name = "cedula", referencedColumnName = "cedula")
     @ManyToOne(optional = false)
     private Estudiante cedula;
@@ -50,15 +53,15 @@ public class Inscripcion implements Serializable {
     public Inscripcion() {
     }
 
-    public Inscripcion(String idinscripcion) {
+    public Inscripcion(Integer idinscripcion) {
         this.idinscripcion = idinscripcion;
     }
 
-    public String getIdinscripcion() {
+    public Integer getIdinscripcion() {
         return idinscripcion;
     }
 
-    public void setIdinscripcion(String idinscripcion) {
+    public void setIdinscripcion(Integer idinscripcion) {
         this.idinscripcion = idinscripcion;
     }
 

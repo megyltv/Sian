@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.IllegalOrphanException;
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -18,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import Entidades.Nivel;
 import Entidades.PeriodoActual;
+import JpaControllers.exceptions.IllegalOrphanException;
+import JpaControllers.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -36,7 +35,7 @@ public class PeriodoActualJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(PeriodoActual periodoActual) throws PreexistingEntityException, Exception {
+    public void create(PeriodoActual periodoActual) {
         if (periodoActual.getInscripcionList() == null) {
             periodoActual.setInscripcionList(new ArrayList<Inscripcion>());
         }
@@ -79,11 +78,6 @@ public class PeriodoActualJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findPeriodoActual(periodoActual.getIdperiodo()) != null) {
-                throw new PreexistingEntityException("PeriodoActual " + periodoActual + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

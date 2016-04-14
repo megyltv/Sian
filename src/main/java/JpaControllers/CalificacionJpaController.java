@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import Entidades.Calificacion;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -15,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Entidades.Estudiante;
 import Entidades.Horariomateria;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -35,7 +34,7 @@ public class CalificacionJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Calificacion calificacion) throws PreexistingEntityException, Exception {
+    public void create(Calificacion calificacion) {
         if (calificacion.getHorariomateriaList() == null) {
             calificacion.setHorariomateriaList(new ArrayList<Horariomateria>());
         }
@@ -69,11 +68,6 @@ public class CalificacionJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findCalificacion(calificacion.getIdcalificacion()) != null) {
-                throw new PreexistingEntityException("Calificacion " + calificacion + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

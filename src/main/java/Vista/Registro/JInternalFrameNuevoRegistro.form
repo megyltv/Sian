@@ -831,10 +831,10 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                    <StringItem index="0" value="Seleccione"/>
+                    <StringItem index="1" value="Primaria"/>
+                    <StringItem index="2" value="Secundaria"/>
+                    <StringItem index="3" value="Superior"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -853,11 +853,14 @@
             <Component class="javax.swing.JComboBox" name="ComboBoxCivil">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="7">
+                    <StringItem index="0" value="Seleccione"/>
+                    <StringItem index="1" value="Soltero"/>
+                    <StringItem index="2" value="Casado"/>
+                    <StringItem index="3" value="Divorciado"/>
+                    <StringItem index="4" value="Separado"/>
+                    <StringItem index="5" value="Viudo"/>
+                    <StringItem index="6" value="Uni&#xf3;n de Hecho"/>
                   </StringArray>
                 </Property>
               </Properties>

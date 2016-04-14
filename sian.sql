@@ -1,68 +1,4 @@
 /*==============================================================*/
-/* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     13/04/2016 15:33:50                          */
-/*==============================================================*/
-
-
-drop index PRESENTA_FK;
-
-drop index CALIFICACION_PK;
-
-drop table CALIFICACION;
-
-drop index ESTUDIANTE_PK;
-
-drop table ESTUDIANTE;
-
-drop index HORARIO_PK;
-
-drop table HORARIO;
-
-drop index RELATIONSHIP_9_FK;
-
-drop index RELATIONSHIP_8_FK;
-
-drop index RELATIONSHIP_8_PK;
-
-drop table HORARIOMATERIA;
-
-drop index RELATIONSHIP_10_FK;
-
-drop index PUEDE_FK;
-
-drop index INSCRIPCION_PK;
-
-drop table INSCRIPCION;
-
-drop index SE_FK;
-
-drop index ESTACOMPUESTO_FK;
-
-drop index MATERIA_PK;
-
-drop table MATERIA;
-
-drop index TIENE_FK;
-
-drop index NIVEL_PK;
-
-drop table NIVEL;
-
-drop index PERIODO_ACTUAL_PK;
-
-drop table PERIODO_ACTUAL;
-
-drop index CONTESTA_FK;
-
-drop index PREGUNTAS_PK;
-
-drop table PREGUNTAS;
-
-drop index USUARIO_PK;
-
-drop table USUARIO;
-
-/*==============================================================*/
 /* Table: CALIFICACION                                          */
 /*==============================================================*/
 create table CALIFICACION (
@@ -169,7 +105,7 @@ IDHORARIO
 /* Table: INSCRIPCION                                           */
 /*==============================================================*/
 create table INSCRIPCION (
-   IDINSCRIPCION        CHAR(10)             not null,
+   IDINSCRIPCION        INT4                 not null,
    IDPERIODO            INT4                 not null,
    CEDULA               INT4                 not null,
    constraint PK_INSCRIPCION primary key (IDINSCRIPCION)
@@ -202,7 +138,7 @@ IDPERIODO
 create table MATERIA (
    IDMATERIA            INT4                 not null,
    IDNIVEL              INT4                 not null,
-   IDINSCRIPCION        CHAR(10)             not null,
+   IDINSCRIPCION        INT4             not null,
    MATERIA              VARCHAR(30)          not null,
    constraint PK_MATERIA primary key (IDMATERIA)
 );
@@ -276,9 +212,21 @@ IDPERIODO
 create table PREGUNTAS (
    IDPREGUNTAS          INT4                 not null,
    CEDULA               INT4                 not null,
-   NUMPREGUNTA          INT4                 not null,
-   OPCION               INT4                 not null,
-   RESPUESTA            VARCHAR(50)          null,
+   OPCION1              INT4                 not null,
+   RESPUESTA1           VARCHAR(50)          null,
+   OPCION2              INT4                 not null,
+   RESPUESTA2           VARCHAR(50)          null,
+   OPCION3              INT4                 not null,
+   RESPUESTA31          VARCHAR(30)          null,
+   RESPUESTA32          VARCHAR(50)          null,
+   OPCION4              INT4                 not null,
+   RESPUESTA4           VARCHAR(50)          null,
+   OPCION5              INT4                 not null,
+   RESPUESTA5           VARCHAR(50)          null,
+   OPCION6              INT4                 not null,
+   RESPUESTA6           VARCHAR(50)          null,
+   OPCION7              INT4                 not null,
+   RESPUESTA7           VARCHAR(50)          null,
    constraint PK_PREGUNTAS primary key (IDPREGUNTAS)
 );
 

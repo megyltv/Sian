@@ -7,8 +7,10 @@ package Vista.Registro;
 
 import Controlador.Registro.ControladorRegistroUsuario;
 import Entidades.Estudiante;
+import Entidades.Preguntas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,11 +18,107 @@ import java.util.logging.Logger;
  */
 public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JInternalFrameNuevoRegistro
-     */
+    Estudiante nuevo_estudiante;
+    Preguntas pregunta;
+            
     public JInternalFrameNuevoRegistro() {
         initComponents();
+    }
+    
+    public void limpiar(){
+        txtApellido.setText("");
+        txtCedula.setText("");
+        txtCelular.setText("");
+        txtConyuge.setText("");
+        txtCorreo.setText("");
+        txtNombre.setText("");
+        txtNombreE.setText("");
+        txtProofesion.setText("");
+        txtRazon1.setText("");
+        txtRazon2.setText("");
+        txtRazon31.setText("");
+        txtRazon32.setText("");
+        txtRazon4.setText("");
+        txtRazon5.setText("");
+        txtRazon6.setText("");
+        txtRazon7.setText("");
+        txtSector.setText("");
+        txtTelefono.setText("");
+        txtTelfE.setText("");
+        txthijos.setText("");
+        jDateChooser1.setCalendar(null);
+        limpiarOpciones();
+    }
+    
+    public void limpiarOpciones(){
+        ComboBoxCivil.setSelectedIndex(0);
+        ComboBoxInstruccion.setSelectedItem(0);
+        RadioButtonSi.setSelected(false);
+        RadioButtonNo.setSelected(false);
+        ButtonNo1.setSelected(false);
+        ButtonNo2.setSelected(false);
+        ButtonNo3.setSelected(false);
+        ButtonNo4.setSelected(false);
+        ButtonNo5.setSelected(false);
+        ButtonNo6.setSelected(false);
+        ButtonNo7.setSelected(false);
+        ButtonSi1.setSelected(false);
+        ButtonSi2.setSelected(false);
+        ButtonSi3.setSelected(false);
+        ButtonSi4.setSelected(false);
+        ButtonSi5.setSelected(false);
+        ButtonSi6.setSelected(false);
+        ButtonSi7.setSelected(false);    
+    }
+    
+    public void setDatosEstudiante(){
+        nuevo_estudiante = new Estudiante();
+        nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
+        nuevo_estudiante.setNombres((txtNombre.getText()));
+        nuevo_estudiante.setApellidos((txtApellido.getText()));
+        nuevo_estudiante.setFechanac((jDateChooser1.getDate()));
+        nuevo_estudiante.setTelefono(Integer.parseInt(txtTelefono.getText().trim())); 
+        nuevo_estudiante.setCelular(Integer.parseInt(txtCelular.getText().trim()));
+        nuevo_estudiante.setCorreo((txtCorreo.getText().trim()));
+        nuevo_estudiante.setNivelinst(((String)ComboBoxInstruccion.getSelectedItem()));
+        nuevo_estudiante.setProfesion((txtProofesion.getText()));
+        nuevo_estudiante.setSector((txtSector.getText()));
+        nuevo_estudiante.setEstadocivil((String)ComboBoxCivil.getSelectedItem());
+        nuevo_estudiante.setNombcony((txtConyuge.getText()));
+        
+        // Si == 1, No == 0
+        if (RadioButtonSi.isSelected())
+        {
+            nuevo_estudiante.setCreycony(1);
+           
+        }
+        else if (RadioButtonNo.isSelected())
+        {
+            nuevo_estudiante.setCreycony(0);
+        }
+        
+        nuevo_estudiante.setNombemerg((txtNombreE.getText()));
+        nuevo_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText())));
+    }
+    
+    public void setPreguntas(){
+        pregunta= new Preguntas();
+        pregunta.setCedula(nuevo_estudiante);
+        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1); } else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0); }
+        pregunta.setRespuesta1(txtRazon1.getText());
+        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); } else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0); }
+        pregunta.setRespuesta2(txtRazon2.getText());
+        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); } else if (ButtonNo3.isSelected()) { pregunta.setOpcion3(0); }
+        pregunta.setRespuesta31(txtRazon31.getText());
+        pregunta.setRespuesta32(txtRazon32.getText());
+        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); } else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }
+        pregunta.setRespuesta4(txtRazon4.getText());
+        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); } else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); }
+        pregunta.setRespuesta5(txtRazon5.getText());
+        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); }
+        pregunta.setRespuesta6(txtRazon6.getText());
+        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); }
+        pregunta.setRespuesta7(txtRazon7.getText());
     }
 
     /**
@@ -409,7 +507,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         lblInstruccion.setText("Nivel de Instrucción:");
 
-        ComboBoxInstruccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxInstruccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Primaria", "Secundaria", "Superior" }));
         ComboBoxInstruccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxInstruccionActionPerformed(evt);
@@ -418,7 +516,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         lblProfesion.setText("Profesión u Ocupación:");
 
-        ComboBoxCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Soltero", "Casado", "Divorciado", "Separado", "Viudo", "Unión de Hecho" }));
 
         lblSector.setText("Sector donde vive:");
 
@@ -635,35 +733,14 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
-        Estudiante nuevo_estudiante = new Estudiante();
-        nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
-        nuevo_estudiante.setNombres((txtNombre.getText()));
-        nuevo_estudiante.setApellidos((txtApellido.getText()));
-        nuevo_estudiante.setFechanac((jDateChooser1.getDate()));
-        nuevo_estudiante.setTelefono(Integer.parseInt(txtTelefono.getText().trim())); 
-        nuevo_estudiante.setCelular(Integer.parseInt(txtCelular.getText().trim()));
-        nuevo_estudiante.setCorreo((txtCorreo.getText().trim()));
-        nuevo_estudiante.setNivelinst(((String)ComboBoxInstruccion.getSelectedItem()));
-        nuevo_estudiante.setProfesion((txtProofesion.getText()));
-        nuevo_estudiante.setSector((txtSector.getText()));
-        nuevo_estudiante.setEstadocivil((String)ComboBoxCivil.getSelectedItem());
-        nuevo_estudiante.setNombcony((txtConyuge.getText()));
-        if (RadioButtonSi.isSelected())
-        {
-            nuevo_estudiante.setCreycony(1);
-           
-        }
-        else if (RadioButtonNo.isSelected())
-        {
-            nuevo_estudiante.setCreycony(0);
-        }
-        
-        nuevo_estudiante.setNombemerg((txtNombreE.getText()));
-        nuevo_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText())));
-        
+        setDatosEstudiante();
+        setPreguntas();
         ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
         try {
-            controlador.crear(nuevo_estudiante);
+            controlador.crearEstudiante(nuevo_estudiante);
+            controlador.crearPreguntas(pregunta);
+            JOptionPane.showMessageDialog(null,"Estudiante Registrado");
+            limpiar();
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.IllegalOrphanException;
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import Entidades.Horario;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -15,6 +12,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Entidades.Horariomateria;
+import JpaControllers.exceptions.IllegalOrphanException;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -35,7 +34,7 @@ public class HorarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Horario horario) throws PreexistingEntityException, Exception {
+    public void create(Horario horario) {
         if (horario.getHorariomateriaList() == null) {
             horario.setHorariomateriaList(new ArrayList<Horariomateria>());
         }
@@ -60,11 +59,6 @@ public class HorarioJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findHorario(horario.getIdhorario()) != null) {
-                throw new PreexistingEntityException("Horario " + horario + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

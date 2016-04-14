@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.IllegalOrphanException;
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -17,6 +14,8 @@ import Entidades.Estudiante;
 import Entidades.Inscripcion;
 import Entidades.PeriodoActual;
 import Entidades.Materia;
+import JpaControllers.exceptions.IllegalOrphanException;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -37,7 +36,7 @@ public class InscripcionJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Inscripcion inscripcion) throws PreexistingEntityException, Exception {
+    public void create(Inscripcion inscripcion) {
         if (inscripcion.getMateriaList() == null) {
             inscripcion.setMateriaList(new ArrayList<Materia>());
         }
@@ -80,11 +79,6 @@ public class InscripcionJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findInscripcion(inscripcion.getIdinscripcion()) != null) {
-                throw new PreexistingEntityException("Inscripcion " + inscripcion + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -163,7 +157,7 @@ public class InscripcionJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = inscripcion.getIdinscripcion();
+                Integer id = inscripcion.getIdinscripcion();
                 if (findInscripcion(id) == null) {
                     throw new NonexistentEntityException("The inscripcion with id " + id + " no longer exists.");
                 }
@@ -176,7 +170,7 @@ public class InscripcionJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -242,7 +236,7 @@ public class InscripcionJpaController implements Serializable {
         }
     }
 
-    public Inscripcion findInscripcion(String id) {
+    public Inscripcion findInscripcion(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Inscripcion.class, id);

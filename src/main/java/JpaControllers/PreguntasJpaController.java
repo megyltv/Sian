@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,7 +32,7 @@ public class PreguntasJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Preguntas preguntas) throws PreexistingEntityException, Exception {
+    public void create(Preguntas preguntas) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -49,11 +48,6 @@ public class PreguntasJpaController implements Serializable {
                 cedula = em.merge(cedula);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findPreguntas(preguntas.getIdpreguntas()) != null) {
-                throw new PreexistingEntityException("Preguntas " + preguntas + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

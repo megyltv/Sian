@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package JpaControllers;
 
-import Controlador.exceptions.IllegalOrphanException;
-import Controlador.exceptions.NonexistentEntityException;
-import Controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -16,6 +13,8 @@ import javax.persistence.criteria.Root;
 import Entidades.PeriodoActual;
 import Entidades.Materia;
 import Entidades.Nivel;
+import JpaControllers.exceptions.IllegalOrphanException;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,7 +35,7 @@ public class NivelJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Nivel nivel) throws PreexistingEntityException, Exception {
+    public void create(Nivel nivel) {
         if (nivel.getMateriaList() == null) {
             nivel.setMateriaList(new ArrayList<Materia>());
         }
@@ -70,11 +69,6 @@ public class NivelJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findNivel(nivel.getIdnivel()) != null) {
-                throw new PreexistingEntityException("Nivel " + nivel + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

@@ -13,6 +13,16 @@
     <class>Entidades.Inscripcion</class>
     <class>Entidades.Usuario</class>
     <class>Entidades.Horariomateria</class>
+    <class>Controlador.Academia.Preguntas</class>
+    <class>Controlador.Academia.Materia</class>
+    <class>Controlador.Academia.Usuario</class>
+    <class>Controlador.Academia.Horariomateria</class>
+    <class>Controlador.Academia.Inscripcion</class>
+    <class>Controlador.Academia.PeriodoActual</class>
+    <class>Controlador.Academia.Horario</class>
+    <class>Controlador.Academia.Nivel</class>
+    <class>Controlador.Academia.Estudiante</class>
+    <class>Controlador.Academia.Calificacion</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/siand"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
