@@ -19,14 +19,7 @@ import Entidades.Estudiante;
  * @author Megan
  */
 public class ControladorRegistroUsuario {
-    
-    /*public void consultaCedula(){
-        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
-        EntityManager em = controladorEstudiante.getEntityManager();
-        List <Estudiante> lstEstudiante = em.createNativeQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", 1714594551).getResultList();
-    }*/
-    
-    public static void main(String args[]) throws NonexistentEntityException, Exception{
+    /*public static void main(String args[]) throws NonexistentEntityException, Exception{
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
         EntityManager em = controladorEstudiante.getEntityManager();
         List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", 17).getResultList();
@@ -39,5 +32,26 @@ public class ControladorRegistroUsuario {
         lstEstudiante.get(0).setTelefono(telf);
         controladorEstudiante.edit(lstEstudiante.get(0));
         System.out.println(lstEstudiante.get(0).getTelefono());
+    }*/
+    
+    public void crear (Estudiante estudiante) throws Exception{
+        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        EntityManager em = controladorEstudiante.getEntityManager();
+        controladorEstudiante.create(estudiante);
+         
+    }
+    
+    public void editar (Estudiante estudiante){
+        
+    }
+    
+    public void eliminar (Estudiante estudiante){
+        
+    }
+    
+     public void consultarCedula(){
+        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        EntityManager em = controladorEstudiante.getEntityManager();
+        List <Estudiante> lstEstudiante = em.createNativeQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", 1714594551).getResultList();
     }
 }
