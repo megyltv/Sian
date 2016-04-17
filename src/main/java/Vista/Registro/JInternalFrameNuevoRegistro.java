@@ -71,6 +71,24 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi7.setSelected(false);    
     }
     
+    public void habilitarPreguntas(){
+        ButtonNo1.setEnabled(true);
+        ButtonNo2.setEnabled(true);
+        ButtonNo3.setEnabled(true);
+        ButtonNo4.setEnabled(true);
+        ButtonNo5.setEnabled(true);
+        ButtonNo6.setEnabled(true);
+        ButtonNo7.setEnabled(true);
+        ButtonSi1.setEnabled(true);
+        ButtonSi2.setEnabled(true);
+        ButtonSi3.setEnabled(true);
+        ButtonSi4.setEnabled(true);
+        ButtonSi5.setEnabled(true);
+        ButtonSi6.setEnabled(true);
+        ButtonSi7.setEnabled(true);
+        btnGuardar1.setEnabled(true);
+    }
+    
     public void setDatosEstudiante(){
         nuevo_estudiante = new Estudiante();
         nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
@@ -104,20 +122,20 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     public void setPreguntas(){
         pregunta= new Preguntas();
         pregunta.setCedula(nuevo_estudiante);
-        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1); } else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0); }
+        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1); txtRazon1.setEnabled(true);} else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0); }
         pregunta.setRespuesta1(txtRazon1.getText());
-        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); } else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0); }
+        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0); }
         pregunta.setRespuesta2(txtRazon2.getText());
-        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); } else if (ButtonNo3.isSelected()) { pregunta.setOpcion3(0); }
+        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()) { pregunta.setOpcion3(0); }
         pregunta.setRespuesta31(txtRazon31.getText());
         pregunta.setRespuesta32(txtRazon32.getText());
-        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); } else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }
+        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }
         pregunta.setRespuesta4(txtRazon4.getText());
-        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); } else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); }
+        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); }
         pregunta.setRespuesta5(txtRazon5.getText());
-        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); }
+        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); txtRazon6.setEnabled(false);}
         pregunta.setRespuesta6(txtRazon6.getText());
-        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); }
+        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); txtRazon7.setEnabled(false);}
         pregunta.setRespuesta7(txtRazon7.getText());
     }
 
@@ -130,6 +148,13 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
+        buttonGroup7 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         pnlEclesiast = new javax.swing.JPanel();
         lbl1 = new javax.swing.JLabel();
@@ -169,6 +194,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonNo7 = new javax.swing.JRadioButton();
         jLabel15 = new javax.swing.JLabel();
         txtRazon7 = new javax.swing.JTextField();
+        btnGuardar1 = new javax.swing.JButton();
         pnlPersonal = new javax.swing.JPanel();
         lblEstado = new javax.swing.JLabel();
         RadioButtonNo = new javax.swing.JRadioButton();
@@ -222,72 +248,124 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         jLabel1.setText("2. Antes de esta iglesia, ¿asistías a alguna otra?");
 
         ButtonNo1.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(ButtonNo1);
         ButtonNo1.setText("No");
+        ButtonNo1.setEnabled(false);
 
         ButtonSi1.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(ButtonSi1);
         ButtonSi1.setText("Si");
+        ButtonSi1.setEnabled(false);
 
         jLabel2.setText("Fecha");
 
+        txtRazon1.setEnabled(false);
+
         ButtonSi2.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup2.add(ButtonSi2);
         ButtonSi2.setText("Si");
+        ButtonSi2.setEnabled(false);
 
         ButtonNo2.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup2.add(ButtonNo2);
         ButtonNo2.setText("No");
+        ButtonNo2.setEnabled(false);
 
         jLabel3.setText("¿A cual?");
+
+        txtRazon2.setEnabled(false);
 
         jLabel4.setText("3. ¿Ha sido bautizado en una Iglesia Cristiana Evangélica?");
 
         ButtonSi3.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup3.add(ButtonSi3);
         ButtonSi3.setText("Si");
+        ButtonSi3.setEnabled(false);
 
         ButtonNo3.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup3.add(ButtonNo3);
         ButtonNo3.setText("No");
+        ButtonNo3.setEnabled(false);
 
         jLabel5.setText("¿Cuándo?");
+
+        txtRazon31.setEnabled(false);
+
+        txtRazon32.setEnabled(false);
 
         jLabel7.setText("¿Dónde?");
 
         jLabel8.setText("4. ¿Asiste a un discipulado?");
 
         ButtonSi4.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup4.add(ButtonSi4);
         ButtonSi4.setText("Si");
+        ButtonSi4.setEnabled(false);
 
         ButtonNo4.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup4.add(ButtonNo4);
         ButtonNo4.setText("No");
+        ButtonNo4.setEnabled(false);
 
         jLabel9.setText("¿Cuál es su discipulador?");
+
+        txtRazon4.setEnabled(false);
 
         jLabel10.setText("5. ¿Estás sirviendo en un ministerio de la IAN?");
 
         ButtonSi5.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup5.add(ButtonSi5);
         ButtonSi5.setText("Si");
+        ButtonSi5.setEnabled(false);
 
         ButtonNo5.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup5.add(ButtonNo5);
         ButtonNo5.setText("No");
+        ButtonNo5.setEnabled(false);
 
         jLabel11.setText("¿Cuál?");
+
+        txtRazon5.setEnabled(false);
 
         jLabel12.setText("6. ¿Ha asistido al Encuentro de Sanidad de la IAN?");
 
         ButtonSi6.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup6.add(ButtonSi6);
         ButtonSi6.setText("Si");
+        ButtonSi6.setEnabled(false);
 
         ButtonNo6.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup6.add(ButtonNo6);
         ButtonNo6.setText("No");
+        ButtonNo6.setEnabled(false);
 
         jLabel13.setText("¿Por qué?");
+
+        txtRazon6.setEnabled(false);
 
         jLabel14.setText("7. ¿Ha asistido al Encuentro de Libertad de la IAN?");
 
         ButtonSi7.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup7.add(ButtonSi7);
         ButtonSi7.setText("Si");
+        ButtonSi7.setEnabled(false);
 
         ButtonNo7.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup7.add(ButtonNo7);
         ButtonNo7.setText("No");
+        ButtonNo7.setEnabled(false);
 
         jLabel15.setText("¿Por qué?");
+
+        txtRazon7.setEnabled(false);
+
+        btnGuardar1.setText("Guardar");
+        btnGuardar1.setEnabled(false);
+        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlEclesiastLayout = new javax.swing.GroupLayout(pnlEclesiast);
         pnlEclesiast.setLayout(pnlEclesiastLayout);
@@ -374,7 +452,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                                         .addComponent(ButtonSi5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(ButtonNo5)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEclesiastLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGuardar1)))
                 .addContainerGap())
         );
         pnlEclesiastLayout.setVerticalGroup(
@@ -442,6 +523,8 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                 .addGroup(pnlEclesiastLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtRazon7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGuardar1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -606,7 +689,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                                         .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(70, 70, 70)
                                 .addComponent(btnGuardar)))
-                        .addContainerGap(38, Short.MAX_VALUE))))
+                        .addContainerGap(28, Short.MAX_VALUE))))
         );
         pnlPersonalLayout.setVerticalGroup(
             pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -737,15 +820,25 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         setPreguntas();
         ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
         try {
-            controlador.crearEstudiante(nuevo_estudiante);
-            controlador.crearPreguntas(pregunta);
+            controlador.crearEstudiante(nuevo_estudiante);  
             JOptionPane.showMessageDialog(null,"Estudiante Registrado");
-            limpiar();
+            habilitarPreguntas();
+            //limpiar();
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+        ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
+        try {
+            controlador.crearPreguntas(pregunta);
+            JOptionPane.showMessageDialog(null,"Estudiante Registrado");
+        } catch (Exception ex) {
+            Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnGuardar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -768,6 +861,14 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton RadioButtonNo;
     private javax.swing.JRadioButton RadioButtonSi;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardar1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.ButtonGroup buttonGroup7;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
