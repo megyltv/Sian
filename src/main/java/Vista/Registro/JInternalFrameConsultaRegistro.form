@@ -594,7 +594,7 @@
                                               <Component id="txtApellido" min="-2" pref="182" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Component id="btnGuardar1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnConsultar" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -636,7 +636,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblCedula" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtCedula" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnGuardar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnConsultar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -897,12 +897,12 @@
                 <Property name="text" type="java.lang.String" value="Si"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnGuardar1">
+            <Component class="javax.swing.JButton" name="btnConsultar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consultar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardar1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnGuardar2">

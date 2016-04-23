@@ -21,6 +21,8 @@ import Entidades.Preguntas;
  * @author Megan
  */
 public class ControladorRegistroUsuario {
+    EntityManager em;
+    Estudiante est;
     /*public static void main(String args[]) throws NonexistentEntityException, Exception{
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
         EntityManager em = controladorEstudiante.getEntityManager();
@@ -39,9 +41,9 @@ public class ControladorRegistroUsuario {
     //Estudiante
     public void crearEstudiante (Estudiante estudiante) throws Exception{
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
-        EntityManager em = controladorEstudiante.getEntityManager();
+        em = controladorEstudiante.getEntityManager();
         controladorEstudiante.create(estudiante);
-         
+        
     }
     
     public void editarEstudiante (Estudiante estudiante){
@@ -52,16 +54,21 @@ public class ControladorRegistroUsuario {
         
     }
     
-    public void consultarCedula(){
-        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
-        EntityManager em = controladorEstudiante.getEntityManager();
-        List <Estudiante> lstEstudiante = em.createNativeQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", 1714594551).getResultList();
+    public Estudiante consultarCedula(int cedula){
+        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));     
+        em = controladorEstudiante.getEntityManager();
+        List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", cedula).getResultList();        
+        est = new Estudiante();
+        if (!lstEstudiante.isEmpty()) {
+            est=lstEstudiante.get(0);
+        }
+        return est;
     }
     
     //Preguntas
     public void crearPreguntas (Preguntas pregunta) throws Exception{
         PreguntasJpaController controladorPreguntas = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
-        EntityManager em = controladorPreguntas.getEntityManager();
+        em = controladorPreguntas.getEntityManager();
         controladorPreguntas.create(pregunta);
     }
     
