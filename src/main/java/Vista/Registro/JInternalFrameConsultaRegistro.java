@@ -88,6 +88,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         txtTelfE.setEnabled(false);
         txthijos.setEnabled(false);
         jDateChooser1.setEnabled(false);
+        
     }
     
     public void setConsultaEstudiante(){
