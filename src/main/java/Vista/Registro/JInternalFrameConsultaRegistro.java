@@ -17,6 +17,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
     public JInternalFrameConsultaRegistro() {
         initComponents();
+        Habilitar();
     }
 
     public void limpiar(){
@@ -63,6 +64,30 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         ButtonSi5.setSelected(false);
         ButtonSi6.setSelected(false);
         ButtonSi7.setSelected(false);    
+    }
+    
+    public void Habilitar(){
+        txtApellido.setEnabled(false);
+        txtCedula.setEnabled(true);
+        txtCelular.setEnabled(false);
+        txtConyuge.setEnabled(false);
+        txtCorreo.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtNombreE.setEnabled(false);
+        txtProofesion.setEnabled(false);
+        txtRazon1.setEnabled(false);
+        txtRazon2.setEnabled(false);
+        txtRazon31.setEnabled(false);
+        txtRazon32.setEnabled(false);
+        txtRazon4.setEnabled(false);
+        txtRazon5.setEnabled(false);
+        txtRazon6.setEnabled(false);
+        txtRazon7.setEnabled(false);
+        txtSector.setEnabled(false);
+        txtTelefono.setEnabled(false);
+        txtTelfE.setEnabled(false);
+        txthijos.setEnabled(false);
+        jDateChooser1.setEnabled(false);
     }
     
     public void setConsultaEstudiante(){
@@ -513,6 +538,11 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         lblHijos.setText("Número de Hijos:");
 
         btnGuardar.setText("Actualizar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         lblEmergencia.setText("En caso de emergencia contactar a:");
 
@@ -810,27 +840,33 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         consulta_estudiante = new Estudiante();
         pregunta_estudiante = new Preguntas();
+        
+        consulta_estudiante.setCedula(Integer.parseInt(txtCedula.getText()));
+        int cedula=Integer.parseInt(txtCedula.getText());
         try{
             ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
-        consulta_estudiante=controlador.consultarCedula(consulta_estudiante);
-        pregunta_estudiante= controlador.consultarCedulaPreguntas(consulta_estudiante);
-        if(consulta_estudiante!=null){
-            setConsultaEstudiante();
-            setPreguntasEstudiante();
+            consulta_estudiante=controlador.consultarCedula(cedula);
+            pregunta_estudiante= controlador.consultarCedulaPreguntas(consulta_estudiante);
+            System.out.println(txtCedula.getText());
+            if(consulta_estudiante!=null){
+                setConsultaEstudiante();
+                setPreguntasEstudiante();
+            }
         }
-        }//int cedula= Integer.parseInt(txtCedula.getText().trim());
         catch(Exception e){
               JOptionPane.showMessageDialog(null, e.getMessage()+e.getStackTrace());
+              JOptionPane.showMessageDialog(null, "No se encuentra registrado");
                 }
-        //else{
-        //    JOptionPane.showMessageDialog(null, "No se encuentra registrado");
-        //}
-        //System.out.println(consulta_estudiante.getApellidos());
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardar2ActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Habilitar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

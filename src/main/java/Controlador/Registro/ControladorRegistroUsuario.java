@@ -14,12 +14,6 @@ import javax.persistence.Persistence;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
 
-
-
-/**
- *
- * @author Megan
- */
 public class ControladorRegistroUsuario {
     EntityManager em;
     Estudiante est;
@@ -55,10 +49,10 @@ public class ControladorRegistroUsuario {
         
     }
     
-    public Estudiante consultarCedula(Estudiante cedula){
+    public Estudiante consultarCedula(int cedula){
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));     
         em = controladorEstudiante.getEntityManager();
-        List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", cedula.getCedula()).getResultList();        
+        List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", cedula).getResultList();        
         est = new Estudiante();
         if (!lstEstudiante.isEmpty()) {
             est=lstEstudiante.get(0);
@@ -76,7 +70,7 @@ public class ControladorRegistroUsuario {
     public Preguntas consultarCedulaPreguntas(Estudiante cedula){
         PreguntasJpaController controladorPreguntas = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
         em = controladorPreguntas.getEntityManager();
-        List <Preguntas> lstPreguntas = em.createNamedQuery("Preguntas.findByCedula",Preguntas.class).setParameter("cedula", cedula.getCedula()).getResultList();
+        List <Preguntas> lstPreguntas = em.createNamedQuery("Preguntas.findByCedula",Preguntas.class).setParameter("cedula",cedula).getResultList();
         pr = new Preguntas();
         if (!lstPreguntas.isEmpty()){
             pr=lstPreguntas.get(0);

@@ -176,6 +176,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     public void setPreguntas(){
         pregunta= new Preguntas();
         pregunta.setCedula(nuevo_estudiante);
+        
         ButtonSi1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
