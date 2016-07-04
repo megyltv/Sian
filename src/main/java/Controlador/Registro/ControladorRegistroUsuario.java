@@ -23,6 +23,7 @@ import Entidades.Preguntas;
 public class ControladorRegistroUsuario {
     EntityManager em;
     Estudiante est;
+    Preguntas pr;
     /*public static void main(String args[]) throws NonexistentEntityException, Exception{
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
         EntityManager em = controladorEstudiante.getEntityManager();
@@ -54,10 +55,10 @@ public class ControladorRegistroUsuario {
         
     }
     
-    public Estudiante consultarCedula(int cedula){
+    public Estudiante consultarCedula(Estudiante cedula){
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));     
         em = controladorEstudiante.getEntityManager();
-        List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", cedula).getResultList();        
+        List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", cedula.getCedula()).getResultList();        
         est = new Estudiante();
         if (!lstEstudiante.isEmpty()) {
             est=lstEstudiante.get(0);
@@ -72,7 +73,20 @@ public class ControladorRegistroUsuario {
         controladorPreguntas.create(pregunta);
     }
     
+    public Preguntas consultarCedulaPreguntas(Estudiante cedula){
+        PreguntasJpaController controladorPreguntas = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        em = controladorPreguntas.getEntityManager();
+        List <Preguntas> lstPreguntas = em.createNamedQuery("Preguntas.findByCedula",Preguntas.class).setParameter("cedula", cedula.getCedula()).getResultList();
+        pr = new Preguntas();
+        if (!lstPreguntas.isEmpty()){
+            pr=lstPreguntas.get(0);
+        }
+        return pr;
+    }
+    
     public void editarPregunta (Estudiante estudiante){
+        PreguntasJpaController controladorEstudiante = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        em = controladorEstudiante.getEntityManager();
         
     }
     

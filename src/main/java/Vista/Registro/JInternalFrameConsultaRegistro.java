@@ -7,11 +7,13 @@ package Vista.Registro;
 
 import Controlador.Registro.ControladorRegistroUsuario;
 import Entidades.Estudiante;
+import Entidades.Preguntas;
 import javax.swing.JOptionPane;
 
 public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
     Estudiante consulta_estudiante;
+    Preguntas pregunta_estudiante; 
 
     public JInternalFrameConsultaRegistro() {
         initComponents();
@@ -64,25 +66,114 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     }
     
     public void setConsultaEstudiante(){
-        consulta_estudiante = new Estudiante();
-        txtNombre.setText(consulta_estudiante.getNombres());
-        txtApellido.setText(consulta_estudiante.getApellidos());   
-        txtProofesion.setText(consulta_estudiante.getProfesion());
-        txtConyuge.setText(consulta_estudiante.getNombcony());
-        txtCorreo.setText(consulta_estudiante.getCorreo());
-        txtNombreE.setText(consulta_estudiante.getNombemerg());
-        txtSector.setText(consulta_estudiante.getSector());
+        if(consulta_estudiante.getNombres()!=null){
+            txtNombre.setText(consulta_estudiante.getNombres());
+        }else{
+            txtNombre.setText("");
+        }
+        if(consulta_estudiante.getNombres()!=null){
+            txtApellido.setText(consulta_estudiante.getApellidos()); 
+        }else{
+            txtApellido.setText("");
+        }
+        if(consulta_estudiante.getProfesion()!=null){
+            txtProofesion.setText(consulta_estudiante.getProfesion());
+        }else{
+            txtProofesion.setText("");
+        }
+        if(consulta_estudiante.getNombcony()!=null){
+            txtConyuge.setText(consulta_estudiante.getNombcony());
+        }else{
+            txtConyuge.setText("");
+        }
+        if(consulta_estudiante.getCorreo()!=null){
+            txtCorreo.setText(consulta_estudiante.getCorreo());
+        }else{
+            txtCorreo.setText("");
+        }
+        if(consulta_estudiante.getCorreo()!=null){
+            txtNombreE.setText(consulta_estudiante.getNombemerg());
+        }else{
+            txtNombreE.setText("");
+        }
+        if(consulta_estudiante.getCorreo()!=null){
+            txtSector.setText(consulta_estudiante.getSector());
+        }else{
+            txtSector.setText("");
+        }
         
         //Comprobar que no sea null 
-        txtTelefono.setText(consulta_estudiante.getTelefono().toString());
-        txtTelfE.setText(consulta_estudiante.getTelfemerg().toString());
-        txthijos.setText(consulta_estudiante.getHijos().toString());     
-        txtCelular.setText(consulta_estudiante.getCelular().toString());
+        if(consulta_estudiante.getTelefono()!=null){
+            txtTelefono.setText(consulta_estudiante.getTelefono().toString());
+        }else{
+            txtTelefono.setText("");
+        }
+        if(consulta_estudiante.getTelfemerg()!=null){
+            txtTelfE.setText(consulta_estudiante.getTelfemerg().toString());
+        }else{
+            txtTelfE.setText("");
+        }
+        if(consulta_estudiante.getHijos()!=null){
+            txthijos.setText(consulta_estudiante.getHijos().toString());
+        }else{
+            txthijos.setText("");
+        }
+        if(consulta_estudiante.getCelular()!=null){
+            txtCelular.setText(consulta_estudiante.getCelular().toString());
+        }else{
+            txtCelular.setText("");
+            
+        }
         
         jDateChooser1.setDate(consulta_estudiante.getFechanac());
         ComboBoxCivil.setSelectedItem(consulta_estudiante.getEstadocivil());
-        ComboBoxInstruccion.setSelectedItem(consulta_estudiante.getNivelinst());       
-        if(consulta_estudiante.getCreycony()==1){RadioButtonSi.setSelected(true);} else if(consulta_estudiante.getCreycony()==0){RadioButtonSi.setSelected(true);}
+        ComboBoxInstruccion.setSelectedItem(consulta_estudiante.getNivelinst());  
+        try {
+            if(consulta_estudiante.getCreycony()==1){RadioButtonSi.setSelected(true);} 
+            else if(consulta_estudiante.getCreycony()==0){RadioButtonSi.setSelected(true);}
+            else if(consulta_estudiante.getCreycony()==2){RadioButtonSi.setSelected(false);}
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
+    
+    public void setPreguntasEstudiante(){
+             if(pregunta_estudiante.getOpcion1()==1){
+                 ButtonSi1.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion1()==0){
+                 ButtonNo1.setSelected(true);
+             }
+             if(pregunta_estudiante.getOpcion2()==1){
+                 ButtonSi2.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion2()==0){
+                 ButtonNo2.setSelected(true);
+             }
+             if(pregunta_estudiante.getOpcion3()==1){
+                 ButtonSi3.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion3()==0){
+                 ButtonNo3.setSelected(true);
+             }
+             if(pregunta_estudiante.getOpcion4()==1){
+                 ButtonSi4.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion4()==0){
+                 ButtonNo4.setSelected(true);
+             }
+             if(pregunta_estudiante.getOpcion5()==1){
+                 ButtonSi5.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion5()==0){
+                 ButtonNo5.setSelected(true);
+             }
+             if(pregunta_estudiante.getOpcion6()==1){
+                 ButtonSi6.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion6()==0){
+                 ButtonNo6.setSelected(true);
+             }
+             if(pregunta_estudiante.getOpcion7()==1){
+                 ButtonSi7.setSelected(true);
+             }else if(pregunta_estudiante.getOpcion7()==0){
+                 ButtonNo7.setSelected(true);
+             }
     }
 
     @SuppressWarnings("unchecked")
@@ -717,16 +808,22 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ComboBoxInstruccionActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        // TODO add your handling code here:
         consulta_estudiante = new Estudiante();
-        int cedula= Integer.parseInt(txtCedula.getText().trim());
-        ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
-        consulta_estudiante=controlador.consultarCedula(cedula);
-        //if(consulta_estudiante!=null){
+        pregunta_estudiante = new Preguntas();
+        try{
+            ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
+        consulta_estudiante=controlador.consultarCedula(consulta_estudiante);
+        pregunta_estudiante= controlador.consultarCedulaPreguntas(consulta_estudiante);
+        if(consulta_estudiante!=null){
             setConsultaEstudiante();
-        //}
+            setPreguntasEstudiante();
+        }
+        }//int cedula= Integer.parseInt(txtCedula.getText().trim());
+        catch(Exception e){
+              JOptionPane.showMessageDialog(null, e.getMessage()+e.getStackTrace());
+                }
         //else{
-            JOptionPane.showMessageDialog(null, "No se encuentra registrado");
+        //    JOptionPane.showMessageDialog(null, "No se encuentra registrado");
         //}
         //System.out.println(consulta_estudiante.getApellidos());
     }//GEN-LAST:event_btnConsultarActionPerformed

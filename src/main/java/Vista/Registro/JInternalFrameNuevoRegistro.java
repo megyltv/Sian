@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista.Registro;
 
 import Controlador.Registro.ControladorRegistroUsuario;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Megan
- */
 public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
     Estudiante nuevo_estudiante;
@@ -91,20 +84,64 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     
     public void setDatosEstudiante(){
         nuevo_estudiante = new Estudiante();
-        nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
-        nuevo_estudiante.setNombres((txtNombre.getText()));
-        nuevo_estudiante.setApellidos((txtApellido.getText()));
-        nuevo_estudiante.setFechanac((jDateChooser1.getDate()));
-        nuevo_estudiante.setTelefono(Integer.parseInt(txtTelefono.getText().trim())); 
-        nuevo_estudiante.setCelular(Integer.parseInt(txtCelular.getText().trim()));
-        nuevo_estudiante.setCorreo((txtCorreo.getText().trim()));
-        nuevo_estudiante.setNivelinst(((String)ComboBoxInstruccion.getSelectedItem()));
-        nuevo_estudiante.setProfesion((txtProofesion.getText()));
-        nuevo_estudiante.setSector((txtSector.getText()));
-        nuevo_estudiante.setEstadocivil((String)ComboBoxCivil.getSelectedItem());
-        nuevo_estudiante.setNombcony((txtConyuge.getText()));
+        try {
+            nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ingresar Cédula");
+        }
         
-        // Si == 1, No == 0
+        if(txtNombre.getText()!=""){
+            nuevo_estudiante.setNombres((txtNombre.getText()));
+        }else{
+            nuevo_estudiante.setNombres(" ");
+        }
+        if(txtApellido.getText()!=""){
+            nuevo_estudiante.setApellidos((txtApellido.getText()));
+        }else{
+            nuevo_estudiante.setApellidos(" ");
+        }
+        nuevo_estudiante.setFechanac((jDateChooser1.getDate()));
+        
+        if(txtTelefono.getText().isEmpty()){
+            nuevo_estudiante.setTelefono(0);
+        }else{
+            nuevo_estudiante.setTelefono(Integer.parseInt(txtTelefono.getText().trim())); 
+        }
+        if(txtCelular.getText().isEmpty()){
+            nuevo_estudiante.setCelular(0);
+        }else{
+            nuevo_estudiante.setCelular(Integer.parseInt(txtCelular.getText().trim()));
+        }
+        
+        if(txtCorreo.getText()!=""){
+            nuevo_estudiante.setCorreo((txtCorreo.getText().trim()));
+        }else{
+            nuevo_estudiante.setCorreo(" ");
+        }
+        if(txtCorreo.getText()!=""){
+            nuevo_estudiante.setCorreo((txtCorreo.getText().trim()));
+        }else{
+            nuevo_estudiante.setCorreo(" ");
+        }
+        nuevo_estudiante.setNivelinst(((String)ComboBoxInstruccion.getSelectedItem()));
+        if(txtProofesion.getText()!=""){
+            nuevo_estudiante.setProfesion((txtProofesion.getText()));
+        }else{
+            nuevo_estudiante.setProfesion(" ");
+        }
+        if(txtSector.getText()!=""){
+            nuevo_estudiante.setSector((txtSector.getText()));
+        }else{
+            nuevo_estudiante.setSector(" ");
+        }
+        
+        nuevo_estudiante.setEstadocivil((String)ComboBoxCivil.getSelectedItem());
+        if(txtConyuge.getText()!=""){
+            nuevo_estudiante.setNombcony((txtConyuge.getText()));
+        }else{
+            nuevo_estudiante.setNombcony(" ");
+        }
+        // Si == 1, No == 0, Ninguno=3 
         if (RadioButtonSi.isSelected())
         {
             nuevo_estudiante.setCreycony(1);
@@ -114,16 +151,45 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         {
             nuevo_estudiante.setCreycony(0);
         }
+        else{
+            nuevo_estudiante.setCreycony(2);
+        }
         
-        nuevo_estudiante.setNombemerg((txtNombreE.getText()));
-        nuevo_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText())));
+        if(txthijos.getText().isEmpty()){
+            nuevo_estudiante.setHijos(0);
+        }else{
+            nuevo_estudiante.setHijos(Integer.parseInt(txthijos.getText()));
+        }
+        
+        if(txtNombreE.getText()!=""){
+            nuevo_estudiante.setNombemerg((txtNombreE.getText()));
+        }else{
+            nuevo_estudiante.setNombemerg(" ");
+        }
+        if(txtTelfE.getText().isEmpty()){
+            nuevo_estudiante.setTelfemerg(0);
+        }else{
+            nuevo_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText())));
+        }
     }
     
     public void setPreguntas(){
         pregunta= new Preguntas();
         pregunta.setCedula(nuevo_estudiante);
-        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1); txtRazon1.setEnabled(true);} else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0); }
+        ButtonSi1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(true);
+        }});
+        ButtonNo1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(false);
+        }});
+
+        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0); }
         pregunta.setRespuesta1(txtRazon1.getText());
+            
         if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0); }
         pregunta.setRespuesta2(txtRazon2.getText());
         if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()) { pregunta.setOpcion3(0); }
@@ -255,7 +321,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(ButtonSi1);
         ButtonSi1.setText("Si");
-        ButtonSi1.setEnabled(false);
 
         jLabel2.setText("Fecha");
 
@@ -815,7 +880,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ComboBoxInstruccionActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
         setDatosEstudiante();
         setPreguntas();
         ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
@@ -834,7 +898,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
         try {
             controlador.crearPreguntas(pregunta);
-            JOptionPane.showMessageDialog(null,"Estudiante Registrado");
+            JOptionPane.showMessageDialog(null,"Preguntas Registradas");
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
