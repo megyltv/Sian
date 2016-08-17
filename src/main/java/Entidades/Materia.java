@@ -14,8 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,12 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Megan
  */
 @Entity
-@Table(name = "materia", catalog = "siand", schema = "public")
+@Table(name = "materia")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m"),
     @NamedQuery(name = "Materia.findByIdmateria", query = "SELECT m FROM Materia m WHERE m.idmateria = :idmateria"),
-    @NamedQuery(name = "Materia.findByMateria", query = "SELECT m FROM Materia m WHERE m.materia = :materia")})
+    @NamedQuery(name = "Materia.findByMateria", query = "SELECT m FROM Materia m WHERE m.materia = :materia"),
+    @NamedQuery(name = "Materia.findByNivel", query = "SELECT m FROM Materia m WHERE m.nivel = :nivel")})
 public class Materia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,14 +45,12 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "materia")
     private String materia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
-    private List<Horariomateria> horariomateriaList;
-    @JoinColumn(name = "idinscripcion", referencedColumnName = "idinscripcion")
-    @ManyToOne(optional = false)
-    private Inscripcion idinscripcion;
-    @JoinColumn(name = "idnivel", referencedColumnName = "idnivel")
-    @ManyToOne(optional = false)
-    private Nivel idnivel;
+    @Column(name = "nivel")
+    private Integer nivel;
+    @ManyToMany(mappedBy = "materiaList")
+    private List<Horario> horarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
+    private List<Inscripcion> inscripcionList;
 
     public Materia() {
     }
@@ -82,29 +80,30 @@ public class Materia implements Serializable {
         this.materia = materia;
     }
 
+    public Integer getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Integer nivel) {
+        this.nivel = nivel;
+    }
+
     @XmlTransient
-    public List<Horariomateria> getHorariomateriaList() {
-        return horariomateriaList;
+    public List<Horario> getHorarioList() {
+        return horarioList;
     }
 
-    public void setHorariomateriaList(List<Horariomateria> horariomateriaList) {
-        this.horariomateriaList = horariomateriaList;
+    public void setHorarioList(List<Horario> horarioList) {
+        this.horarioList = horarioList;
     }
 
-    public Inscripcion getIdinscripcion() {
-        return idinscripcion;
+    @XmlTransient
+    public List<Inscripcion> getInscripcionList() {
+        return inscripcionList;
     }
 
-    public void setIdinscripcion(Inscripcion idinscripcion) {
-        this.idinscripcion = idinscripcion;
-    }
-
-    public Nivel getIdnivel() {
-        return idnivel;
-    }
-
-    public void setIdnivel(Nivel idnivel) {
-        this.idnivel = idnivel;
+    public void setInscripcionList(List<Inscripcion> inscripcionList) {
+        this.inscripcionList = inscripcionList;
     }
 
     @Override

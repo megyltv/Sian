@@ -100,7 +100,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbl1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -201,6 +201,10 @@
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="btnNueva" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -280,6 +284,8 @@
                           <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtRazon7" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnNueva" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -489,6 +495,14 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtRazon7">
             </Component>
+            <Component class="javax.swing.JButton" name="btnNueva">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Nuevo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevaActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlPersonal">
@@ -525,7 +539,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="ComboBoxInstruccion" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
                                           <Component id="ComboBoxCivil" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                                          <Component id="txtProofesion" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
+                                          <Component id="txtProfesion" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
                                           <Component id="txtSector" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -621,7 +635,7 @@
                               <EmptySpace min="74" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnGuardar2" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnGuardar" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnActualizar" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
@@ -670,7 +684,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="lblProfesion" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtProofesion" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtProfesion" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -712,7 +726,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                              <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnActualizar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnGuardar2" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -755,12 +769,12 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
             </Component>
-            <Component class="javax.swing.JButton" name="btnGuardar">
+            <Component class="javax.swing.JButton" name="btnActualizar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Actualizar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblEmergencia">
@@ -801,7 +815,7 @@
                 <Property name="text" type="java.lang.String" value="C&#xe9;dula:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtProofesion">
+            <Component class="javax.swing.JTextField" name="txtProfesion">
             </Component>
             <Component class="javax.swing.JLabel" name="lblNombres">
               <Properties>
@@ -853,10 +867,10 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                    <StringItem index="0" value="Seleccione"/>
+                    <StringItem index="1" value="Primaria"/>
+                    <StringItem index="2" value="Secundaria"/>
+                    <StringItem index="3" value="Superior"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -875,11 +889,14 @@
             <Component class="javax.swing.JComboBox" name="ComboBoxCivil">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="7">
+                    <StringItem index="0" value="Seleccione"/>
+                    <StringItem index="1" value="Soltero"/>
+                    <StringItem index="2" value="Casado"/>
+                    <StringItem index="3" value="Divorciado"/>
+                    <StringItem index="4" value="Separado"/>
+                    <StringItem index="5" value="Viudo"/>
+                    <StringItem index="6" value="Uni&#xf3;n de Hecho"/>
                   </StringArray>
                 </Property>
               </Properties>

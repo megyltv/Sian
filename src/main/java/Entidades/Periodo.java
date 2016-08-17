@@ -29,15 +29,15 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Megan
  */
 @Entity
-@Table(name = "periodo_actual", catalog = "siand", schema = "public")
+@Table(name = "periodo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PeriodoActual.findAll", query = "SELECT p FROM PeriodoActual p"),
-    @NamedQuery(name = "PeriodoActual.findByIdperiodo", query = "SELECT p FROM PeriodoActual p WHERE p.idperiodo = :idperiodo"),
-    @NamedQuery(name = "PeriodoActual.findByPeriodo", query = "SELECT p FROM PeriodoActual p WHERE p.periodo = :periodo"),
-    @NamedQuery(name = "PeriodoActual.findByFechainicio", query = "SELECT p FROM PeriodoActual p WHERE p.fechainicio = :fechainicio"),
-    @NamedQuery(name = "PeriodoActual.findByFechafin", query = "SELECT p FROM PeriodoActual p WHERE p.fechafin = :fechafin")})
-public class PeriodoActual implements Serializable {
+    @NamedQuery(name = "Periodo.findAll", query = "SELECT p FROM Periodo p"),
+    @NamedQuery(name = "Periodo.findByIdperiodo", query = "SELECT p FROM Periodo p WHERE p.idperiodo = :idperiodo"),
+    @NamedQuery(name = "Periodo.findByPeriodo", query = "SELECT p FROM Periodo p WHERE p.periodo = :periodo"),
+    @NamedQuery(name = "Periodo.findByFechainicio", query = "SELECT p FROM Periodo p WHERE p.fechainicio = :fechainicio"),
+    @NamedQuery(name = "Periodo.findByFechafin", query = "SELECT p FROM Periodo p WHERE p.fechafin = :fechafin")})
+public class Periodo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,17 +56,15 @@ public class PeriodoActual implements Serializable {
     private Date fechafin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperiodo")
     private List<Inscripcion> inscripcionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperiodo")
-    private List<Nivel> nivelList;
 
-    public PeriodoActual() {
+    public Periodo() {
     }
 
-    public PeriodoActual(Integer idperiodo) {
+    public Periodo(Integer idperiodo) {
         this.idperiodo = idperiodo;
     }
 
-    public PeriodoActual(Integer idperiodo, String periodo) {
+    public Periodo(Integer idperiodo, String periodo) {
         this.idperiodo = idperiodo;
         this.periodo = periodo;
     }
@@ -112,15 +110,6 @@ public class PeriodoActual implements Serializable {
         this.inscripcionList = inscripcionList;
     }
 
-    @XmlTransient
-    public List<Nivel> getNivelList() {
-        return nivelList;
-    }
-
-    public void setNivelList(List<Nivel> nivelList) {
-        this.nivelList = nivelList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -131,10 +120,10 @@ public class PeriodoActual implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PeriodoActual)) {
+        if (!(object instanceof Periodo)) {
             return false;
         }
-        PeriodoActual other = (PeriodoActual) object;
+        Periodo other = (Periodo) object;
         if ((this.idperiodo == null && other.idperiodo != null) || (this.idperiodo != null && !this.idperiodo.equals(other.idperiodo))) {
             return false;
         }
@@ -143,7 +132,7 @@ public class PeriodoActual implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.PeriodoActual[ idperiodo=" + idperiodo + " ]";
+        return "Entidades.Periodo[ idperiodo=" + idperiodo + " ]";
     }
     
 }

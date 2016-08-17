@@ -8,15 +8,16 @@ package Entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,13 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Megan
  */
 @Entity
-@Table(name = "horario", catalog = "siand", schema = "public")
+@Table(name = "horario")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"),
     @NamedQuery(name = "Horario.findByIdhorario", query = "SELECT h FROM Horario h WHERE h.idhorario = :idhorario"),
     @NamedQuery(name = "Horario.findByDia", query = "SELECT h FROM Horario h WHERE h.dia = :dia"),
-    @NamedQuery(name = "Horario.findByHora", query = "SELECT h FROM Horario h WHERE h.hora = :hora")})
+    @NamedQuery(name = "Horario.findByHora", query = "SELECT h FROM Horario h WHERE h.hora = :hora"),
+    @NamedQuery(name = "Horario.findByEstado", query = "SELECT h FROM Horario h WHERE h.estado = :estado")})
 public class Horario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,8 +48,13 @@ public class Horario implements Serializable {
     private String dia;
     @Column(name = "hora")
     private String hora;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
-    private List<Horariomateria> horariomateriaList;
+    @Column(name = "estado")
+    private Integer estado;
+    @JoinTable(name = "horario_materia", joinColumns = {
+        @JoinColumn(name = "idhorario", referencedColumnName = "idhorario")}, inverseJoinColumns = {
+        @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")})
+    @ManyToMany
+    private List<Materia> materiaList;
 
     public Horario() {
     }
@@ -85,13 +92,21 @@ public class Horario implements Serializable {
         this.hora = hora;
     }
 
-    @XmlTransient
-    public List<Horariomateria> getHorariomateriaList() {
-        return horariomateriaList;
+    public Integer getEstado() {
+        return estado;
     }
 
-    public void setHorariomateriaList(List<Horariomateria> horariomateriaList) {
-        this.horariomateriaList = horariomateriaList;
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    @XmlTransient
+    public List<Materia> getMateriaList() {
+        return materiaList;
+    }
+
+    public void setMateriaList(List<Materia> materiaList) {
+        this.materiaList = materiaList;
     }
 
     @Override

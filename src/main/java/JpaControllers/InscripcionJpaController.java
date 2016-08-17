@@ -12,11 +12,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Entidades.Estudiante;
 import Entidades.Inscripcion;
-import Entidades.PeriodoActual;
 import Entidades.Materia;
-import JpaControllers.exceptions.IllegalOrphanException;
+import Entidades.Periodo;
 import JpaControllers.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -37,46 +35,37 @@ public class InscripcionJpaController implements Serializable {
     }
 
     public void create(Inscripcion inscripcion) {
-        if (inscripcion.getMateriaList() == null) {
-            inscripcion.setMateriaList(new ArrayList<Materia>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Estudiante cedula = inscripcion.getCedula();
-            if (cedula != null) {
-                cedula = em.getReference(cedula.getClass(), cedula.getCedula());
-                inscripcion.setCedula(cedula);
+            Estudiante idestudiante = inscripcion.getIdestudiante();
+            if (idestudiante != null) {
+                idestudiante = em.getReference(idestudiante.getClass(), idestudiante.getIdestudiante());
+                inscripcion.setIdestudiante(idestudiante);
             }
-            PeriodoActual idperiodo = inscripcion.getIdperiodo();
+            Materia idmateria = inscripcion.getIdmateria();
+            if (idmateria != null) {
+                idmateria = em.getReference(idmateria.getClass(), idmateria.getIdmateria());
+                inscripcion.setIdmateria(idmateria);
+            }
+            Periodo idperiodo = inscripcion.getIdperiodo();
             if (idperiodo != null) {
                 idperiodo = em.getReference(idperiodo.getClass(), idperiodo.getIdperiodo());
                 inscripcion.setIdperiodo(idperiodo);
             }
-            List<Materia> attachedMateriaList = new ArrayList<Materia>();
-            for (Materia materiaListMateriaToAttach : inscripcion.getMateriaList()) {
-                materiaListMateriaToAttach = em.getReference(materiaListMateriaToAttach.getClass(), materiaListMateriaToAttach.getIdmateria());
-                attachedMateriaList.add(materiaListMateriaToAttach);
-            }
-            inscripcion.setMateriaList(attachedMateriaList);
             em.persist(inscripcion);
-            if (cedula != null) {
-                cedula.getInscripcionList().add(inscripcion);
-                cedula = em.merge(cedula);
+            if (idestudiante != null) {
+                idestudiante.getInscripcionList().add(inscripcion);
+                idestudiante = em.merge(idestudiante);
+            }
+            if (idmateria != null) {
+                idmateria.getInscripcionList().add(inscripcion);
+                idmateria = em.merge(idmateria);
             }
             if (idperiodo != null) {
                 idperiodo.getInscripcionList().add(inscripcion);
                 idperiodo = em.merge(idperiodo);
-            }
-            for (Materia materiaListMateria : inscripcion.getMateriaList()) {
-                Inscripcion oldIdinscripcionOfMateriaListMateria = materiaListMateria.getIdinscripcion();
-                materiaListMateria.setIdinscripcion(inscripcion);
-                materiaListMateria = em.merge(materiaListMateria);
-                if (oldIdinscripcionOfMateriaListMateria != null) {
-                    oldIdinscripcionOfMateriaListMateria.getMateriaList().remove(materiaListMateria);
-                    oldIdinscripcionOfMateriaListMateria = em.merge(oldIdinscripcionOfMateriaListMateria);
-                }
             }
             em.getTransaction().commit();
         } finally {
@@ -86,53 +75,46 @@ public class InscripcionJpaController implements Serializable {
         }
     }
 
-    public void edit(Inscripcion inscripcion) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Inscripcion inscripcion) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Inscripcion persistentInscripcion = em.find(Inscripcion.class, inscripcion.getIdinscripcion());
-            Estudiante cedulaOld = persistentInscripcion.getCedula();
-            Estudiante cedulaNew = inscripcion.getCedula();
-            PeriodoActual idperiodoOld = persistentInscripcion.getIdperiodo();
-            PeriodoActual idperiodoNew = inscripcion.getIdperiodo();
-            List<Materia> materiaListOld = persistentInscripcion.getMateriaList();
-            List<Materia> materiaListNew = inscripcion.getMateriaList();
-            List<String> illegalOrphanMessages = null;
-            for (Materia materiaListOldMateria : materiaListOld) {
-                if (!materiaListNew.contains(materiaListOldMateria)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Materia " + materiaListOldMateria + " since its idinscripcion field is not nullable.");
-                }
+            Estudiante idestudianteOld = persistentInscripcion.getIdestudiante();
+            Estudiante idestudianteNew = inscripcion.getIdestudiante();
+            Materia idmateriaOld = persistentInscripcion.getIdmateria();
+            Materia idmateriaNew = inscripcion.getIdmateria();
+            Periodo idperiodoOld = persistentInscripcion.getIdperiodo();
+            Periodo idperiodoNew = inscripcion.getIdperiodo();
+            if (idestudianteNew != null) {
+                idestudianteNew = em.getReference(idestudianteNew.getClass(), idestudianteNew.getIdestudiante());
+                inscripcion.setIdestudiante(idestudianteNew);
             }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            if (cedulaNew != null) {
-                cedulaNew = em.getReference(cedulaNew.getClass(), cedulaNew.getCedula());
-                inscripcion.setCedula(cedulaNew);
+            if (idmateriaNew != null) {
+                idmateriaNew = em.getReference(idmateriaNew.getClass(), idmateriaNew.getIdmateria());
+                inscripcion.setIdmateria(idmateriaNew);
             }
             if (idperiodoNew != null) {
                 idperiodoNew = em.getReference(idperiodoNew.getClass(), idperiodoNew.getIdperiodo());
                 inscripcion.setIdperiodo(idperiodoNew);
             }
-            List<Materia> attachedMateriaListNew = new ArrayList<Materia>();
-            for (Materia materiaListNewMateriaToAttach : materiaListNew) {
-                materiaListNewMateriaToAttach = em.getReference(materiaListNewMateriaToAttach.getClass(), materiaListNewMateriaToAttach.getIdmateria());
-                attachedMateriaListNew.add(materiaListNewMateriaToAttach);
-            }
-            materiaListNew = attachedMateriaListNew;
-            inscripcion.setMateriaList(materiaListNew);
             inscripcion = em.merge(inscripcion);
-            if (cedulaOld != null && !cedulaOld.equals(cedulaNew)) {
-                cedulaOld.getInscripcionList().remove(inscripcion);
-                cedulaOld = em.merge(cedulaOld);
+            if (idestudianteOld != null && !idestudianteOld.equals(idestudianteNew)) {
+                idestudianteOld.getInscripcionList().remove(inscripcion);
+                idestudianteOld = em.merge(idestudianteOld);
             }
-            if (cedulaNew != null && !cedulaNew.equals(cedulaOld)) {
-                cedulaNew.getInscripcionList().add(inscripcion);
-                cedulaNew = em.merge(cedulaNew);
+            if (idestudianteNew != null && !idestudianteNew.equals(idestudianteOld)) {
+                idestudianteNew.getInscripcionList().add(inscripcion);
+                idestudianteNew = em.merge(idestudianteNew);
+            }
+            if (idmateriaOld != null && !idmateriaOld.equals(idmateriaNew)) {
+                idmateriaOld.getInscripcionList().remove(inscripcion);
+                idmateriaOld = em.merge(idmateriaOld);
+            }
+            if (idmateriaNew != null && !idmateriaNew.equals(idmateriaOld)) {
+                idmateriaNew.getInscripcionList().add(inscripcion);
+                idmateriaNew = em.merge(idmateriaNew);
             }
             if (idperiodoOld != null && !idperiodoOld.equals(idperiodoNew)) {
                 idperiodoOld.getInscripcionList().remove(inscripcion);
@@ -142,22 +124,11 @@ public class InscripcionJpaController implements Serializable {
                 idperiodoNew.getInscripcionList().add(inscripcion);
                 idperiodoNew = em.merge(idperiodoNew);
             }
-            for (Materia materiaListNewMateria : materiaListNew) {
-                if (!materiaListOld.contains(materiaListNewMateria)) {
-                    Inscripcion oldIdinscripcionOfMateriaListNewMateria = materiaListNewMateria.getIdinscripcion();
-                    materiaListNewMateria.setIdinscripcion(inscripcion);
-                    materiaListNewMateria = em.merge(materiaListNewMateria);
-                    if (oldIdinscripcionOfMateriaListNewMateria != null && !oldIdinscripcionOfMateriaListNewMateria.equals(inscripcion)) {
-                        oldIdinscripcionOfMateriaListNewMateria.getMateriaList().remove(materiaListNewMateria);
-                        oldIdinscripcionOfMateriaListNewMateria = em.merge(oldIdinscripcionOfMateriaListNewMateria);
-                    }
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = inscripcion.getIdinscripcion();
+                String id = inscripcion.getIdinscripcion();
                 if (findInscripcion(id) == null) {
                     throw new NonexistentEntityException("The inscripcion with id " + id + " no longer exists.");
                 }
@@ -170,7 +141,7 @@ public class InscripcionJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -182,23 +153,17 @@ public class InscripcionJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The inscripcion with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Materia> materiaListOrphanCheck = inscripcion.getMateriaList();
-            for (Materia materiaListOrphanCheckMateria : materiaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Inscripcion (" + inscripcion + ") cannot be destroyed since the Materia " + materiaListOrphanCheckMateria + " in its materiaList field has a non-nullable idinscripcion field.");
+            Estudiante idestudiante = inscripcion.getIdestudiante();
+            if (idestudiante != null) {
+                idestudiante.getInscripcionList().remove(inscripcion);
+                idestudiante = em.merge(idestudiante);
             }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            Materia idmateria = inscripcion.getIdmateria();
+            if (idmateria != null) {
+                idmateria.getInscripcionList().remove(inscripcion);
+                idmateria = em.merge(idmateria);
             }
-            Estudiante cedula = inscripcion.getCedula();
-            if (cedula != null) {
-                cedula.getInscripcionList().remove(inscripcion);
-                cedula = em.merge(cedula);
-            }
-            PeriodoActual idperiodo = inscripcion.getIdperiodo();
+            Periodo idperiodo = inscripcion.getIdperiodo();
             if (idperiodo != null) {
                 idperiodo.getInscripcionList().remove(inscripcion);
                 idperiodo = em.merge(idperiodo);
@@ -236,7 +201,7 @@ public class InscripcionJpaController implements Serializable {
         }
     }
 
-    public Inscripcion findInscripcion(Integer id) {
+    public Inscripcion findInscripcion(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Inscripcion.class, id);

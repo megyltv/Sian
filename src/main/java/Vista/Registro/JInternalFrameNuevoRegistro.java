@@ -16,6 +16,18 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
             
     public JInternalFrameNuevoRegistro() {
         initComponents();
+        habilitarPreguntas();
+        //Habilitacion de botones si o no
+        ButtonSi1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(true);
+        }});
+        ButtonNo1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(false);
+        }});
     }
     
     public void limpiar(){
@@ -79,7 +91,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi5.setEnabled(true);
         ButtonSi6.setEnabled(true);
         ButtonSi7.setEnabled(true);
-        btnGuardar1.setEnabled(true);
     }
     
     public void setDatosEstudiante(){
@@ -175,42 +186,64 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     
     public void setPreguntas(){
         pregunta= new Preguntas();
-        pregunta.setCedula(nuevo_estudiante);
+        pregunta.setIdestudiante(nuevo_estudiante);
         
-        ButtonSi1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(true);
-        }});
-        ButtonNo1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(false);
-        }});
 
-        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0); }
-        pregunta.setRespuesta1(txtRazon1.getText());
-            
-        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0); }
-        pregunta.setRespuesta2(txtRazon2.getText());
-        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()) { pregunta.setOpcion3(0); }
-        pregunta.setRespuesta31(txtRazon31.getText());
-        pregunta.setRespuesta32(txtRazon32.getText());
-        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }
-        pregunta.setRespuesta4(txtRazon4.getText());
-        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); }
-        pregunta.setRespuesta5(txtRazon5.getText());
-        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); txtRazon6.setEnabled(false);}
-        pregunta.setRespuesta6(txtRazon6.getText());
-        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); txtRazon7.setEnabled(false);}
-        pregunta.setRespuesta7(txtRazon7.getText());
+        if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0);} else {pregunta.setOpcion1(0);}
+        if(txtRazon1.getText()!=""){
+            pregunta.setRespuesta1(txtRazon1.getText());
+        }else{
+            pregunta.setRespuesta1("");
+        }
+             
+        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0);} else {pregunta.setOpcion1(0);}
+        if(txtRazon1.getText()!=""){
+            pregunta.setRespuesta2(txtRazon2.getText());
+        }else{
+            pregunta.setRespuesta2("");
+        }
+               
+        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()){pregunta.setOpcion3(0);}else {pregunta.setOpcion1(0);}
+        if(txtRazon31.getText()!=""){
+            pregunta.setRespuesta31(txtRazon31.getText());
+        }else{
+            pregunta.setRespuesta31("");
+        }
+        if(txtRazon32.getText()!=""){
+            pregunta.setRespuesta32(txtRazon32.getText());
+        }else{
+            pregunta.setRespuesta32("");
+        }
+        
+        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }else {pregunta.setOpcion1(0);}
+        if(txtRazon4.getText()!=""){
+            pregunta.setRespuesta4(txtRazon4.getText());
+        }else{
+            pregunta.setRespuesta4("");
+        }
+
+        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); } else {pregunta.setOpcion1(0);}
+        if(txtRazon5.getText()!=""){
+            pregunta.setRespuesta5(txtRazon5.getText());
+        }else{
+            pregunta.setRespuesta5("");
+        }    
+
+        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); txtRazon6.setEnabled(false);} else {pregunta.setOpcion1(0);}
+        if(txtRazon6.getText()!=""){
+            pregunta.setRespuesta6(txtRazon6.getText());
+        }else{
+            pregunta.setRespuesta6("");
+        } 
+        
+        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); txtRazon7.setEnabled(false);} else {pregunta.setOpcion1(0);}
+        if(txtRazon7.getText()!=""){
+            pregunta.setRespuesta7(txtRazon7.getText());
+        }else{
+            pregunta.setRespuesta7("");
+        }     
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -261,7 +294,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonNo7 = new javax.swing.JRadioButton();
         jLabel15 = new javax.swing.JLabel();
         txtRazon7 = new javax.swing.JTextField();
-        btnGuardar1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         pnlPersonal = new javax.swing.JPanel();
         lblEstado = new javax.swing.JLabel();
         RadioButtonNo = new javax.swing.JRadioButton();
@@ -270,7 +303,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         lblCreyente = new javax.swing.JLabel();
         lblHijos = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        btnGuardar = new javax.swing.JButton();
         lblEmergencia = new javax.swing.JLabel();
         lblNombreE = new javax.swing.JLabel();
         lblTelefE = new javax.swing.JLabel();
@@ -425,11 +457,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         txtRazon7.setEnabled(false);
 
-        btnGuardar1.setText("Guardar");
-        btnGuardar1.setEnabled(false);
-        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardar1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -521,7 +552,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEclesiastLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGuardar1)))
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
         );
         pnlEclesiastLayout.setVerticalGroup(
@@ -590,7 +621,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                     .addComponent(jLabel15)
                     .addComponent(txtRazon7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar1)
+                .addComponent(btnGuardar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -608,13 +639,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         lblCreyente.setText("Creyente:");
 
         lblHijos.setText("Número de Hijos:");
-
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
 
         lblEmergencia.setText("En caso de emergencia contactar a:");
 
@@ -746,15 +770,12 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(RadioButtonNo))))
                             .addComponent(lblNombreE)
-                            .addGroup(pnlPersonalLayout.createSequentialGroup()
-                                .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPersonalLayout.createSequentialGroup()
-                                        .addComponent(lblTelefE)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(70, 70, 70)
-                                .addComponent(btnGuardar)))
+                            .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlPersonalLayout.createSequentialGroup()
+                                    .addComponent(lblTelefE)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(28, Short.MAX_VALUE))))
         );
         pnlPersonalLayout.setVerticalGroup(
@@ -820,9 +841,8 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPersonalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefE)
-                    .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar))
-                .addContainerGap(119, Short.MAX_VALUE))
+                    .addComponent(txtTelfE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -882,28 +902,20 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         setDatosEstudiante();
-        setPreguntas();
+        
         ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
         try {
             controlador.crearEstudiante(nuevo_estudiante);  
+            setPreguntas();
+            controlador.crearPreguntas(pregunta);
             JOptionPane.showMessageDialog(null,"Estudiante Registrado");
-            habilitarPreguntas();
+            
             //limpiar();
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
-        ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
-        try {
-            controlador.crearPreguntas(pregunta);
-            JOptionPane.showMessageDialog(null,"Preguntas Registradas");
-        } catch (Exception ex) {
-            Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnGuardar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -926,7 +938,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton RadioButtonNo;
     private javax.swing.JRadioButton RadioButtonSi;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnGuardar1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;

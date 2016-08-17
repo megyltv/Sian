@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,10 +29,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Megan
  */
 @Entity
-@Table(name = "estudiante", catalog = "siand", schema = "public")
+@Table(name = "estudiante")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e"),
+    @NamedQuery(name = "Estudiante.findByIdestudiante", query = "SELECT e FROM Estudiante e WHERE e.idestudiante = :idestudiante"),
     @NamedQuery(name = "Estudiante.findByCedula", query = "SELECT e FROM Estudiante e WHERE e.cedula = :cedula"),
     @NamedQuery(name = "Estudiante.findByNombres", query = "SELECT e FROM Estudiante e WHERE e.nombres = :nombres"),
     @NamedQuery(name = "Estudiante.findByApellidos", query = "SELECT e FROM Estudiante e WHERE e.apellidos = :apellidos"),
@@ -51,9 +54,13 @@ public class Estudiante implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idestudiante")
+    private Integer idestudiante;
     @Basic(optional = false)
     @Column(name = "cedula")
-    private Integer cedula;
+    private int cedula;
     @Basic(optional = false)
     @Column(name = "nombres")
     private String nombres;
@@ -87,31 +94,38 @@ public class Estudiante implements Serializable {
     private String nombemerg;
     @Column(name = "telfemerg")
     private Integer telfemerg;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cedula")
-    private List<Calificacion> calificacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cedula")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
     private List<Inscripcion> inscripcionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cedula")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
     private List<Preguntas> preguntasList;
 
     public Estudiante() {
     }
 
-    public Estudiante(Integer cedula) {
-        this.cedula = cedula;
+    public Estudiante(Integer idestudiante) {
+        this.idestudiante = idestudiante;
     }
 
-    public Estudiante(Integer cedula, String nombres, String apellidos) {
+    public Estudiante(Integer idestudiante, int cedula, String nombres, String apellidos) {
+        this.idestudiante = idestudiante;
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
     }
 
-    public Integer getCedula() {
+    public Integer getIdestudiante() {
+        return idestudiante;
+    }
+
+    public void setIdestudiante(Integer idestudiante) {
+        this.idestudiante = idestudiante;
+    }
+
+    public int getCedula() {
         return cedula;
     }
 
-    public void setCedula(Integer cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 
@@ -236,15 +250,6 @@ public class Estudiante implements Serializable {
     }
 
     @XmlTransient
-    public List<Calificacion> getCalificacionList() {
-        return calificacionList;
-    }
-
-    public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
-    }
-
-    @XmlTransient
     public List<Inscripcion> getInscripcionList() {
         return inscripcionList;
     }
@@ -265,7 +270,7 @@ public class Estudiante implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cedula != null ? cedula.hashCode() : 0);
+        hash += (idestudiante != null ? idestudiante.hashCode() : 0);
         return hash;
     }
 
@@ -276,7 +281,7 @@ public class Estudiante implements Serializable {
             return false;
         }
         Estudiante other = (Estudiante) object;
-        if ((this.cedula == null && other.cedula != null) || (this.cedula != null && !this.cedula.equals(other.cedula))) {
+        if ((this.idestudiante == null && other.idestudiante != null) || (this.idestudiante != null && !this.idestudiante.equals(other.idestudiante))) {
             return false;
         }
         return true;
@@ -284,7 +289,7 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Estudiante[ cedula=" + cedula + " ]";
+        return "Entidades.Estudiante[ idestudiante=" + idestudiante + " ]";
     }
     
 }

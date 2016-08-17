@@ -6,9 +6,8 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,21 +17,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Megan
  */
 @Entity
-@Table(name = "inscripcion", catalog = "siand", schema = "public")
+@Table(name = "inscripcion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Inscripcion.findAll", query = "SELECT i FROM Inscripcion i"),
-    @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion")})
+    @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion"),
+    @NamedQuery(name = "Inscripcion.findByCalificacion", query = "SELECT i FROM Inscripcion i WHERE i.calificacion = :calificacion")})
 public class Inscripcion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,54 +38,65 @@ public class Inscripcion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idinscripcion")
-    private Integer idinscripcion;
-    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    private String idinscripcion;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "calificacion")
+    private BigDecimal calificacion;
+    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
     @ManyToOne(optional = false)
-    private Estudiante cedula;
+    private Estudiante idestudiante;
+    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
+    @ManyToOne(optional = false)
+    private Materia idmateria;
     @JoinColumn(name = "idperiodo", referencedColumnName = "idperiodo")
     @ManyToOne(optional = false)
-    private PeriodoActual idperiodo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idinscripcion")
-    private List<Materia> materiaList;
+    private Periodo idperiodo;
 
     public Inscripcion() {
     }
 
-    public Inscripcion(Integer idinscripcion) {
+    public Inscripcion(String idinscripcion) {
         this.idinscripcion = idinscripcion;
     }
 
-    public Integer getIdinscripcion() {
+    public String getIdinscripcion() {
         return idinscripcion;
     }
 
-    public void setIdinscripcion(Integer idinscripcion) {
+    public void setIdinscripcion(String idinscripcion) {
         this.idinscripcion = idinscripcion;
     }
 
-    public Estudiante getCedula() {
-        return cedula;
+    public BigDecimal getCalificacion() {
+        return calificacion;
     }
 
-    public void setCedula(Estudiante cedula) {
-        this.cedula = cedula;
+    public void setCalificacion(BigDecimal calificacion) {
+        this.calificacion = calificacion;
     }
 
-    public PeriodoActual getIdperiodo() {
+    public Estudiante getIdestudiante() {
+        return idestudiante;
+    }
+
+    public void setIdestudiante(Estudiante idestudiante) {
+        this.idestudiante = idestudiante;
+    }
+
+    public Materia getIdmateria() {
+        return idmateria;
+    }
+
+    public void setIdmateria(Materia idmateria) {
+        this.idmateria = idmateria;
+    }
+
+    public Periodo getIdperiodo() {
         return idperiodo;
     }
 
-    public void setIdperiodo(PeriodoActual idperiodo) {
+    public void setIdperiodo(Periodo idperiodo) {
         this.idperiodo = idperiodo;
-    }
-
-    @XmlTransient
-    public List<Materia> getMateriaList() {
-        return materiaList;
-    }
-
-    public void setMateriaList(List<Materia> materiaList) {
-        this.materiaList = materiaList;
     }
 
     @Override

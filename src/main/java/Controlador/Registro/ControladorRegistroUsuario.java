@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador.Registro;
 
 import JpaControllers.EstudianteJpaController;
@@ -18,31 +13,18 @@ public class ControladorRegistroUsuario {
     EntityManager em;
     Estudiante est;
     Preguntas pr;
-    /*public static void main(String args[]) throws NonexistentEntityException, Exception{
-        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
-        EntityManager em = controladorEstudiante.getEntityManager();
-        List <Estudiante> lstEstudiante = em.createNamedQuery("Estudiante.findByCedula", Estudiante.class).setParameter("cedula", 17).getResultList();
-    
-        for(Estudiante est : lstEstudiante){
-            System.out.println(est.getApellidos());
-            System.out.println(est.getTelefono());
-        }
-        int telf=2823652;
-        lstEstudiante.get(0).setTelefono(telf);
-        controladorEstudiante.edit(lstEstudiante.get(0));
-        System.out.println(lstEstudiante.get(0).getTelefono());
-    }*/
-    
+
     //Estudiante
     public void crearEstudiante (Estudiante estudiante) throws Exception{
         EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
         em = controladorEstudiante.getEntityManager();
-        controladorEstudiante.create(estudiante);
-        
+        controladorEstudiante.create(estudiante);  
     }
     
-    public void editarEstudiante (Estudiante estudiante){
-        
+    public void editarEstudiante (Estudiante estudiante) throws NonexistentEntityException, Exception{
+        EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        em = controladorEstudiante.getEntityManager();
+        controladorEstudiante.edit(estudiante);
     }
     
     public void eliminarEstudiante (Estudiante estudiante){
@@ -78,10 +60,10 @@ public class ControladorRegistroUsuario {
         return pr;
     }
     
-    public void editarPregunta (Estudiante estudiante){
-        PreguntasJpaController controladorEstudiante = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
-        em = controladorEstudiante.getEntityManager();
-        
+    public void editarPregunta (Preguntas pregunta) throws Exception{
+        PreguntasJpaController controladorPreguntas = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        em = controladorPreguntas.getEntityManager();
+        controladorPreguntas.edit(pregunta);
     }
     
     public void eliminarPregunta (Estudiante estudiante){

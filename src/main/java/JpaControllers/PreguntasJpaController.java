@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package JpaControllers;
 
 import java.io.Serializable;
@@ -32,15 +37,15 @@ public class PreguntasJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Estudiante cedula = preguntas.getCedula();
-            if (cedula != null) {
-                cedula = em.getReference(cedula.getClass(), cedula.getCedula());
-                preguntas.setCedula(cedula);
+            Estudiante idestudiante = preguntas.getIdestudiante();
+            if (idestudiante != null) {
+                idestudiante = em.getReference(idestudiante.getClass(), idestudiante.getIdestudiante());
+                preguntas.setIdestudiante(idestudiante);
             }
             em.persist(preguntas);
-            if (cedula != null) {
-                cedula.getPreguntasList().add(preguntas);
-                cedula = em.merge(cedula);
+            if (idestudiante != null) {
+                idestudiante.getPreguntasList().add(preguntas);
+                idestudiante = em.merge(idestudiante);
             }
             em.getTransaction().commit();
         } finally {
@@ -56,20 +61,20 @@ public class PreguntasJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Preguntas persistentPreguntas = em.find(Preguntas.class, preguntas.getIdpreguntas());
-            Estudiante cedulaOld = persistentPreguntas.getCedula();
-            Estudiante cedulaNew = preguntas.getCedula();
-            if (cedulaNew != null) {
-                cedulaNew = em.getReference(cedulaNew.getClass(), cedulaNew.getCedula());
-                preguntas.setCedula(cedulaNew);
+            Estudiante idestudianteOld = persistentPreguntas.getIdestudiante();
+            Estudiante idestudianteNew = preguntas.getIdestudiante();
+            if (idestudianteNew != null) {
+                idestudianteNew = em.getReference(idestudianteNew.getClass(), idestudianteNew.getIdestudiante());
+                preguntas.setIdestudiante(idestudianteNew);
             }
             preguntas = em.merge(preguntas);
-            if (cedulaOld != null && !cedulaOld.equals(cedulaNew)) {
-                cedulaOld.getPreguntasList().remove(preguntas);
-                cedulaOld = em.merge(cedulaOld);
+            if (idestudianteOld != null && !idestudianteOld.equals(idestudianteNew)) {
+                idestudianteOld.getPreguntasList().remove(preguntas);
+                idestudianteOld = em.merge(idestudianteOld);
             }
-            if (cedulaNew != null && !cedulaNew.equals(cedulaOld)) {
-                cedulaNew.getPreguntasList().add(preguntas);
-                cedulaNew = em.merge(cedulaNew);
+            if (idestudianteNew != null && !idestudianteNew.equals(idestudianteOld)) {
+                idestudianteNew.getPreguntasList().add(preguntas);
+                idestudianteNew = em.merge(idestudianteNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -100,10 +105,10 @@ public class PreguntasJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The preguntas with id " + id + " no longer exists.", enfe);
             }
-            Estudiante cedula = preguntas.getCedula();
-            if (cedula != null) {
-                cedula.getPreguntasList().remove(preguntas);
-                cedula = em.merge(cedula);
+            Estudiante idestudiante = preguntas.getIdestudiante();
+            if (idestudiante != null) {
+                idestudiante.getPreguntasList().remove(preguntas);
+                idestudiante = em.merge(idestudiante);
             }
             em.remove(preguntas);
             em.getTransaction().commit();

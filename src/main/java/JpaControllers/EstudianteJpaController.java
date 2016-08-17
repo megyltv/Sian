@@ -5,20 +5,18 @@
  */
 package JpaControllers;
 
+import Entidades.Estudiante;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Entidades.Calificacion;
-import Entidades.Estudiante;
+import Entidades.Inscripcion;
 import java.util.ArrayList;
 import java.util.List;
-import Entidades.Inscripcion;
 import Entidades.Preguntas;
 import JpaControllers.exceptions.IllegalOrphanException;
 import JpaControllers.exceptions.NonexistentEntityException;
-import JpaControllers.exceptions.PreexistingEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -37,10 +35,7 @@ public class EstudianteJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Estudiante estudiante) throws PreexistingEntityException, Exception {
-        if (estudiante.getCalificacionList() == null) {
-            estudiante.setCalificacionList(new ArrayList<Calificacion>());
-        }
+    public void create(Estudiante estudiante) {
         if (estudiante.getInscripcionList() == null) {
             estudiante.setInscripcionList(new ArrayList<Inscripcion>());
         }
@@ -51,12 +46,6 @@ public class EstudianteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Calificacion> attachedCalificacionList = new ArrayList<Calificacion>();
-            for (Calificacion calificacionListCalificacionToAttach : estudiante.getCalificacionList()) {
-                calificacionListCalificacionToAttach = em.getReference(calificacionListCalificacionToAttach.getClass(), calificacionListCalificacionToAttach.getIdcalificacion());
-                attachedCalificacionList.add(calificacionListCalificacionToAttach);
-            }
-            estudiante.setCalificacionList(attachedCalificacionList);
             List<Inscripcion> attachedInscripcionList = new ArrayList<Inscripcion>();
             for (Inscripcion inscripcionListInscripcionToAttach : estudiante.getInscripcionList()) {
                 inscripcionListInscripcionToAttach = em.getReference(inscripcionListInscripcionToAttach.getClass(), inscripcionListInscripcionToAttach.getIdinscripcion());
@@ -70,39 +59,25 @@ public class EstudianteJpaController implements Serializable {
             }
             estudiante.setPreguntasList(attachedPreguntasList);
             em.persist(estudiante);
-            for (Calificacion calificacionListCalificacion : estudiante.getCalificacionList()) {
-                Estudiante oldCedulaOfCalificacionListCalificacion = calificacionListCalificacion.getCedula();
-                calificacionListCalificacion.setCedula(estudiante);
-                calificacionListCalificacion = em.merge(calificacionListCalificacion);
-                if (oldCedulaOfCalificacionListCalificacion != null) {
-                    oldCedulaOfCalificacionListCalificacion.getCalificacionList().remove(calificacionListCalificacion);
-                    oldCedulaOfCalificacionListCalificacion = em.merge(oldCedulaOfCalificacionListCalificacion);
-                }
-            }
             for (Inscripcion inscripcionListInscripcion : estudiante.getInscripcionList()) {
-                Estudiante oldCedulaOfInscripcionListInscripcion = inscripcionListInscripcion.getCedula();
-                inscripcionListInscripcion.setCedula(estudiante);
+                Estudiante oldIdestudianteOfInscripcionListInscripcion = inscripcionListInscripcion.getIdestudiante();
+                inscripcionListInscripcion.setIdestudiante(estudiante);
                 inscripcionListInscripcion = em.merge(inscripcionListInscripcion);
-                if (oldCedulaOfInscripcionListInscripcion != null) {
-                    oldCedulaOfInscripcionListInscripcion.getInscripcionList().remove(inscripcionListInscripcion);
-                    oldCedulaOfInscripcionListInscripcion = em.merge(oldCedulaOfInscripcionListInscripcion);
+                if (oldIdestudianteOfInscripcionListInscripcion != null) {
+                    oldIdestudianteOfInscripcionListInscripcion.getInscripcionList().remove(inscripcionListInscripcion);
+                    oldIdestudianteOfInscripcionListInscripcion = em.merge(oldIdestudianteOfInscripcionListInscripcion);
                 }
             }
             for (Preguntas preguntasListPreguntas : estudiante.getPreguntasList()) {
-                Estudiante oldCedulaOfPreguntasListPreguntas = preguntasListPreguntas.getCedula();
-                preguntasListPreguntas.setCedula(estudiante);
+                Estudiante oldIdestudianteOfPreguntasListPreguntas = preguntasListPreguntas.getIdestudiante();
+                preguntasListPreguntas.setIdestudiante(estudiante);
                 preguntasListPreguntas = em.merge(preguntasListPreguntas);
-                if (oldCedulaOfPreguntasListPreguntas != null) {
-                    oldCedulaOfPreguntasListPreguntas.getPreguntasList().remove(preguntasListPreguntas);
-                    oldCedulaOfPreguntasListPreguntas = em.merge(oldCedulaOfPreguntasListPreguntas);
+                if (oldIdestudianteOfPreguntasListPreguntas != null) {
+                    oldIdestudianteOfPreguntasListPreguntas.getPreguntasList().remove(preguntasListPreguntas);
+                    oldIdestudianteOfPreguntasListPreguntas = em.merge(oldIdestudianteOfPreguntasListPreguntas);
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findEstudiante(estudiante.getCedula()) != null) {
-                throw new PreexistingEntityException("Estudiante " + estudiante + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -115,28 +90,18 @@ public class EstudianteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getCedula());
-            List<Calificacion> calificacionListOld = persistentEstudiante.getCalificacionList();
-            List<Calificacion> calificacionListNew = estudiante.getCalificacionList();
+            Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getIdestudiante());
             List<Inscripcion> inscripcionListOld = persistentEstudiante.getInscripcionList();
             List<Inscripcion> inscripcionListNew = estudiante.getInscripcionList();
             List<Preguntas> preguntasListOld = persistentEstudiante.getPreguntasList();
             List<Preguntas> preguntasListNew = estudiante.getPreguntasList();
             List<String> illegalOrphanMessages = null;
-            for (Calificacion calificacionListOldCalificacion : calificacionListOld) {
-                if (!calificacionListNew.contains(calificacionListOldCalificacion)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Calificacion " + calificacionListOldCalificacion + " since its cedula field is not nullable.");
-                }
-            }
             for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
                 if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its cedula field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its idestudiante field is not nullable.");
                 }
             }
             for (Preguntas preguntasListOldPreguntas : preguntasListOld) {
@@ -144,19 +109,12 @@ public class EstudianteJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Preguntas " + preguntasListOldPreguntas + " since its cedula field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Preguntas " + preguntasListOldPreguntas + " since its idestudiante field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Calificacion> attachedCalificacionListNew = new ArrayList<Calificacion>();
-            for (Calificacion calificacionListNewCalificacionToAttach : calificacionListNew) {
-                calificacionListNewCalificacionToAttach = em.getReference(calificacionListNewCalificacionToAttach.getClass(), calificacionListNewCalificacionToAttach.getIdcalificacion());
-                attachedCalificacionListNew.add(calificacionListNewCalificacionToAttach);
-            }
-            calificacionListNew = attachedCalificacionListNew;
-            estudiante.setCalificacionList(calificacionListNew);
             List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
             for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
                 inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
@@ -172,36 +130,25 @@ public class EstudianteJpaController implements Serializable {
             preguntasListNew = attachedPreguntasListNew;
             estudiante.setPreguntasList(preguntasListNew);
             estudiante = em.merge(estudiante);
-            for (Calificacion calificacionListNewCalificacion : calificacionListNew) {
-                if (!calificacionListOld.contains(calificacionListNewCalificacion)) {
-                    Estudiante oldCedulaOfCalificacionListNewCalificacion = calificacionListNewCalificacion.getCedula();
-                    calificacionListNewCalificacion.setCedula(estudiante);
-                    calificacionListNewCalificacion = em.merge(calificacionListNewCalificacion);
-                    if (oldCedulaOfCalificacionListNewCalificacion != null && !oldCedulaOfCalificacionListNewCalificacion.equals(estudiante)) {
-                        oldCedulaOfCalificacionListNewCalificacion.getCalificacionList().remove(calificacionListNewCalificacion);
-                        oldCedulaOfCalificacionListNewCalificacion = em.merge(oldCedulaOfCalificacionListNewCalificacion);
-                    }
-                }
-            }
             for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
                 if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
-                    Estudiante oldCedulaOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getCedula();
-                    inscripcionListNewInscripcion.setCedula(estudiante);
+                    Estudiante oldIdestudianteOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdestudiante();
+                    inscripcionListNewInscripcion.setIdestudiante(estudiante);
                     inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
-                    if (oldCedulaOfInscripcionListNewInscripcion != null && !oldCedulaOfInscripcionListNewInscripcion.equals(estudiante)) {
-                        oldCedulaOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
-                        oldCedulaOfInscripcionListNewInscripcion = em.merge(oldCedulaOfInscripcionListNewInscripcion);
+                    if (oldIdestudianteOfInscripcionListNewInscripcion != null && !oldIdestudianteOfInscripcionListNewInscripcion.equals(estudiante)) {
+                        oldIdestudianteOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
+                        oldIdestudianteOfInscripcionListNewInscripcion = em.merge(oldIdestudianteOfInscripcionListNewInscripcion);
                     }
                 }
             }
             for (Preguntas preguntasListNewPreguntas : preguntasListNew) {
                 if (!preguntasListOld.contains(preguntasListNewPreguntas)) {
-                    Estudiante oldCedulaOfPreguntasListNewPreguntas = preguntasListNewPreguntas.getCedula();
-                    preguntasListNewPreguntas.setCedula(estudiante);
+                    Estudiante oldIdestudianteOfPreguntasListNewPreguntas = preguntasListNewPreguntas.getIdestudiante();
+                    preguntasListNewPreguntas.setIdestudiante(estudiante);
                     preguntasListNewPreguntas = em.merge(preguntasListNewPreguntas);
-                    if (oldCedulaOfPreguntasListNewPreguntas != null && !oldCedulaOfPreguntasListNewPreguntas.equals(estudiante)) {
-                        oldCedulaOfPreguntasListNewPreguntas.getPreguntasList().remove(preguntasListNewPreguntas);
-                        oldCedulaOfPreguntasListNewPreguntas = em.merge(oldCedulaOfPreguntasListNewPreguntas);
+                    if (oldIdestudianteOfPreguntasListNewPreguntas != null && !oldIdestudianteOfPreguntasListNewPreguntas.equals(estudiante)) {
+                        oldIdestudianteOfPreguntasListNewPreguntas.getPreguntasList().remove(preguntasListNewPreguntas);
+                        oldIdestudianteOfPreguntasListNewPreguntas = em.merge(oldIdestudianteOfPreguntasListNewPreguntas);
                     }
                 }
             }
@@ -209,7 +156,7 @@ public class EstudianteJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = estudiante.getCedula();
+                Integer id = estudiante.getIdestudiante();
                 if (findEstudiante(id) == null) {
                     throw new NonexistentEntityException("The estudiante with id " + id + " no longer exists.");
                 }
@@ -230,31 +177,24 @@ public class EstudianteJpaController implements Serializable {
             Estudiante estudiante;
             try {
                 estudiante = em.getReference(Estudiante.class, id);
-                estudiante.getCedula();
+                estudiante.getIdestudiante();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The estudiante with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Calificacion> calificacionListOrphanCheck = estudiante.getCalificacionList();
-            for (Calificacion calificacionListOrphanCheckCalificacion : calificacionListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Estudiante (" + estudiante + ") cannot be destroyed since the Calificacion " + calificacionListOrphanCheckCalificacion + " in its calificacionList field has a non-nullable cedula field.");
-            }
             List<Inscripcion> inscripcionListOrphanCheck = estudiante.getInscripcionList();
             for (Inscripcion inscripcionListOrphanCheckInscripcion : inscripcionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Estudiante (" + estudiante + ") cannot be destroyed since the Inscripcion " + inscripcionListOrphanCheckInscripcion + " in its inscripcionList field has a non-nullable cedula field.");
+                illegalOrphanMessages.add("This Estudiante (" + estudiante + ") cannot be destroyed since the Inscripcion " + inscripcionListOrphanCheckInscripcion + " in its inscripcionList field has a non-nullable idestudiante field.");
             }
             List<Preguntas> preguntasListOrphanCheck = estudiante.getPreguntasList();
             for (Preguntas preguntasListOrphanCheckPreguntas : preguntasListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Estudiante (" + estudiante + ") cannot be destroyed since the Preguntas " + preguntasListOrphanCheckPreguntas + " in its preguntasList field has a non-nullable cedula field.");
+                illegalOrphanMessages.add("This Estudiante (" + estudiante + ") cannot be destroyed since the Preguntas " + preguntasListOrphanCheckPreguntas + " in its preguntasList field has a non-nullable idestudiante field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Megan
  */
 @Entity
-@Table(name = "preguntas", catalog = "siand", schema = "public")
+@Table(name = "preguntas")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Preguntas.findAll", query = "SELECT p FROM Preguntas p"),
@@ -43,8 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Preguntas.findByOpcion6", query = "SELECT p FROM Preguntas p WHERE p.opcion6 = :opcion6"),
     @NamedQuery(name = "Preguntas.findByRespuesta6", query = "SELECT p FROM Preguntas p WHERE p.respuesta6 = :respuesta6"),
     @NamedQuery(name = "Preguntas.findByOpcion7", query = "SELECT p FROM Preguntas p WHERE p.opcion7 = :opcion7"),
-    @NamedQuery(name = "Preguntas.findByRespuesta7", query = "SELECT p FROM Preguntas p WHERE p.respuesta7 = :respuesta7"),
-    @NamedQuery(name = "Preguntas.findByCedula", query = "SELECT p FROM Preguntas p WHERE p.cedula = :cedula")})
+    @NamedQuery(name = "Preguntas.findByRespuesta7", query = "SELECT p FROM Preguntas p WHERE p.respuesta7 = :respuesta7")})
 public class Preguntas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,43 +55,38 @@ public class Preguntas implements Serializable {
     @Basic(optional = false)
     @Column(name = "opcion1")
     private int opcion1;
+    @Basic(optional = false)
     @Column(name = "respuesta1")
     private String respuesta1;
-    @Basic(optional = false)
     @Column(name = "opcion2")
-    private int opcion2;
+    private Integer opcion2;
     @Column(name = "respuesta2")
     private String respuesta2;
-    @Basic(optional = false)
     @Column(name = "opcion3")
-    private int opcion3;
+    private Integer opcion3;
     @Column(name = "respuesta31")
     private String respuesta31;
     @Column(name = "respuesta32")
     private String respuesta32;
-    @Basic(optional = false)
     @Column(name = "opcion4")
-    private int opcion4;
+    private Integer opcion4;
     @Column(name = "respuesta4")
     private String respuesta4;
-    @Basic(optional = false)
     @Column(name = "opcion5")
-    private int opcion5;
+    private Integer opcion5;
     @Column(name = "respuesta5")
     private String respuesta5;
-    @Basic(optional = false)
     @Column(name = "opcion6")
-    private int opcion6;
+    private Integer opcion6;
     @Column(name = "respuesta6")
     private String respuesta6;
-    @Basic(optional = false)
     @Column(name = "opcion7")
-    private int opcion7;
+    private Integer opcion7;
     @Column(name = "respuesta7")
     private String respuesta7;
-    @JoinColumn(name = "cedula", referencedColumnName = "cedula")
+    @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
     @ManyToOne(optional = false)
-    private Estudiante cedula;
+    private Estudiante idestudiante;
 
     public Preguntas() {
     }
@@ -101,15 +95,10 @@ public class Preguntas implements Serializable {
         this.idpreguntas = idpreguntas;
     }
 
-    public Preguntas(Integer idpreguntas, int opcion1, int opcion2, int opcion3, int opcion4, int opcion5, int opcion6, int opcion7) {
+    public Preguntas(Integer idpreguntas, int opcion1, String respuesta1) {
         this.idpreguntas = idpreguntas;
         this.opcion1 = opcion1;
-        this.opcion2 = opcion2;
-        this.opcion3 = opcion3;
-        this.opcion4 = opcion4;
-        this.opcion5 = opcion5;
-        this.opcion6 = opcion6;
-        this.opcion7 = opcion7;
+        this.respuesta1 = respuesta1;
     }
 
     public Integer getIdpreguntas() {
@@ -136,11 +125,11 @@ public class Preguntas implements Serializable {
         this.respuesta1 = respuesta1;
     }
 
-    public int getOpcion2() {
+    public Integer getOpcion2() {
         return opcion2;
     }
 
-    public void setOpcion2(int opcion2) {
+    public void setOpcion2(Integer opcion2) {
         this.opcion2 = opcion2;
     }
 
@@ -152,11 +141,11 @@ public class Preguntas implements Serializable {
         this.respuesta2 = respuesta2;
     }
 
-    public int getOpcion3() {
+    public Integer getOpcion3() {
         return opcion3;
     }
 
-    public void setOpcion3(int opcion3) {
+    public void setOpcion3(Integer opcion3) {
         this.opcion3 = opcion3;
     }
 
@@ -176,11 +165,11 @@ public class Preguntas implements Serializable {
         this.respuesta32 = respuesta32;
     }
 
-    public int getOpcion4() {
+    public Integer getOpcion4() {
         return opcion4;
     }
 
-    public void setOpcion4(int opcion4) {
+    public void setOpcion4(Integer opcion4) {
         this.opcion4 = opcion4;
     }
 
@@ -192,11 +181,11 @@ public class Preguntas implements Serializable {
         this.respuesta4 = respuesta4;
     }
 
-    public int getOpcion5() {
+    public Integer getOpcion5() {
         return opcion5;
     }
 
-    public void setOpcion5(int opcion5) {
+    public void setOpcion5(Integer opcion5) {
         this.opcion5 = opcion5;
     }
 
@@ -208,11 +197,11 @@ public class Preguntas implements Serializable {
         this.respuesta5 = respuesta5;
     }
 
-    public int getOpcion6() {
+    public Integer getOpcion6() {
         return opcion6;
     }
 
-    public void setOpcion6(int opcion6) {
+    public void setOpcion6(Integer opcion6) {
         this.opcion6 = opcion6;
     }
 
@@ -224,11 +213,11 @@ public class Preguntas implements Serializable {
         this.respuesta6 = respuesta6;
     }
 
-    public int getOpcion7() {
+    public Integer getOpcion7() {
         return opcion7;
     }
 
-    public void setOpcion7(int opcion7) {
+    public void setOpcion7(Integer opcion7) {
         this.opcion7 = opcion7;
     }
 
@@ -240,12 +229,12 @@ public class Preguntas implements Serializable {
         this.respuesta7 = respuesta7;
     }
 
-    public Estudiante getCedula() {
-        return cedula;
+    public Estudiante getIdestudiante() {
+        return idestudiante;
     }
 
-    public void setCedula(Estudiante cedula) {
-        this.cedula = cedula;
+    public void setIdestudiante(Estudiante idestudiante) {
+        this.idestudiante = idestudiante;
     }
 
     @Override
