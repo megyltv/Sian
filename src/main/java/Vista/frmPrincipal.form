@@ -82,18 +82,31 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuAcademia">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Academia B&#xed;blica"/>
+            <Property name="text" type="java.lang.String" value="Periodos"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemReporte1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nuevo periodo acad&#xe9;mico"/>
+                <Property name="text" type="java.lang.String" value="Crear nuevo periodo"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemReporte1ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consultar periodo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Horarios"/>
+          </Properties>
         </Menu>
       </SubComponents>
     </Menu>
