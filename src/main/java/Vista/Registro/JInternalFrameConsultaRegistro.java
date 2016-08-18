@@ -14,17 +14,19 @@ import javax.swing.JOptionPane;
 
 public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
-    Estudiante consulta_estudiante;
-    Preguntas pregunta_estudiante; 
-    Estudiante actualizar_estudiante;
+    Estudiante consulta_estudiante, actualizar_estudiante;
+    Preguntas pregunta_estudiante, actualizar_pregunta; 
+    
     boolean estado;
-    int cedula;
-    ControladorRegistroUsuario controlador;
+    int cedula,idEstudiante;
+    ControladorRegistroUsuario controlador, controladorConsulta;
     
     public JInternalFrameConsultaRegistro() {
         initComponents();
         //estado=true;
-        Habilitar(true);
+        Habilitar(false);
+        txtCedula.setEnabled(true);
+        
     }
 
     public void limpiar(){
@@ -74,28 +76,27 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     }
     
     public void Habilitar(boolean estado){
-        txtApellido.setEnabled(!estado);
+        txtApellido.setEnabled(estado);
         txtCedula.setEnabled(estado);
-        txtCelular.setEnabled(!estado);
-        txtConyuge.setEnabled(!estado);
-        txtCorreo.setEnabled(!estado);
-        txtNombre.setEnabled(!estado);
-        txtNombreE.setEnabled(!estado);
-        txtProfesion.setEnabled(!estado);
-        txtRazon1.setEnabled(!estado);
-        txtRazon2.setEnabled(!estado);
-        txtRazon31.setEnabled(!estado);
-        txtRazon32.setEnabled(!estado);
-        txtRazon4.setEnabled(!estado);
-        txtRazon5.setEnabled(!estado);
-        txtRazon6.setEnabled(!estado);
-        txtRazon7.setEnabled(!estado);
-        txtSector.setEnabled(!estado);
-        txtTelefono.setEnabled(!estado);
-        txtTelfE.setEnabled(!estado);
-        txthijos.setEnabled(!estado);
-        jDateChooser1.setEnabled(!estado);
-        
+        txtCelular.setEnabled(estado);
+        txtConyuge.setEnabled(estado);
+        txtCorreo.setEnabled(estado);
+        txtNombre.setEnabled(estado);
+        txtNombreE.setEnabled(estado);
+        txtProfesion.setEnabled(estado);
+        txtRazon1.setEnabled(estado);
+        txtRazon2.setEnabled(estado);
+        txtRazon31.setEnabled(estado);
+        txtRazon32.setEnabled(estado);
+        txtRazon4.setEnabled(estado);
+        txtRazon5.setEnabled(estado);
+        txtRazon6.setEnabled(estado);
+        txtRazon7.setEnabled(estado);
+        txtSector.setEnabled(estado);
+        txtTelefono.setEnabled(estado);
+        txtTelfE.setEnabled(estado);
+        txthijos.setEnabled(estado);
+        jDateChooser1.setEnabled(estado);
     }
     
     public void setConsultaEstudiante(){
@@ -205,9 +206,10 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }else if(pregunta_estudiante.getOpcion7()==0){
             ButtonNo7.setSelected(true);
         }
-    }    
+    }   
+    //Obtencion de datos de actualizar
     public void editEstudiante(){
-        actualizar_estudiante = new Estudiante();
+        actualizar_estudiante.setIdestudiante(consulta_estudiante.getIdestudiante());
         try {
             actualizar_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
         } catch (Exception e) {
@@ -242,11 +244,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }else{
             actualizar_estudiante.setCorreo(" ");
         }
-        if(txtCorreo.getText()!=""){
-            actualizar_estudiante.setCorreo((txtCorreo.getText().trim()));
-        }else{
-            actualizar_estudiante.setCorreo(" ");
-        }
+
         actualizar_estudiante.setNivelinst(((String)ComboBoxInstruccion.getSelectedItem()));
         if(txtProfesion.getText()!=""){
             actualizar_estudiante.setProfesion((txtProfesion.getText()));
@@ -265,40 +263,78 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }else{
             actualizar_estudiante.setNombcony(" ");
         }
-        // Si == 1, No == 0, Ninguno=3 
-        if (RadioButtonSi.isSelected())
-        {
-            actualizar_estudiante.setCreycony(1);
-           
-        }
-        else if (RadioButtonNo.isSelected())
-        {
-            actualizar_estudiante.setCreycony(0);
-        }
-        else{
-            actualizar_estudiante.setCreycony(2);
-        }
+        // Si == 1, No == 0, Ninguno=2 
+        if (RadioButtonSi.isSelected()){ actualizar_estudiante.setCreycony(1); }
+        else if (RadioButtonNo.isSelected()){ actualizar_estudiante.setCreycony(0); }
+        else{ actualizar_estudiante.setCreycony(2); }
         
-        if(txthijos.getText().isEmpty()){
-            actualizar_estudiante.setHijos(0);
-        }else{
-            actualizar_estudiante.setHijos(Integer.parseInt(txthijos.getText()));
-        }
+        if(txthijos.getText().isEmpty()){ actualizar_estudiante.setHijos(0); }
+        else{ actualizar_estudiante.setHijos(Integer.parseInt(txthijos.getText())); }
         
-        if(txtNombreE.getText()!=""){
-            actualizar_estudiante.setNombemerg((txtNombreE.getText()));
-        }else{
-            actualizar_estudiante.setNombemerg(" ");
-        }
-        if(txtTelfE.getText().isEmpty()){
-            actualizar_estudiante.setTelfemerg(0);
-        }else{
-            actualizar_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText())));
-        }
+        if(txtNombreE.getText()!=""){ actualizar_estudiante.setNombemerg((txtNombreE.getText())); }
+        else{ actualizar_estudiante.setNombemerg(" "); }
+        
+        if(txtTelfE.getText().isEmpty()){ actualizar_estudiante.setTelfemerg(0); }
+        else{ actualizar_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText()))); }
     }
     
     public void editPreguntas(){
+        actualizar_pregunta.setIdestudiante(actualizar_estudiante);
         
+        if (ButtonSi1.isSelected()){ actualizar_pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { actualizar_pregunta.setOpcion1(0);} else {actualizar_pregunta.setOpcion1(0);}
+        if(txtRazon1.getText()!=""){
+            actualizar_pregunta.setRespuesta1(txtRazon1.getText());
+        }else{
+            actualizar_pregunta.setRespuesta1("");
+        }
+             
+        if (ButtonSi2.isSelected()){ actualizar_pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { actualizar_pregunta.setOpcion2(0);} else {actualizar_pregunta.setOpcion2(0);}
+        if(txtRazon1.getText()!=""){
+            actualizar_pregunta.setRespuesta2(txtRazon2.getText());
+        }else{
+            actualizar_pregunta.setRespuesta2("");
+        }
+               
+        if (ButtonSi3.isSelected()){ actualizar_pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()){actualizar_pregunta.setOpcion3(0);
+        }else {actualizar_pregunta.setOpcion3(0);}
+        if(txtRazon31.getText()!=""){
+            actualizar_pregunta.setRespuesta31(txtRazon31.getText());
+        }else{
+            actualizar_pregunta.setRespuesta31("");
+        }
+        if(txtRazon32.getText()!=""){
+            actualizar_pregunta.setRespuesta32(txtRazon32.getText());
+        }else{
+            actualizar_pregunta.setRespuesta32("");
+        }
+        
+        if (ButtonSi4.isSelected()){ actualizar_pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { actualizar_pregunta.setOpcion4(0); }else {actualizar_pregunta.setOpcion4(0);}
+        if(txtRazon4.getText()!=""){
+            actualizar_pregunta.setRespuesta4(txtRazon4.getText());
+        }else{
+            actualizar_pregunta.setRespuesta4("");
+        }
+
+        if (ButtonSi5.isSelected()){ actualizar_pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { actualizar_pregunta.setOpcion5(0); } else {actualizar_pregunta.setOpcion5(0);}
+        if(txtRazon5.getText()!=""){
+            actualizar_pregunta.setRespuesta5(txtRazon5.getText());
+        }else{
+            actualizar_pregunta.setRespuesta5("");
+        }    
+
+        if (ButtonSi6.isSelected()){ actualizar_pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { actualizar_pregunta.setOpcion6(0); txtRazon6.setEnabled(false);} else {actualizar_pregunta.setOpcion6(0);}
+        if(txtRazon6.getText()!=""){
+            actualizar_pregunta.setRespuesta6(txtRazon6.getText());
+        }else{
+            actualizar_pregunta.setRespuesta6("");
+        } 
+        
+        if (ButtonSi7.isSelected()){ actualizar_pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { actualizar_pregunta.setOpcion7(0); txtRazon7.setEnabled(false);} else {actualizar_pregunta.setOpcion7(0);}
+        if(txtRazon7.getText()!=""){
+            actualizar_pregunta.setRespuesta7(txtRazon7.getText());
+        }else{
+            actualizar_pregunta.setRespuesta7("");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -954,45 +990,53 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         try{
             consulta_estudiante = new Estudiante();
             pregunta_estudiante = new Preguntas();
-        
+            //Setear cedula para consulta
             consulta_estudiante.setCedula(Integer.parseInt(txtCedula.getText()));
             cedula=Integer.parseInt(txtCedula.getText());
-            
+            //Consultar estudiante por cedula
             controlador = new ControladorRegistroUsuario();
             consulta_estudiante=controlador.consultarCedula(cedula);
+            //Consulta Preguntas
             pregunta_estudiante= controlador.consultarCedulaPreguntas(consulta_estudiante);
             System.out.println(txtCedula.getText());
+            //Seteo de datos
             if(consulta_estudiante!=null){
                 setConsultaEstudiante();
                 setPreguntasEstudiante();
             }
-            Habilitar(true);
         }
         catch(Exception e){
-              JOptionPane.showMessageDialog(null, e.getMessage()+e.getStackTrace());
+              //JOptionPane.showMessageDialog(null, e.getMessage()+e.getStackTrace());
               JOptionPane.showMessageDialog(null, "No se encuentra registrado");
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
         try{
+            actualizar_estudiante = new Estudiante();
+            actualizar_pregunta = new Preguntas();
+            controladorConsulta = new ControladorRegistroUsuario();
+            
             editEstudiante();
             editPreguntas();
-            controlador.editarEstudiante(actualizar_estudiante);
+            
+            controladorConsulta.editarEstudiante(actualizar_estudiante);
             JOptionPane.showMessageDialog(null,"Estudiante Actualizado");
         }catch(Exception e){
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"No se puede actualizar \n"+e);
+            JOptionPane.showMessageDialog(null,"No se puede actualizar \n");
+            e.printStackTrace(System.out);
         }
     }//GEN-LAST:event_btnGuardar2ActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        Habilitar(false);
+        Habilitar(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
         limpiar();
-        Habilitar(true);
+        Habilitar(false);
+        txtCedula.setEnabled(true);        
     }//GEN-LAST:event_btnNuevaActionPerformed
 
 

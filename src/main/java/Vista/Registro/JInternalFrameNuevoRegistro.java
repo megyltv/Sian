@@ -196,14 +196,14 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
             pregunta.setRespuesta1("");
         }
              
-        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0);} else {pregunta.setOpcion1(0);}
+        if (ButtonSi2.isSelected()){ pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { pregunta.setOpcion2(0);} else {pregunta.setOpcion2(0);}
         if(txtRazon1.getText()!=""){
             pregunta.setRespuesta2(txtRazon2.getText());
         }else{
             pregunta.setRespuesta2("");
         }
                
-        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()){pregunta.setOpcion3(0);}else {pregunta.setOpcion1(0);}
+        if (ButtonSi3.isSelected()){ pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()){pregunta.setOpcion3(0);}else {pregunta.setOpcion3(0);}
         if(txtRazon31.getText()!=""){
             pregunta.setRespuesta31(txtRazon31.getText());
         }else{
@@ -215,28 +215,28 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
             pregunta.setRespuesta32("");
         }
         
-        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }else {pregunta.setOpcion1(0);}
+        if (ButtonSi4.isSelected()){ pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { pregunta.setOpcion4(0); }else {pregunta.setOpcion4(0);}
         if(txtRazon4.getText()!=""){
             pregunta.setRespuesta4(txtRazon4.getText());
         }else{
             pregunta.setRespuesta4("");
         }
 
-        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); } else {pregunta.setOpcion1(0);}
+        if (ButtonSi5.isSelected()){ pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { pregunta.setOpcion5(0); } else {pregunta.setOpcion5(0);}
         if(txtRazon5.getText()!=""){
             pregunta.setRespuesta5(txtRazon5.getText());
         }else{
             pregunta.setRespuesta5("");
         }    
 
-        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); txtRazon6.setEnabled(false);} else {pregunta.setOpcion1(0);}
+        if (ButtonSi6.isSelected()){ pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { pregunta.setOpcion6(0); txtRazon6.setEnabled(false);} else {pregunta.setOpcion6(0);}
         if(txtRazon6.getText()!=""){
             pregunta.setRespuesta6(txtRazon6.getText());
         }else{
             pregunta.setRespuesta6("");
         } 
         
-        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); txtRazon7.setEnabled(false);} else {pregunta.setOpcion1(0);}
+        if (ButtonSi7.isSelected()){ pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { pregunta.setOpcion7(0); txtRazon7.setEnabled(false);} else {pregunta.setOpcion7(0);}
         if(txtRazon7.getText()!=""){
             pregunta.setRespuesta7(txtRazon7.getText());
         }else{
