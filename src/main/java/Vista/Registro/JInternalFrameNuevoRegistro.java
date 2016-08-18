@@ -1,5 +1,6 @@
 package Vista.Registro;
 
+import Controlador.Registro.ControladorRegistroPreguntas;
 import Controlador.Registro.ControladorRegistroUsuario;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
@@ -13,6 +14,8 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
     Estudiante nuevo_estudiante;
     Preguntas pregunta;
+    ControladorRegistroUsuario controlador;
+    ControladorRegistroPreguntas controladorPreguntas;
             
     public JInternalFrameNuevoRegistro() {
         initComponents();
@@ -903,11 +906,12 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         setDatosEstudiante();
         
-        ControladorRegistroUsuario controlador = new ControladorRegistroUsuario();
+        controlador = new ControladorRegistroUsuario();
+        controladorPreguntas = new ControladorRegistroPreguntas();
         try {
             controlador.crearEstudiante(nuevo_estudiante);  
             setPreguntas();
-            controlador.crearPreguntas(pregunta);
+            controladorPreguntas.crearPreguntas(pregunta);
             JOptionPane.showMessageDialog(null,"Estudiante Registrado");
             
             //limpiar();

@@ -5,6 +5,7 @@
  */
 package Vista.Registro;
 
+import Controlador.Registro.ControladorRegistroPreguntas;
 import Controlador.Registro.ControladorRegistroUsuario;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
@@ -19,7 +20,8 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     
     boolean estado;
     int cedula,idEstudiante;
-    ControladorRegistroUsuario controlador, controladorConsulta;
+    ControladorRegistroUsuario controlador;
+    ControladorRegistroPreguntas controladorPreguntas;
     
     public JInternalFrameConsultaRegistro() {
         initComponents();
@@ -280,6 +282,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     
     public void editPreguntas(){
         actualizar_pregunta.setIdestudiante(actualizar_estudiante);
+        actualizar_pregunta.setIdpreguntas(pregunta_estudiante.getIdpreguntas());
         
         if (ButtonSi1.isSelected()){ actualizar_pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { actualizar_pregunta.setOpcion1(0);} else {actualizar_pregunta.setOpcion1(0);}
         if(txtRazon1.getText()!=""){
@@ -990,15 +993,20 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         try{
             consulta_estudiante = new Estudiante();
             pregunta_estudiante = new Preguntas();
+            
             //Setear cedula para consulta
             consulta_estudiante.setCedula(Integer.parseInt(txtCedula.getText()));
             cedula=Integer.parseInt(txtCedula.getText());
+            
             //Consultar estudiante por cedula
             controlador = new ControladorRegistroUsuario();
+            controladorPreguntas = new ControladorRegistroPreguntas();
             consulta_estudiante=controlador.consultarCedula(cedula);
+            
             //Consulta Preguntas
-            pregunta_estudiante= controlador.consultarCedulaPreguntas(consulta_estudiante);
+            pregunta_estudiante= controladorPreguntas.consultarCedulaPreguntas(consulta_estudiante);
             System.out.println(txtCedula.getText());
+            
             //Seteo de datos
             if(consulta_estudiante!=null){
                 setConsultaEstudiante();
@@ -1013,18 +1021,22 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
     private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
         try{
+            //Instancia de objetos
             actualizar_estudiante = new Estudiante();
             actualizar_pregunta = new Preguntas();
-            controladorConsulta = new ControladorRegistroUsuario();
+            controlador = new ControladorRegistroUsuario();
             
+            //Seteo de datos para editar
             editEstudiante();
             editPreguntas();
             
-            controladorConsulta.editarEstudiante(actualizar_estudiante);
+            //Actualizacion de datos
+            controlador.editarEstudiante(actualizar_estudiante);
+            controladorPreguntas.editarPregunta(actualizar_pregunta);
             JOptionPane.showMessageDialog(null,"Estudiante Actualizado");
         }catch(Exception e){
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"No se puede actualizar \n");
+            JOptionPane.showMessageDialog(null,"No se puede Actualizar \n");
             e.printStackTrace(System.out);
         }
     }//GEN-LAST:event_btnGuardar2ActionPerformed
