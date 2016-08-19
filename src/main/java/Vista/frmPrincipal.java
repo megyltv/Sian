@@ -1,9 +1,10 @@
 package Vista;
 
-import Vista.Academia.JInternalFrameAcademy;
+import Vista.Periodo.JInternalFrameNuevoPeriodo;
 import Vista.Calificacion.JInternalFrameConsultaCalificacion;
 import Vista.Calificacion.JInternalFrameIngresaCalificacion;
 import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
+import Vista.Periodo.JInternalFrameConsultarPeriodo;
 import Vista.Registro.JInternalFrameConsultaRegistro;
 import Vista.Registro.JInternalFrameNuevoRegistro;
 import Vista.Reporte.JInternalFrameGeneraReporte;
@@ -18,7 +19,8 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameIngresaCalificacion internalFrameIngresaCalificacion;
     JInternalFrameConsultaCalificacion internalFrameConsultaCalificacion;
     JInternalFrameGeneraReporte internalFrameGeneraReporte;
-    JInternalFrameAcademy internalFrameAcademia;
+    JInternalFrameNuevoPeriodo internalFrameNuevoPeriodo;
+    JInternalFrameConsultarPeriodo internalFrameConsultarPeriodo;
     JDesktopPane dp=new JDesktopPane();
     
     
@@ -50,6 +52,8 @@ public class frmPrincipal extends javax.swing.JFrame{
         itemReporte = new javax.swing.JMenuItem();
         menuAcademia = new javax.swing.JMenu();
         itemReporte1 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -143,9 +147,9 @@ public class frmPrincipal extends javax.swing.JFrame{
 
         MenuBarPrincipal.add(menuReporte);
 
-        menuAcademia.setText("Academia Bíblica");
+        menuAcademia.setText("Periodos");
 
-        itemReporte1.setText("Nuevo periodo académico");
+        itemReporte1.setText("Crear nuevo periodo");
         itemReporte1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemReporte1ActionPerformed(evt);
@@ -153,7 +157,18 @@ public class frmPrincipal extends javax.swing.JFrame{
         });
         menuAcademia.add(itemReporte1);
 
+        jMenuItem1.setText("Consultar periodo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuAcademia.add(jMenuItem1);
+
         MenuBarPrincipal.add(menuAcademia);
+
+        jMenu1.setText("Horarios");
+        MenuBarPrincipal.add(jMenu1);
 
         setJMenuBar(MenuBarPrincipal);
 
@@ -216,11 +231,16 @@ public class frmPrincipal extends javax.swing.JFrame{
        internalFrameGeneraReporte = new JInternalFrameGeneraReporte();
         mostrarVentana(internalFrameGeneraReporte);
     }//GEN-LAST:event_itemReporteActionPerformed
-
+    //Mètodos para mostrar las vistas crear periodo
     private void itemReporte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemReporte1ActionPerformed
-       internalFrameAcademia = new JInternalFrameAcademy();
-        mostrarVentana(internalFrameAcademia); 
+       internalFrameNuevoPeriodo = new JInternalFrameNuevoPeriodo();
+        mostrarVentana(internalFrameNuevoPeriodo); 
     }//GEN-LAST:event_itemReporte1ActionPerformed
+    //Mètodos para mostrar las vistas crear periodo
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        internalFrameConsultarPeriodo = new JInternalFrameConsultarPeriodo();
+        mostrarVentana(internalFrameConsultarPeriodo); 
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     private void mostrarVentana(JInternalFrame frame ){
         pnlPrincipal.removeAll();
@@ -269,6 +289,8 @@ public class frmPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenuItem itemNuevoE;
     private javax.swing.JMenuItem itemReporte;
     private javax.swing.JMenuItem itemReporte1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel lblBarra;
     private javax.swing.JLabel lblIcono;
     private javax.swing.JMenu menuAcademia;

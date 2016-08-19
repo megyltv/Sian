@@ -11,9 +11,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Entidades.Estudiante;
-import Entidades.Inscripcion;
 import Entidades.Materia;
 import Entidades.Periodo;
+import Entidades.HorarioMateria;
+import Entidades.Inscripcion;
 import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -54,6 +55,11 @@ public class InscripcionJpaController implements Serializable {
                 idperiodo = em.getReference(idperiodo.getClass(), idperiodo.getIdperiodo());
                 inscripcion.setIdperiodo(idperiodo);
             }
+            HorarioMateria idmateriahorario = inscripcion.getIdmateriahorario();
+            if (idmateriahorario != null) {
+                idmateriahorario = em.getReference(idmateriahorario.getClass(), idmateriahorario.getIdmateriahorario());
+                inscripcion.setIdmateriahorario(idmateriahorario);
+            }
             em.persist(inscripcion);
             if (idestudiante != null) {
                 idestudiante.getInscripcionList().add(inscripcion);
@@ -66,6 +72,10 @@ public class InscripcionJpaController implements Serializable {
             if (idperiodo != null) {
                 idperiodo.getInscripcionList().add(inscripcion);
                 idperiodo = em.merge(idperiodo);
+            }
+            if (idmateriahorario != null) {
+                idmateriahorario.getInscripcionList().add(inscripcion);
+                idmateriahorario = em.merge(idmateriahorario);
             }
             em.getTransaction().commit();
         } finally {
@@ -87,6 +97,8 @@ public class InscripcionJpaController implements Serializable {
             Materia idmateriaNew = inscripcion.getIdmateria();
             Periodo idperiodoOld = persistentInscripcion.getIdperiodo();
             Periodo idperiodoNew = inscripcion.getIdperiodo();
+            HorarioMateria idmateriahorarioOld = persistentInscripcion.getIdmateriahorario();
+            HorarioMateria idmateriahorarioNew = inscripcion.getIdmateriahorario();
             if (idestudianteNew != null) {
                 idestudianteNew = em.getReference(idestudianteNew.getClass(), idestudianteNew.getIdestudiante());
                 inscripcion.setIdestudiante(idestudianteNew);
@@ -98,6 +110,10 @@ public class InscripcionJpaController implements Serializable {
             if (idperiodoNew != null) {
                 idperiodoNew = em.getReference(idperiodoNew.getClass(), idperiodoNew.getIdperiodo());
                 inscripcion.setIdperiodo(idperiodoNew);
+            }
+            if (idmateriahorarioNew != null) {
+                idmateriahorarioNew = em.getReference(idmateriahorarioNew.getClass(), idmateriahorarioNew.getIdmateriahorario());
+                inscripcion.setIdmateriahorario(idmateriahorarioNew);
             }
             inscripcion = em.merge(inscripcion);
             if (idestudianteOld != null && !idestudianteOld.equals(idestudianteNew)) {
@@ -123,6 +139,14 @@ public class InscripcionJpaController implements Serializable {
             if (idperiodoNew != null && !idperiodoNew.equals(idperiodoOld)) {
                 idperiodoNew.getInscripcionList().add(inscripcion);
                 idperiodoNew = em.merge(idperiodoNew);
+            }
+            if (idmateriahorarioOld != null && !idmateriahorarioOld.equals(idmateriahorarioNew)) {
+                idmateriahorarioOld.getInscripcionList().remove(inscripcion);
+                idmateriahorarioOld = em.merge(idmateriahorarioOld);
+            }
+            if (idmateriahorarioNew != null && !idmateriahorarioNew.equals(idmateriahorarioOld)) {
+                idmateriahorarioNew.getInscripcionList().add(inscripcion);
+                idmateriahorarioNew = em.merge(idmateriahorarioNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -167,6 +191,11 @@ public class InscripcionJpaController implements Serializable {
             if (idperiodo != null) {
                 idperiodo.getInscripcionList().remove(inscripcion);
                 idperiodo = em.merge(idperiodo);
+            }
+            HorarioMateria idmateriahorario = inscripcion.getIdmateriahorario();
+            if (idmateriahorario != null) {
+                idmateriahorario.getInscripcionList().remove(inscripcion);
+                idmateriahorario = em.merge(idmateriahorario);
             }
             em.remove(inscripcion);
             em.getTransaction().commit();

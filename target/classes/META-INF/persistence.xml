@@ -2,28 +2,14 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>Entidades.Materia</class>
-    <class>Entidades.PeriodoActual</class>
-    <class>Entidades.Preguntas</class>
-    <class>Entidades.Estudiante</class>
-    <class>Entidades.Nivel</class>
-    <class>Entidades.Horario</class>
-    <class>Entidades.Calificacion</class>
-    <class>Entidades.MateriaHorario</class>
-    <class>Entidades.Inscripcion</class>
     <class>Entidades.Usuario</class>
-    <class>Entidades.Horariomateria</class>
-    <class>Controlador.Academia.Preguntas</class>
-    <class>Controlador.Academia.Materia</class>
-    <class>Controlador.Academia.Usuario</class>
-    <class>Controlador.Academia.Horariomateria</class>
-    <class>Controlador.Academia.Inscripcion</class>
-    <class>Controlador.Academia.PeriodoActual</class>
-    <class>Controlador.Academia.Horario</class>
-    <class>Controlador.Academia.Nivel</class>
-    <class>Controlador.Academia.Estudiante</class>
-    <class>Controlador.Academia.Calificacion</class>
+    <class>Entidades.Materia</class>
     <class>Entidades.Periodo</class>
+    <class>Entidades.Inscripcion</class>
+    <class>Entidades.Preguntas</class>
+    <class>Entidades.Horario</class>
+    <class>Entidades.Estudiante</class>
+    <class>Entidades.HorarioMateria</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Sian"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
