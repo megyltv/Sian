@@ -262,8 +262,8 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     
     public boolean validarDatos(){
         return sinCamposVacios()
-                && soporte.validacionCedula(txtCedula.getText().trim())
-                && validarCedulaUnica();
+                && soporte.validacionCedula(txtCedula.getText().trim());
+                //&& validarCedulaUnica();
     }
     
     public boolean sinCamposVacios(){
@@ -399,7 +399,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         RadioButtonSi = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(null);
+        setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setPreferredSize(new java.awt.Dimension(1168, 647));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));

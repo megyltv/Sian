@@ -42,7 +42,7 @@ public class JInternalFrameConsultaCalificacion extends javax.swing.JInternalFra
         btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(null);
+        setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setPreferredSize(new java.awt.Dimension(1168, 647));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -181,7 +181,7 @@ public class JInternalFrameConsultaCalificacion extends javax.swing.JInternalFra
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
         );
 
         jPanel2.getAccessibleContext().setAccessibleDescription("");

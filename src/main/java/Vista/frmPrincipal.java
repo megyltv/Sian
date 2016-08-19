@@ -45,6 +45,7 @@ public class frmPrincipal extends javax.swing.JFrame{
         itemActualizarE = new javax.swing.JMenuItem();
         menuInscripcion = new javax.swing.JMenu();
         itemInscripcion = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuCalificacion = new javax.swing.JMenu();
         itemNuevaCalif = new javax.swing.JMenuItem();
         itemConsultarCal = new javax.swing.JMenuItem();
@@ -53,7 +54,15 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuAcademia = new javax.swing.JMenu();
         itemReporte1 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -83,7 +92,7 @@ public class frmPrincipal extends javax.swing.JFrame{
 
         lblBarra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barra.jpg"))); // NOI18N
 
-        menuRegistro.setText("Registro de Estudiantes");
+        menuRegistro.setText("Estudiantes");
 
         itemNuevoE.setText("Nuevo estudiante");
         itemNuevoE.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +121,9 @@ public class frmPrincipal extends javax.swing.JFrame{
             }
         });
         menuInscripcion.add(itemInscripcion);
+
+        jMenuItem2.setText("Consultar/Actualizar inscripcion");
+        menuInscripcion.add(jMenuItem2);
 
         MenuBarPrincipal.add(menuInscripcion);
 
@@ -147,7 +159,7 @@ public class frmPrincipal extends javax.swing.JFrame{
 
         MenuBarPrincipal.add(menuReporte);
 
-        menuAcademia.setText("Periodos");
+        menuAcademia.setText("Periodo Académico");
 
         itemReporte1.setText("Crear nuevo periodo");
         itemReporte1.addActionListener(new java.awt.event.ActionListener() {
@@ -157,18 +169,41 @@ public class frmPrincipal extends javax.swing.JFrame{
         });
         menuAcademia.add(itemReporte1);
 
-        jMenuItem1.setText("Consultar periodo");
+        jMenuItem1.setText("Consultar/Actualizar periodo");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         menuAcademia.add(jMenuItem1);
+        menuAcademia.add(jSeparator1);
+
+        jMenuItem4.setText("Crear nuevo horario");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuAcademia.add(jMenuItem4);
+
+        jMenuItem3.setText("Consultar/Actualizar horario");
+        menuAcademia.add(jMenuItem3);
+        menuAcademia.add(jSeparator2);
+
+        jMenuItem5.setText("Crear nueva materia");
+        menuAcademia.add(jMenuItem5);
+
+        jMenuItem6.setText("Consultar/Actualizar materia");
+        menuAcademia.add(jMenuItem6);
+        menuAcademia.add(jSeparator3);
+
+        jMenuItem7.setText("Asignación horario a materia");
+        menuAcademia.add(jMenuItem7);
+
+        jMenuItem8.setText("Consultar/Actualizar horaria a materia");
+        menuAcademia.add(jMenuItem8);
 
         MenuBarPrincipal.add(menuAcademia);
-
-        jMenu1.setText("Horarios");
-        MenuBarPrincipal.add(jMenu1);
 
         setJMenuBar(MenuBarPrincipal);
 
@@ -241,6 +276,10 @@ public class frmPrincipal extends javax.swing.JFrame{
         internalFrameConsultarPeriodo = new JInternalFrameConsultarPeriodo();
         mostrarVentana(internalFrameConsultarPeriodo); 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
     
     private void mostrarVentana(JInternalFrame frame ){
         pnlPrincipal.removeAll();
@@ -289,8 +328,17 @@ public class frmPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenuItem itemNuevoE;
     private javax.swing.JMenuItem itemReporte;
     private javax.swing.JMenuItem itemReporte1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JLabel lblBarra;
     private javax.swing.JLabel lblIcono;
     private javax.swing.JMenu menuAcademia;

@@ -497,7 +497,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         btnGuardar2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(null);
+        setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setPreferredSize(new java.awt.Dimension(1168, 647));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));

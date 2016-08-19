@@ -45,7 +45,7 @@ public class JInternalFrameGeneraReporte extends javax.swing.JInternalFrame {
         btnExportar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(null);
+        setBorder(javax.swing.BorderFactory.createCompoundBorder());
         setPreferredSize(new java.awt.Dimension(1168, 647));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -160,7 +160,7 @@ public class JInternalFrameGeneraReporte extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
         );
 
         jPanel2.getAccessibleContext().setAccessibleDescription("");
@@ -172,22 +172,16 @@ public class JInternalFrameGeneraReporte extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea TxtAreaObservacion;
     private javax.swing.JButton btnExportar;
-    private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnGenerar1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblBuscar1;
     private javax.swing.JLabel lblObervaciones;
-    private javax.swing.JPanel pnlCabecReporte;
     private javax.swing.JPanel pnlCabecReporte1;
     private javax.swing.JTable tblReporte;
-    private javax.swing.JTextField txtBusReporte;
     private javax.swing.JTextField txtBusReporte1;
-    private javax.swing.JTextField txtNombreReport;
     private javax.swing.JTextField txtNombreReport1;
     // End of variables declaration//GEN-END:variables
 }
