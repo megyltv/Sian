@@ -33,6 +33,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Inscripcion.findByCalificacion", query = "SELECT i FROM Inscripcion i WHERE i.calificacion = :calificacion")})
 public class Inscripcion implements Serializable {
 
+    @Column(name = "observacion")
+    private String observacion;
+    @JoinColumn(name = "idmateriahorario", referencedColumnName = "idmateriahorario")
+    @ManyToOne
+    private HorarioMateria idmateriahorario;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -122,6 +128,22 @@ public class Inscripcion implements Serializable {
     @Override
     public String toString() {
         return "Entidades.Inscripcion[ idinscripcion=" + idinscripcion + " ]";
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public HorarioMateria getIdmateriahorario() {
+        return idmateriahorario;
+    }
+
+    public void setIdmateriahorario(HorarioMateria idmateriahorario) {
+        this.idmateriahorario = idmateriahorario;
     }
     
 }
