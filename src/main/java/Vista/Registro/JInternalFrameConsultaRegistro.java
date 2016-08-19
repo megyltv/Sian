@@ -5,26 +5,56 @@
  */
 package Vista.Registro;
 
+import Controlador.Registro.ControladorRegistroPreguntas;
 import Controlador.Registro.ControladorRegistroUsuario;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import soporte.botonListener;
+import soporte.metodosSoporte;
 
 public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
-    Estudiante consulta_estudiante;
-    Preguntas pregunta_estudiante; 
-    Estudiante actualizar_estudiante;
+    Estudiante consulta_estudiante, actualizar_estudiante;
+    Preguntas pregunta_estudiante, actualizar_pregunta; 
+    metodosSoporte soporte;
+    
     boolean estado;
-    int cedula;
+    int cedula,idEstudiante;
     ControladorRegistroUsuario controlador;
+    ControladorRegistroPreguntas controladorPreguntas;
+    botonListener list;
     
     public JInternalFrameConsultaRegistro() {
         initComponents();
-        //estado=true;
-        Habilitar(true);
+        soporte=new metodosSoporte();
+        Habilitar(false);
+        txtCedula.setEnabled(true);
+        
+        list = new botonListener();
+
+        botones();
+    }
+    
+    public void botones(){
+        list.Listener(ButtonSi1, txtRazon1, true);
+        list.Listener(ButtonNo1, txtRazon1, false);
+        list.Listener(ButtonSi2, txtRazon2, true);
+        list.Listener(ButtonNo2, txtRazon2, false);
+        list.Listener(ButtonSi3, txtRazon31, true);
+        list.Listener(ButtonSi3, txtRazon32, true);
+        list.Listener(ButtonNo3, txtRazon31, false);
+        list.Listener(ButtonNo3, txtRazon32, false);
+        list.Listener(ButtonSi4, txtRazon4, true);
+        list.Listener(ButtonNo4, txtRazon4, false);
+        list.Listener(ButtonSi5, txtRazon5, true);
+        list.Listener(ButtonNo5, txtRazon5, false);
+        list.Listener(ButtonSi6, txtRazon6, false);
+        list.Listener(ButtonNo6, txtRazon6, true);
+        list.Listener(ButtonSi7, txtRazon7, false);
+        list.Listener(ButtonNo7, txtRazon7, true);
     }
 
     public void limpiar(){
@@ -74,28 +104,27 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     }
     
     public void Habilitar(boolean estado){
-        txtApellido.setEnabled(!estado);
+        txtApellido.setEnabled(estado);
         txtCedula.setEnabled(estado);
-        txtCelular.setEnabled(!estado);
-        txtConyuge.setEnabled(!estado);
-        txtCorreo.setEnabled(!estado);
-        txtNombre.setEnabled(!estado);
-        txtNombreE.setEnabled(!estado);
-        txtProfesion.setEnabled(!estado);
-        txtRazon1.setEnabled(!estado);
-        txtRazon2.setEnabled(!estado);
-        txtRazon31.setEnabled(!estado);
-        txtRazon32.setEnabled(!estado);
-        txtRazon4.setEnabled(!estado);
-        txtRazon5.setEnabled(!estado);
-        txtRazon6.setEnabled(!estado);
-        txtRazon7.setEnabled(!estado);
-        txtSector.setEnabled(!estado);
-        txtTelefono.setEnabled(!estado);
-        txtTelfE.setEnabled(!estado);
-        txthijos.setEnabled(!estado);
-        jDateChooser1.setEnabled(!estado);
-        
+        txtCelular.setEnabled(estado);
+        txtConyuge.setEnabled(estado);
+        txtCorreo.setEnabled(estado);
+        txtNombre.setEnabled(estado);
+        txtNombreE.setEnabled(estado);
+        txtProfesion.setEnabled(estado);
+        txtRazon1.setEnabled(estado);
+        txtRazon2.setEnabled(estado);
+        txtRazon31.setEnabled(estado);
+        txtRazon32.setEnabled(estado);
+        txtRazon4.setEnabled(estado);
+        txtRazon5.setEnabled(estado);
+        txtRazon6.setEnabled(estado);
+        txtRazon7.setEnabled(estado);
+        txtSector.setEnabled(estado);
+        txtTelefono.setEnabled(estado);
+        txtTelfE.setEnabled(estado);
+        txthijos.setEnabled(estado);
+        jDateChooser1.setEnabled(estado);
     }
     
     public void setConsultaEstudiante(){
@@ -136,22 +165,23 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }
         
         //Comprobar que no sea null 
-        if(consulta_estudiante.getTelefono()!=null||consulta_estudiante.getTelefono()!=0){
+        if(consulta_estudiante.getTelefono()!=0){
             txtTelefono.setText(consulta_estudiante.getTelefono().toString());
-        }else{
+            System.out.println(consulta_estudiante.getTelefono().toString());
+        }else if(consulta_estudiante.getTelefono().toString().equals("0")) {
             txtTelefono.setText("");
         }
-        if(consulta_estudiante.getTelfemerg()!=null||consulta_estudiante.getTelfemerg()!=0){
+        if(consulta_estudiante.getTelfemerg()!=0){
             txtTelfE.setText(consulta_estudiante.getTelfemerg().toString());
         }else{
             txtTelfE.setText("");
         }
-        if(consulta_estudiante.getHijos()!=null||consulta_estudiante.getHijos()!=0){
+        if(consulta_estudiante.getHijos()!=0){
             txthijos.setText(consulta_estudiante.getHijos().toString());
         }else{
             txthijos.setText("");
         }
-        if(consulta_estudiante.getCelular()!=null){
+        if(consulta_estudiante.getCelular()!=0){
             txtCelular.setText(consulta_estudiante.getCelular().toString());
         }else{
             txtCelular.setText(""); 
@@ -205,9 +235,10 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }else if(pregunta_estudiante.getOpcion7()==0){
             ButtonNo7.setSelected(true);
         }
-    }    
+    }   
+    //Obtencion de datos de actualizar
     public void editEstudiante(){
-        actualizar_estudiante = new Estudiante();
+        actualizar_estudiante.setIdestudiante(consulta_estudiante.getIdestudiante());
         try {
             actualizar_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
         } catch (Exception e) {
@@ -242,11 +273,7 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }else{
             actualizar_estudiante.setCorreo(" ");
         }
-        if(txtCorreo.getText()!=""){
-            actualizar_estudiante.setCorreo((txtCorreo.getText().trim()));
-        }else{
-            actualizar_estudiante.setCorreo(" ");
-        }
+
         actualizar_estudiante.setNivelinst(((String)ComboBoxInstruccion.getSelectedItem()));
         if(txtProfesion.getText()!=""){
             actualizar_estudiante.setProfesion((txtProfesion.getText()));
@@ -265,46 +292,131 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         }else{
             actualizar_estudiante.setNombcony(" ");
         }
-        // Si == 1, No == 0, Ninguno=3 
-        if (RadioButtonSi.isSelected())
-        {
-            actualizar_estudiante.setCreycony(1);
-           
-        }
-        else if (RadioButtonNo.isSelected())
-        {
-            actualizar_estudiante.setCreycony(0);
-        }
-        else{
-            actualizar_estudiante.setCreycony(2);
-        }
+        // Si == 1, No == 0, Ninguno=2 
+        if (RadioButtonSi.isSelected()){ actualizar_estudiante.setCreycony(1); }
+        else if (RadioButtonNo.isSelected()){ actualizar_estudiante.setCreycony(0); }
+        else{ actualizar_estudiante.setCreycony(2); }
         
-        if(txthijos.getText().isEmpty()){
-            actualizar_estudiante.setHijos(0);
-        }else{
-            actualizar_estudiante.setHijos(Integer.parseInt(txthijos.getText()));
-        }
+        if(txthijos.getText().isEmpty()){ actualizar_estudiante.setHijos(0); }
+        else{ actualizar_estudiante.setHijos(Integer.parseInt(txthijos.getText())); }
         
-        if(txtNombreE.getText()!=""){
-            actualizar_estudiante.setNombemerg((txtNombreE.getText()));
-        }else{
-            actualizar_estudiante.setNombemerg(" ");
-        }
-        if(txtTelfE.getText().isEmpty()){
-            actualizar_estudiante.setTelfemerg(0);
-        }else{
-            actualizar_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText())));
-        }
+        if(txtNombreE.getText()!=""){ actualizar_estudiante.setNombemerg((txtNombreE.getText())); }
+        else{ actualizar_estudiante.setNombemerg(" "); }
+        
+        if(txtTelfE.getText().isEmpty()){ actualizar_estudiante.setTelfemerg(0); }
+        else{ actualizar_estudiante.setTelfemerg((Integer.parseInt(txtTelfE.getText()))); }
     }
     
     public void editPreguntas(){
+        actualizar_pregunta.setIdestudiante(actualizar_estudiante);
+        actualizar_pregunta.setIdpreguntas(pregunta_estudiante.getIdpreguntas());
         
+        if (ButtonSi1.isSelected()){ actualizar_pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { actualizar_pregunta.setOpcion1(0);} else {actualizar_pregunta.setOpcion1(0);}
+        if(txtRazon1.getText()!=""){
+            actualizar_pregunta.setRespuesta1(txtRazon1.getText());
+        }else{
+            actualizar_pregunta.setRespuesta1("");
+        }
+             
+        if (ButtonSi2.isSelected()){ actualizar_pregunta.setOpcion2(1); txtRazon2.setEnabled(true);} else if (ButtonNo2.isSelected()) { actualizar_pregunta.setOpcion2(0);} else {actualizar_pregunta.setOpcion2(0);}
+        if(txtRazon1.getText()!=""){
+            actualizar_pregunta.setRespuesta2(txtRazon2.getText());
+        }else{
+            actualizar_pregunta.setRespuesta2("");
+        }
+               
+        if (ButtonSi3.isSelected()){ actualizar_pregunta.setOpcion3(1); txtRazon31.setEnabled(true);txtRazon32.setEnabled(true);} else if (ButtonNo3.isSelected()){actualizar_pregunta.setOpcion3(0);
+        }else {actualizar_pregunta.setOpcion3(0);}
+        if(txtRazon31.getText()!=""){
+            actualizar_pregunta.setRespuesta31(txtRazon31.getText());
+        }else{
+            actualizar_pregunta.setRespuesta31("");
+        }
+        if(txtRazon32.getText()!=""){
+            actualizar_pregunta.setRespuesta32(txtRazon32.getText());
+        }else{
+            actualizar_pregunta.setRespuesta32("");
+        }
+        
+        if (ButtonSi4.isSelected()){ actualizar_pregunta.setOpcion4(1); txtRazon4.setEnabled(true);} else if (ButtonNo4.isSelected()) { actualizar_pregunta.setOpcion4(0); }else {actualizar_pregunta.setOpcion4(0);}
+        if(txtRazon4.getText()!=""){
+            actualizar_pregunta.setRespuesta4(txtRazon4.getText());
+        }else{
+            actualizar_pregunta.setRespuesta4("");
+        }
+
+        if (ButtonSi5.isSelected()){ actualizar_pregunta.setOpcion5(1); txtRazon5.setEnabled(true);} else if (ButtonNo5.isSelected()) { actualizar_pregunta.setOpcion5(0); } else {actualizar_pregunta.setOpcion5(0);}
+        if(txtRazon5.getText()!=""){
+            actualizar_pregunta.setRespuesta5(txtRazon5.getText());
+        }else{
+            actualizar_pregunta.setRespuesta5("");
+        }    
+
+        if (ButtonSi6.isSelected()){ actualizar_pregunta.setOpcion6(1); } else if (ButtonNo6.isSelected()) { actualizar_pregunta.setOpcion6(0); txtRazon6.setEnabled(false);} else {actualizar_pregunta.setOpcion6(0);}
+        if(txtRazon6.getText()!=""){
+            actualizar_pregunta.setRespuesta6(txtRazon6.getText());
+        }else{
+            actualizar_pregunta.setRespuesta6("");
+        } 
+        
+        if (ButtonSi7.isSelected()){ actualizar_pregunta.setOpcion7(1); } else if (ButtonNo7.isSelected()) { actualizar_pregunta.setOpcion7(0); txtRazon7.setEnabled(false);} else {actualizar_pregunta.setOpcion7(0);}
+        if(txtRazon7.getText()!=""){
+            actualizar_pregunta.setRespuesta7(txtRazon7.getText());
+        }else{
+            actualizar_pregunta.setRespuesta7("");
+        }
+    }
+    
+    public boolean validarDatos(){
+        return sinCamposVacios()
+                && soporte.validacionCedula(txtCedula.getText().trim());
+    }
+    
+    public boolean sinCamposVacios(){
+        return cedulaLlena() && nombreLleno() && apellidoLleno();
+    }
+    
+    private boolean cedulaLlena(){
+        if(txtCedula.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese cedula del estudiante");
+            return false;
+        }
+        else{
+            return true;
+        }  
+    }
+    
+    private boolean nombreLleno(){
+        if(txtNombre.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese nombre del estudiante");
+            return false;
+        }
+        else{
+            return true;
+        }  
+    }
+    
+    private boolean apellidoLleno(){
+        if(txtApellido.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese apellido del estudiante");
+            return false;
+        }
+        else{
+            return true;
+        }  
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
+        buttonGroup7 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         pnlEclesiast = new javax.swing.JPanel();
         lbl1 = new javax.swing.JLabel();
@@ -400,72 +512,102 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         jLabel1.setText("2. Antes de esta iglesia, ¿asistías a alguna otra?");
 
         ButtonNo1.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(ButtonNo1);
         ButtonNo1.setText("No");
 
         ButtonSi1.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(ButtonSi1);
         ButtonSi1.setText("Si");
 
         jLabel2.setText("Fecha");
 
+        txtRazon1.setEnabled(false);
+
         ButtonSi2.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup2.add(ButtonSi2);
         ButtonSi2.setText("Si");
 
         ButtonNo2.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup2.add(ButtonNo2);
         ButtonNo2.setText("No");
 
         jLabel3.setText("¿A cual?");
 
+        txtRazon2.setEnabled(false);
+
         jLabel4.setText("3. ¿Ha sido bautizado en una Iglesia Cristiana Evangélica?");
 
         ButtonSi3.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup3.add(ButtonSi3);
         ButtonSi3.setText("Si");
 
         ButtonNo3.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup3.add(ButtonNo3);
         ButtonNo3.setText("No");
 
         jLabel5.setText("¿Cuándo?");
+
+        txtRazon31.setEnabled(false);
+
+        txtRazon32.setEnabled(false);
 
         jLabel7.setText("¿Dónde?");
 
         jLabel8.setText("4. ¿Asiste a un discipulado?");
 
         ButtonSi4.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup4.add(ButtonSi4);
         ButtonSi4.setText("Si");
 
         ButtonNo4.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup4.add(ButtonNo4);
         ButtonNo4.setText("No");
 
         jLabel9.setText("¿Cuál es su discipulador?");
 
+        txtRazon4.setEnabled(false);
+
         jLabel10.setText("5. ¿Estás sirviendo en un ministerio de la IAN?");
 
         ButtonSi5.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup5.add(ButtonSi5);
         ButtonSi5.setText("Si");
 
         ButtonNo5.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup5.add(ButtonNo5);
         ButtonNo5.setText("No");
 
         jLabel11.setText("¿Cuál?");
 
+        txtRazon5.setEnabled(false);
+
         jLabel12.setText("6. ¿Ha asistido al Encuentro de Sanidad de la IAN?");
 
         ButtonSi6.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup6.add(ButtonSi6);
         ButtonSi6.setText("Si");
 
         ButtonNo6.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup6.add(ButtonNo6);
         ButtonNo6.setText("No");
 
         jLabel13.setText("¿Por qué?");
 
+        txtRazon6.setEnabled(false);
+
         jLabel14.setText("7. ¿Ha asistido al Encuentro de Libertad de la IAN?");
 
         ButtonSi7.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup7.add(ButtonSi7);
         ButtonSi7.setText("Si");
 
         ButtonNo7.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup7.add(ButtonNo7);
         ButtonNo7.setText("No");
 
         jLabel15.setText("¿Por qué?");
+
+        txtRazon7.setEnabled(false);
 
         btnNueva.setText("Nuevo");
         btnNueva.addActionListener(new java.awt.event.ActionListener() {
@@ -665,9 +807,26 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
         lblCorreo.setText("Correo Electrónico:");
 
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyTyped(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         txtCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCelularActionPerformed(evt);
+            }
+        });
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularKeyTyped(evt);
             }
         });
 
@@ -685,6 +844,12 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
 
         lblNacimiento.setText("Fecha de Nacimiento:");
 
+        txthijos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txthijosKeyTyped(evt);
+            }
+        });
+
         lblTelefono.setText("Teléfono:");
 
         txtNombreE.addActionListener(new java.awt.event.ActionListener() {
@@ -694,6 +859,12 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         });
 
         lblCelular.setText("Celular:");
+
+        txtTelfE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelfEKeyTyped(evt);
+            }
+        });
 
         lblInstruccion.setText("Nivel de Instrucción:");
 
@@ -954,46 +1125,84 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         try{
             consulta_estudiante = new Estudiante();
             pregunta_estudiante = new Preguntas();
-        
+            
+            //Setear cedula para consulta
             consulta_estudiante.setCedula(Integer.parseInt(txtCedula.getText()));
             cedula=Integer.parseInt(txtCedula.getText());
             
+            //Consultar estudiante por cedula
             controlador = new ControladorRegistroUsuario();
+            controladorPreguntas = new ControladorRegistroPreguntas();
             consulta_estudiante=controlador.consultarCedula(cedula);
-            pregunta_estudiante= controlador.consultarCedulaPreguntas(consulta_estudiante);
+            
+            //Consulta Preguntas
+            pregunta_estudiante= controladorPreguntas.consultarCedulaPreguntas(consulta_estudiante);
             System.out.println(txtCedula.getText());
+            
+            //Seteo de datos
             if(consulta_estudiante!=null){
                 setConsultaEstudiante();
                 setPreguntasEstudiante();
             }
-            Habilitar(true);
         }
         catch(Exception e){
-              JOptionPane.showMessageDialog(null, e.getMessage()+e.getStackTrace());
+              //JOptionPane.showMessageDialog(null, e.getMessage()+e.getStackTrace());
               JOptionPane.showMessageDialog(null, "No se encuentra registrado");
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
         try{
+            //Instancia de objetos
+            actualizar_estudiante = new Estudiante();
+            actualizar_pregunta = new Preguntas();
+            controlador = new ControladorRegistroUsuario();
+            
+            //Seteo de datos para editar
             editEstudiante();
             editPreguntas();
-            controlador.editarEstudiante(actualizar_estudiante);
-            JOptionPane.showMessageDialog(null,"Estudiante Actualizado");
+            if (validarDatos()) {
+            //Actualizacion de datos
+                controlador.editarEstudiante(actualizar_estudiante);
+                controladorPreguntas.editarPregunta(actualizar_pregunta);
+                JOptionPane.showMessageDialog(null,"Estudiante Actualizado");
+            }
         }catch(Exception e){
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"No se puede actualizar \n"+e);
+            JOptionPane.showMessageDialog(null,"No se puede Actualizar \n");
+            e.printStackTrace(System.out);
         }
     }//GEN-LAST:event_btnGuardar2ActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        Habilitar(false);
+        Habilitar(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
         limpiar();
-        Habilitar(true);
+        Habilitar(false);
+        txtCedula.setEnabled(true);        
     }//GEN-LAST:event_btnNuevaActionPerformed
+
+    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtCedulaKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtCelularKeyTyped
+
+    private void txthijosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txthijosKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txthijosKeyTyped
+
+    private void txtTelfEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfEKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelfEKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1019,6 +1228,13 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnGuardar2;
     private javax.swing.JButton btnNueva;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.ButtonGroup buttonGroup7;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
