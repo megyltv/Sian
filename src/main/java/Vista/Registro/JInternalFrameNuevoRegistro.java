@@ -6,9 +6,12 @@ import Entidades.Estudiante;
 import Entidades.Preguntas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import soporte.botonListener;
+import soporte.metodosSoporte;
 
 public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
@@ -16,21 +19,35 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     Preguntas pregunta;
     ControladorRegistroUsuario controlador;
     ControladorRegistroPreguntas controladorPreguntas;
+    metodosSoporte soporte;
+    botonListener list;
             
     public JInternalFrameNuevoRegistro() {
         initComponents();
         habilitarPreguntas();
-        //Habilitacion de botones si o no
-        ButtonSi1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(true);
-        }});
-        ButtonNo1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                     JInternalFrameNuevoRegistro.this.txtRazon1.setEnabled(false);
-        }});
+        soporte = new metodosSoporte();
+        list = new botonListener();
+
+        botones();
+    }
+    
+    public void botones(){
+        list.Listener(ButtonSi1, txtRazon1, true);
+        list.Listener(ButtonNo1, txtRazon1, false);
+        list.Listener(ButtonSi2, txtRazon2, true);
+        list.Listener(ButtonNo2, txtRazon2, false);
+        list.Listener(ButtonSi3, txtRazon31, true);
+        list.Listener(ButtonSi3, txtRazon32, true);
+        list.Listener(ButtonNo3, txtRazon31, false);
+        list.Listener(ButtonNo3, txtRazon32, false);
+        list.Listener(ButtonSi4, txtRazon4, true);
+        list.Listener(ButtonNo4, txtRazon4, false);
+        list.Listener(ButtonSi5, txtRazon5, true);
+        list.Listener(ButtonNo5, txtRazon5, false);
+        list.Listener(ButtonSi6, txtRazon6, false);
+        list.Listener(ButtonNo6, txtRazon6, true);
+        list.Listener(ButtonSi7, txtRazon7, false);
+        list.Listener(ButtonNo7, txtRazon7, true);
     }
     
     public void limpiar(){
@@ -98,11 +115,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     
     public void setDatosEstudiante(){
         nuevo_estudiante = new Estudiante();
-        try {
-            nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ingresar Cédula");
-        }
+        nuevo_estudiante.setCedula(Integer.parseInt(txtCedula.getText().trim()));
         
         if(txtNombre.getText()!=""){
             nuevo_estudiante.setNombres((txtNombre.getText()));
@@ -246,6 +259,57 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
             pregunta.setRespuesta7("");
         }     
     }
+    
+    public boolean validarDatos(){
+        return sinCamposVacios()
+                && soporte.validacionCedula(txtCedula.getText().trim())
+                && validarCedulaUnica();
+    }
+    
+    public boolean sinCamposVacios(){
+        return cedulaLlena() && nombreLleno() && apellidoLleno();
+    }
+    
+    private boolean cedulaLlena(){
+        if(txtCedula.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese cedula del estudiante");
+            return false;
+        }
+        else{
+            return true;
+        }  
+    }
+    
+    private boolean nombreLleno(){
+        if(txtNombre.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese nombre del estudiante");
+            return false;
+        }
+        else{
+            return true;
+        }  
+    }
+    
+    private boolean apellidoLleno(){
+        if(txtApellido.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Ingrese apellido del estudiante");
+            return false;
+        }
+        else{
+            return true;
+        }  
+    }
+    
+    public boolean validarCedulaUnica() {
+        Estudiante enBase = controlador.consultarCedula(Integer.parseInt(txtCedula.getText()));
+        if (enBase != null) {
+            JOptionPane.showMessageDialog(null,"El estudiante con esa cédula ya está registrado");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -352,7 +416,6 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonNo1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(ButtonNo1);
         ButtonNo1.setText("No");
-        ButtonNo1.setEnabled(false);
 
         ButtonSi1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(ButtonSi1);
@@ -365,12 +428,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi2.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(ButtonSi2);
         ButtonSi2.setText("Si");
-        ButtonSi2.setEnabled(false);
 
         ButtonNo2.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(ButtonNo2);
         ButtonNo2.setText("No");
-        ButtonNo2.setEnabled(false);
 
         jLabel3.setText("¿A cual?");
 
@@ -381,12 +442,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi3.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup3.add(ButtonSi3);
         ButtonSi3.setText("Si");
-        ButtonSi3.setEnabled(false);
 
         ButtonNo3.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup3.add(ButtonNo3);
         ButtonNo3.setText("No");
-        ButtonNo3.setEnabled(false);
 
         jLabel5.setText("¿Cuándo?");
 
@@ -401,12 +460,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi4.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup4.add(ButtonSi4);
         ButtonSi4.setText("Si");
-        ButtonSi4.setEnabled(false);
 
         ButtonNo4.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup4.add(ButtonNo4);
         ButtonNo4.setText("No");
-        ButtonNo4.setEnabled(false);
 
         jLabel9.setText("¿Cuál es su discipulador?");
 
@@ -417,12 +474,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi5.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup5.add(ButtonSi5);
         ButtonSi5.setText("Si");
-        ButtonSi5.setEnabled(false);
 
         ButtonNo5.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup5.add(ButtonNo5);
         ButtonNo5.setText("No");
-        ButtonNo5.setEnabled(false);
 
         jLabel11.setText("¿Cuál?");
 
@@ -433,12 +488,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi6.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup6.add(ButtonSi6);
         ButtonSi6.setText("Si");
-        ButtonSi6.setEnabled(false);
 
         ButtonNo6.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup6.add(ButtonNo6);
         ButtonNo6.setText("No");
-        ButtonNo6.setEnabled(false);
 
         jLabel13.setText("¿Por qué?");
 
@@ -449,12 +502,10 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         ButtonSi7.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup7.add(ButtonSi7);
         ButtonSi7.setText("Si");
-        ButtonSi7.setEnabled(false);
 
         ButtonNo7.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup7.add(ButtonNo7);
         ButtonNo7.setText("No");
-        ButtonNo7.setEnabled(false);
 
         jLabel15.setText("¿Por qué?");
 
@@ -651,9 +702,26 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         lblCorreo.setText("Correo Electrónico:");
 
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyTyped(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
         txtCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCelularActionPerformed(evt);
+            }
+        });
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularKeyTyped(evt);
             }
         });
 
@@ -671,6 +739,12 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
         lblNacimiento.setText("Fecha de Nacimiento:");
 
+        txthijos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txthijosKeyTyped(evt);
+            }
+        });
+
         lblTelefono.setText("Teléfono:");
 
         txtNombreE.addActionListener(new java.awt.event.ActionListener() {
@@ -680,6 +754,12 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         });
 
         lblCelular.setText("Celular:");
+
+        txtTelfE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelfEKeyTyped(evt);
+            }
+        });
 
         lblInstruccion.setText("Nivel de Instrucción:");
 
@@ -905,21 +985,42 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         setDatosEstudiante();
-        
-        controlador = new ControladorRegistroUsuario();
-        controladorPreguntas = new ControladorRegistroPreguntas();
         try {
-            controlador.crearEstudiante(nuevo_estudiante);  
-            setPreguntas();
-            controladorPreguntas.crearPreguntas(pregunta);
-            JOptionPane.showMessageDialog(null,"Estudiante Registrado");
+            controlador = new ControladorRegistroUsuario();
+            controladorPreguntas = new ControladorRegistroPreguntas();
             
+            if (validarDatos()) {
+                controlador.crearEstudiante(nuevo_estudiante);  
+                setPreguntas();
+                controladorPreguntas.crearPreguntas(pregunta);
+                JOptionPane.showMessageDialog(null,"Estudiante Registrado");
+            }
             //limpiar();
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+            JOptionPane.showMessageDialog(null,"Cédula Incorrecta");
+        } 
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtCedulaKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtCelularKeyTyped
+
+    private void txthijosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txthijosKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txthijosKeyTyped
+
+    private void txtTelfEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelfEKeyTyped
+        soporte.soloNumeros(evt);
+    }//GEN-LAST:event_txtTelfEKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
