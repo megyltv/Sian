@@ -7,7 +7,6 @@ package Vista.Periodo;
 
 import Controlador.Periodo.ControladorCrudPeriodo;
 import Entidades.Periodo;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +21,7 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
     //Inicializacion de variables
     Periodo periodoConsulta=new Periodo();
     ControladorCrudPeriodo controladorPeriodo= new ControladorCrudPeriodo();
+    Periodo periodoActualizado= new Periodo();
   
     //Constructor
     public JInternalFrameConsultarPeriodo() {
@@ -51,6 +51,34 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
         dateFechaInicio.setEnabled(estado);
         dateFechaFin.setEnabled(estado);
     }
+    
+    //Método para obtener los datos actualizados de la interfaz
+     public void setDatosPeriodoActualizado (){
+         try {
+             
+             periodoActualizado.setIdperiodo(periodoConsulta.getIdperiodo());
+             periodoActualizado.setPeriodo(txtNombrePeriodo.getText().trim());
+             periodoActualizado.setFechainicio(dateFechaInicio.getDate());
+             periodoActualizado.setFechafin(dateFechaFin.getDate());
+         }
+         catch (Exception e) {
+              JOptionPane.showMessageDialog(null, "Verifique los datos Actualizados");
+         }
+     }
+     
+     //Método para validar los datos ingresados
+     public boolean validarDatosPeriodo()
+     {
+         boolean bandera=false; 
+         if ((dateFechaInicio.getDate()!=null)&&(dateFechaFin.getDate()!=null)&&(dateFechaFin.getDate().compareTo(dateFechaInicio.getDate())==1)){
+             bandera=true;
+         }
+         if(txtNombrePeriodo.getText().equals(""))
+         {
+             bandera=false;
+         }        
+         return bandera; 
+     }
     
     
     /**
@@ -200,6 +228,11 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
         });
 
         btnGuardar.setLabel("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setLabel("Eliminar");
 
@@ -308,6 +341,26 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
         habilitarDeshabilitar(true);
         btnGuardar.setEnabled(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try{
+                 //Llamada al metodo validar antes de que se guarden los datos
+                 if (validarDatosPeriodo())
+                 {
+                    //Llamado al método para obtener los datos actualizados
+                     setDatosPeriodoActualizado();
+                    controladorPeriodo.editarPeriodo(periodoActualizado);
+                    JOptionPane.showMessageDialog(null,"Periodo Actualizado");
+                 }
+                 else {
+                     JOptionPane.showMessageDialog(null,"Verifique que los datos ingresados para la actualización sean los correctos");
+                }
+             }
+         catch(Exception e){
+             System.out.println(e);
+             JOptionPane.showMessageDialog(null,"No se puede actualizar \n"+e);
+         }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

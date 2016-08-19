@@ -7,6 +7,7 @@ package Controlador.Periodo;
 
 import Entidades.Periodo;
 import JpaControllers.PeriodoJpaController;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -38,4 +39,11 @@ public class ControladorCrudPeriodo {
         }
         return periodoBuscado;
     }
+    
+     //Método para editar periodo
+     public void editarPeriodo (Periodo periodo) throws NonexistentEntityException, Exception{
+        em = controladorPeriodo.getEntityManager();
+         controladorPeriodo.edit(periodo);
+     }
+    
 }
