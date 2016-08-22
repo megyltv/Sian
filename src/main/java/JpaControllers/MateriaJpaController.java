@@ -105,7 +105,7 @@ public class MateriaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Materia persistentMateria = em.find(Materia.class, materia.getIdmateria());
-            List<Horario> horarioListOld = persistentMateria.getHorarioList();
+            /*List<Horario> horarioListOld = persistentMateria.getHorarioList();
             List<Horario> horarioListNew = materia.getHorarioList();
             List<Inscripcion> inscripcionListOld = persistentMateria.getInscripcionList();
             List<Inscripcion> inscripcionListNew = materia.getInscripcionList();
@@ -151,9 +151,9 @@ public class MateriaJpaController implements Serializable {
                 attachedHorarioMateriaListNew.add(horarioMateriaListNewHorarioMateriaToAttach);
             }
             horarioMateriaListNew = attachedHorarioMateriaListNew;
-            materia.setHorarioMateriaList(horarioMateriaListNew);
+            materia.setHorarioMateriaList(horarioMateriaListNew);*/
             materia = em.merge(materia);
-            for (Horario horarioListOldHorario : horarioListOld) {
+            /*for (Horario horarioListOldHorario : horarioListOld) {
                 if (!horarioListNew.contains(horarioListOldHorario)) {
                     horarioListOldHorario.getMateriaList().remove(materia);
                     horarioListOldHorario = em.merge(horarioListOldHorario);
@@ -186,7 +186,7 @@ public class MateriaJpaController implements Serializable {
                         oldIdmateriaOfHorarioMateriaListNewHorarioMateria = em.merge(oldIdmateriaOfHorarioMateriaListNewHorarioMateria);
                     }
                 }
-            }
+            }*/
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
