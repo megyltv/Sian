@@ -29,6 +29,7 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
         habilitarDeshabilitar(false);
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
+        btnActualizar.setEnabled(false);
     }
 
     //Método para llenar los campos de la interfaz con los datos obtenidos de la busqueda
@@ -328,6 +329,7 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
                 setDatosPeriodoConsulta();                
             }
             txtParamBusqPeriodo.setText("");
+            btnActualizar.setEnabled(true);
             habilitarDeshabilitar(false);
             btnGuardar.setEnabled(false);
         }
@@ -351,6 +353,9 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
                      setDatosPeriodoActualizado();
                     controladorPeriodo.editarPeriodo(periodoActualizado);
                     JOptionPane.showMessageDialog(null,"Periodo Actualizado");
+                     habilitarDeshabilitar(false);
+                     btnGuardar.setEnabled(false);
+                     
                  }
                  else {
                      JOptionPane.showMessageDialog(null,"Verifique que los datos ingresados para la actualización sean los correctos");

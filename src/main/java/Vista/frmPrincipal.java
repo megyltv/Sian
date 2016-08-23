@@ -3,6 +3,7 @@ package Vista;
 import Vista.Periodo.JInternalFrameNuevoPeriodo;
 import Vista.Calificacion.JInternalFrameConsultaCalificacion;
 import Vista.Calificacion.JInternalFrameIngresaCalificacion;
+import Vista.Horario.JInternalFrameNuevoHorario;
 import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
 import Vista.Periodo.JInternalFrameConsultarPeriodo;
 import Vista.Registro.JInternalFrameConsultaRegistro;
@@ -21,6 +22,9 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameGeneraReporte internalFrameGeneraReporte;
     JInternalFrameNuevoPeriodo internalFrameNuevoPeriodo;
     JInternalFrameConsultarPeriodo internalFrameConsultarPeriodo;
+    JInternalFrameNuevoHorario internalFrameNuevoHorario;
+    
+    
     JDesktopPane dp=new JDesktopPane();
     
     
@@ -278,7 +282,8 @@ public class frmPrincipal extends javax.swing.JFrame{
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+         internalFrameNuevoHorario = new JInternalFrameNuevoHorario();
+        mostrarVentana(internalFrameNuevoHorario); 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
     
     private void mostrarVentana(JInternalFrame frame ){
