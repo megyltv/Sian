@@ -36,9 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Materia.findByNivel", query = "SELECT m FROM Materia m WHERE m.nivel = :nivel")})
 public class Materia implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
-    private List<HorarioMateria> horarioMateriaList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -132,15 +129,6 @@ public class Materia implements Serializable {
     @Override
     public String toString() {
         return "Entidades.Materia[ idmateria=" + idmateria + " ]";
-    }
-
-    @XmlTransient
-    public List<HorarioMateria> getHorarioMateriaList() {
-        return horarioMateriaList;
-    }
-
-    public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
-        this.horarioMateriaList = horarioMateriaList;
     }
     
 }

@@ -282,7 +282,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ingres&#xe9; el nombre de Periodo:"/>
+                <Property name="text" type="java.lang.String" value="Ingrese el nombre de Periodo:"/>
               </Properties>
             </Component>
           </SubComponents>
