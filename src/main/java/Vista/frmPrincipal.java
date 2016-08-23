@@ -4,6 +4,8 @@ import Vista.Periodo.JInternalFrameNuevoPeriodo;
 import Vista.Calificacion.JInternalFrameConsultaCalificacion;
 import Vista.Calificacion.JInternalFrameIngresaCalificacion;
 import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
+import Vista.Materia.JInternalFrameConsultarMateria;
+import Vista.Materia.JInternalFrameNuevaMateria;
 import Vista.Periodo.JInternalFrameConsultarPeriodo;
 import Vista.Registro.JInternalFrameConsultaRegistro;
 import Vista.Registro.JInternalFrameNuevoRegistro;
@@ -21,6 +23,8 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameGeneraReporte internalFrameGeneraReporte;
     JInternalFrameNuevoPeriodo internalFrameNuevoPeriodo;
     JInternalFrameConsultarPeriodo internalFrameConsultarPeriodo;
+    JInternalFrameNuevaMateria internalFrameNuevaMateria;
+    JInternalFrameConsultarMateria internalFrameConsultarMateria;
     JDesktopPane dp=new JDesktopPane();
     
     
@@ -191,9 +195,19 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuAcademia.add(jSeparator2);
 
         jMenuItem5.setText("Crear nueva materia");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menuAcademia.add(jMenuItem5);
 
         jMenuItem6.setText("Consultar/Actualizar materia");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         menuAcademia.add(jMenuItem6);
         menuAcademia.add(jSeparator3);
 
@@ -280,6 +294,16 @@ public class frmPrincipal extends javax.swing.JFrame{
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        internalFrameNuevaMateria = new JInternalFrameNuevaMateria();
+        mostrarVentana(internalFrameNuevaMateria);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        internalFrameConsultarMateria = new JInternalFrameConsultarMateria();
+        mostrarVentana(internalFrameConsultarMateria);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
     
     private void mostrarVentana(JInternalFrame frame ){
         pnlPrincipal.removeAll();
