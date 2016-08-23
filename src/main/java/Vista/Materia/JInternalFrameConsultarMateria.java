@@ -7,6 +7,8 @@ package Vista.Materia;
 
 import Controlador.Materia.ControladorCrudMateria;
 import Entidades.Materia;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -314,6 +316,7 @@ public class JInternalFrameConsultarMateria extends javax.swing.JInternalFrame {
         }catch(Exception e){
             System.out.println(e);
             JOptionPane.showMessageDialog(null,"No se puede actualizar \n"+e);
+            Logger.getLogger(JInternalFrameConsultarMateria.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

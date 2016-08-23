@@ -20,7 +20,7 @@ public class ControladorCrudMateria {
     
     //Método para editar materia
      public void editarMateria (Materia materia) throws NonexistentEntityException, Exception{
-         em = controladorMateria.getEntityManager();
+        em = controladorMateria.getEntityManager();
         controladorMateria.edit(materia);
      }
      

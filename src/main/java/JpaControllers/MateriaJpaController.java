@@ -14,7 +14,6 @@ import Entidades.Horario;
 import java.util.ArrayList;
 import java.util.List;
 import Entidades.Inscripcion;
-import Entidades.HorarioMateria;
 import Entidades.Materia;
 import JpaControllers.exceptions.IllegalOrphanException;
 import JpaControllers.exceptions.NonexistentEntityException;
@@ -43,9 +42,6 @@ public class MateriaJpaController implements Serializable {
         if (materia.getInscripcionList() == null) {
             materia.setInscripcionList(new ArrayList<Inscripcion>());
         }
-        if (materia.getHorarioMateriaList() == null) {
-            materia.setHorarioMateriaList(new ArrayList<HorarioMateria>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -62,12 +58,6 @@ public class MateriaJpaController implements Serializable {
                 attachedInscripcionList.add(inscripcionListInscripcionToAttach);
             }
             materia.setInscripcionList(attachedInscripcionList);
-            List<HorarioMateria> attachedHorarioMateriaList = new ArrayList<HorarioMateria>();
-            for (HorarioMateria horarioMateriaListHorarioMateriaToAttach : materia.getHorarioMateriaList()) {
-                horarioMateriaListHorarioMateriaToAttach = em.getReference(horarioMateriaListHorarioMateriaToAttach.getClass(), horarioMateriaListHorarioMateriaToAttach.getIdmateriahorario());
-                attachedHorarioMateriaList.add(horarioMateriaListHorarioMateriaToAttach);
-            }
-            materia.setHorarioMateriaList(attachedHorarioMateriaList);
             em.persist(materia);
             for (Horario horarioListHorario : materia.getHorarioList()) {
                 horarioListHorario.getMateriaList().add(materia);
@@ -80,15 +70,6 @@ public class MateriaJpaController implements Serializable {
                 if (oldIdmateriaOfInscripcionListInscripcion != null) {
                     oldIdmateriaOfInscripcionListInscripcion.getInscripcionList().remove(inscripcionListInscripcion);
                     oldIdmateriaOfInscripcionListInscripcion = em.merge(oldIdmateriaOfInscripcionListInscripcion);
-                }
-            }
-            for (HorarioMateria horarioMateriaListHorarioMateria : materia.getHorarioMateriaList()) {
-                Materia oldIdmateriaOfHorarioMateriaListHorarioMateria = horarioMateriaListHorarioMateria.getIdmateria();
-                horarioMateriaListHorarioMateria.setIdmateria(materia);
-                horarioMateriaListHorarioMateria = em.merge(horarioMateriaListHorarioMateria);
-                if (oldIdmateriaOfHorarioMateriaListHorarioMateria != null) {
-                    oldIdmateriaOfHorarioMateriaListHorarioMateria.getHorarioMateriaList().remove(horarioMateriaListHorarioMateria);
-                    oldIdmateriaOfHorarioMateriaListHorarioMateria = em.merge(oldIdmateriaOfHorarioMateriaListHorarioMateria);
                 }
             }
             em.getTransaction().commit();
@@ -105,88 +86,60 @@ public class MateriaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Materia persistentMateria = em.find(Materia.class, materia.getIdmateria());
-            /*List<Horario> horarioListOld = persistentMateria.getHorarioList();
-            List<Horario> horarioListNew = materia.getHorarioList();
-            List<Inscripcion> inscripcionListOld = persistentMateria.getInscripcionList();
-            List<Inscripcion> inscripcionListNew = materia.getInscripcionList();
-            List<HorarioMateria> horarioMateriaListOld = persistentMateria.getHorarioMateriaList();
-            List<HorarioMateria> horarioMateriaListNew = materia.getHorarioMateriaList();
-            List<String> illegalOrphanMessages = null;
-            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
-                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its idmateria field is not nullable.");
-                }
-            }
-            for (HorarioMateria horarioMateriaListOldHorarioMateria : horarioMateriaListOld) {
-                if (!horarioMateriaListNew.contains(horarioMateriaListOldHorarioMateria)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain HorarioMateria " + horarioMateriaListOldHorarioMateria + " since its idmateria field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<Horario> attachedHorarioListNew = new ArrayList<Horario>();
-            for (Horario horarioListNewHorarioToAttach : horarioListNew) {
-                horarioListNewHorarioToAttach = em.getReference(horarioListNewHorarioToAttach.getClass(), horarioListNewHorarioToAttach.getIdhorario());
-                attachedHorarioListNew.add(horarioListNewHorarioToAttach);
-            }
-            horarioListNew = attachedHorarioListNew;
-            materia.setHorarioList(horarioListNew);
-            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
-            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
-                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
-                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
-            }
-            inscripcionListNew = attachedInscripcionListNew;
-            materia.setInscripcionList(inscripcionListNew);
-            List<HorarioMateria> attachedHorarioMateriaListNew = new ArrayList<HorarioMateria>();
-            for (HorarioMateria horarioMateriaListNewHorarioMateriaToAttach : horarioMateriaListNew) {
-                horarioMateriaListNewHorarioMateriaToAttach = em.getReference(horarioMateriaListNewHorarioMateriaToAttach.getClass(), horarioMateriaListNewHorarioMateriaToAttach.getIdmateriahorario());
-                attachedHorarioMateriaListNew.add(horarioMateriaListNewHorarioMateriaToAttach);
-            }
-            horarioMateriaListNew = attachedHorarioMateriaListNew;
-            materia.setHorarioMateriaList(horarioMateriaListNew);*/
+//            List<Horario> horarioListOld = persistentMateria.getHorarioList();
+//            List<Horario> horarioListNew = materia.getHorarioList();
+//            List<Inscripcion> inscripcionListOld = persistentMateria.getInscripcionList();
+//            List<Inscripcion> inscripcionListNew = materia.getInscripcionList();
+//            List<String> illegalOrphanMessages = null;
+//            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
+//                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
+//                    if (illegalOrphanMessages == null) {
+//                        illegalOrphanMessages = new ArrayList<String>();
+//                    }
+//                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its idmateria field is not nullable.");
+//                }
+//            }
+//            if (illegalOrphanMessages != null) {
+//                throw new IllegalOrphanException(illegalOrphanMessages);
+//            }
+//            List<Horario> attachedHorarioListNew = new ArrayList<Horario>();
+//            for (Horario horarioListNewHorarioToAttach : horarioListNew) {
+//                horarioListNewHorarioToAttach = em.getReference(horarioListNewHorarioToAttach.getClass(), horarioListNewHorarioToAttach.getIdhorario());
+//                attachedHorarioListNew.add(horarioListNewHorarioToAttach);
+//            }
+//            horarioListNew = attachedHorarioListNew;
+//            materia.setHorarioList(horarioListNew);
+//            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
+//            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
+//                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
+//                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
+//            }
+//            inscripcionListNew = attachedInscripcionListNew;
+//            materia.setInscripcionList(inscripcionListNew);
             materia = em.merge(materia);
-            /*for (Horario horarioListOldHorario : horarioListOld) {
-                if (!horarioListNew.contains(horarioListOldHorario)) {
-                    horarioListOldHorario.getMateriaList().remove(materia);
-                    horarioListOldHorario = em.merge(horarioListOldHorario);
-                }
-            }
-            for (Horario horarioListNewHorario : horarioListNew) {
-                if (!horarioListOld.contains(horarioListNewHorario)) {
-                    horarioListNewHorario.getMateriaList().add(materia);
-                    horarioListNewHorario = em.merge(horarioListNewHorario);
-                }
-            }
-            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
-                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
-                    Materia oldIdmateriaOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdmateria();
-                    inscripcionListNewInscripcion.setIdmateria(materia);
-                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
-                    if (oldIdmateriaOfInscripcionListNewInscripcion != null && !oldIdmateriaOfInscripcionListNewInscripcion.equals(materia)) {
-                        oldIdmateriaOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
-                        oldIdmateriaOfInscripcionListNewInscripcion = em.merge(oldIdmateriaOfInscripcionListNewInscripcion);
-                    }
-                }
-            }
-            for (HorarioMateria horarioMateriaListNewHorarioMateria : horarioMateriaListNew) {
-                if (!horarioMateriaListOld.contains(horarioMateriaListNewHorarioMateria)) {
-                    Materia oldIdmateriaOfHorarioMateriaListNewHorarioMateria = horarioMateriaListNewHorarioMateria.getIdmateria();
-                    horarioMateriaListNewHorarioMateria.setIdmateria(materia);
-                    horarioMateriaListNewHorarioMateria = em.merge(horarioMateriaListNewHorarioMateria);
-                    if (oldIdmateriaOfHorarioMateriaListNewHorarioMateria != null && !oldIdmateriaOfHorarioMateriaListNewHorarioMateria.equals(materia)) {
-                        oldIdmateriaOfHorarioMateriaListNewHorarioMateria.getHorarioMateriaList().remove(horarioMateriaListNewHorarioMateria);
-                        oldIdmateriaOfHorarioMateriaListNewHorarioMateria = em.merge(oldIdmateriaOfHorarioMateriaListNewHorarioMateria);
-                    }
-                }
-            }*/
+//            for (Horario horarioListOldHorario : horarioListOld) {
+//                if (!horarioListNew.contains(horarioListOldHorario)) {
+//                    horarioListOldHorario.getMateriaList().remove(materia);
+//                    horarioListOldHorario = em.merge(horarioListOldHorario);
+//                }
+//            }
+//            for (Horario horarioListNewHorario : horarioListNew) {
+//                if (!horarioListOld.contains(horarioListNewHorario)) {
+//                    horarioListNewHorario.getMateriaList().add(materia);
+//                    horarioListNewHorario = em.merge(horarioListNewHorario);
+//                }
+//            }
+//            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
+//                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
+//                    Materia oldIdmateriaOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdmateria();
+//                    inscripcionListNewInscripcion.setIdmateria(materia);
+//                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
+//                    if (oldIdmateriaOfInscripcionListNewInscripcion != null && !oldIdmateriaOfInscripcionListNewInscripcion.equals(materia)) {
+//                        oldIdmateriaOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
+//                        oldIdmateriaOfInscripcionListNewInscripcion = em.merge(oldIdmateriaOfInscripcionListNewInscripcion);
+//                    }
+//                }
+//            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -223,13 +176,6 @@ public class MateriaJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Materia (" + materia + ") cannot be destroyed since the Inscripcion " + inscripcionListOrphanCheckInscripcion + " in its inscripcionList field has a non-nullable idmateria field.");
-            }
-            List<HorarioMateria> horarioMateriaListOrphanCheck = materia.getHorarioMateriaList();
-            for (HorarioMateria horarioMateriaListOrphanCheckHorarioMateria : horarioMateriaListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Materia (" + materia + ") cannot be destroyed since the HorarioMateria " + horarioMateriaListOrphanCheckHorarioMateria + " in its horarioMateriaList field has a non-nullable idmateria field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
