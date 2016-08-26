@@ -11,7 +11,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Entidades.Materia;
+import Entidades.HorarioMateria;
+import JpaControllers.exceptions.IllegalOrphanException;
 import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,23 +35,28 @@ public class HorarioJpaController implements Serializable {
     }
 
     public void create(Horario horario) {
-        if (horario.getMateriaList() == null) {
-            horario.setMateriaList(new ArrayList<Materia>());
+        if (horario.getHorarioMateriaList() == null) {
+            horario.setHorarioMateriaList(new ArrayList<HorarioMateria>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Materia> attachedMateriaList = new ArrayList<Materia>();
-            for (Materia materiaListMateriaToAttach : horario.getMateriaList()) {
-                materiaListMateriaToAttach = em.getReference(materiaListMateriaToAttach.getClass(), materiaListMateriaToAttach.getIdmateria());
-                attachedMateriaList.add(materiaListMateriaToAttach);
+            List<HorarioMateria> attachedHorarioMateriaList = new ArrayList<HorarioMateria>();
+            for (HorarioMateria horarioMateriaListHorarioMateriaToAttach : horario.getHorarioMateriaList()) {
+                horarioMateriaListHorarioMateriaToAttach = em.getReference(horarioMateriaListHorarioMateriaToAttach.getClass(), horarioMateriaListHorarioMateriaToAttach.getIdmateriahorario());
+                attachedHorarioMateriaList.add(horarioMateriaListHorarioMateriaToAttach);
             }
-            horario.setMateriaList(attachedMateriaList);
+            horario.setHorarioMateriaList(attachedHorarioMateriaList);
             em.persist(horario);
-            for (Materia materiaListMateria : horario.getMateriaList()) {
-                materiaListMateria.getHorarioList().add(horario);
-                materiaListMateria = em.merge(materiaListMateria);
+            for (HorarioMateria horarioMateriaListHorarioMateria : horario.getHorarioMateriaList()) {
+                Horario oldIdhorarioOfHorarioMateriaListHorarioMateria = horarioMateriaListHorarioMateria.getIdhorario();
+                horarioMateriaListHorarioMateria.setIdhorario(horario);
+                horarioMateriaListHorarioMateria = em.merge(horarioMateriaListHorarioMateria);
+                if (oldIdhorarioOfHorarioMateriaListHorarioMateria != null) {
+                    oldIdhorarioOfHorarioMateriaListHorarioMateria.getHorarioMateriaList().remove(horarioMateriaListHorarioMateria);
+                    oldIdhorarioOfHorarioMateriaListHorarioMateria = em.merge(oldIdhorarioOfHorarioMateriaListHorarioMateria);
+                }
             }
             em.getTransaction().commit();
         } finally {
@@ -60,32 +66,43 @@ public class HorarioJpaController implements Serializable {
         }
     }
 
-    public void edit(Horario horario) throws NonexistentEntityException, Exception {
+    public void edit(Horario horario) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Horario persistentHorario = em.find(Horario.class, horario.getIdhorario());
-            List<Materia> materiaListOld = persistentHorario.getMateriaList();
-            List<Materia> materiaListNew = horario.getMateriaList();
-            List<Materia> attachedMateriaListNew = new ArrayList<Materia>();
-            for (Materia materiaListNewMateriaToAttach : materiaListNew) {
-                materiaListNewMateriaToAttach = em.getReference(materiaListNewMateriaToAttach.getClass(), materiaListNewMateriaToAttach.getIdmateria());
-                attachedMateriaListNew.add(materiaListNewMateriaToAttach);
-            }
-            materiaListNew = attachedMateriaListNew;
-            horario.setMateriaList(materiaListNew);
-            horario = em.merge(horario);
-            for (Materia materiaListOldMateria : materiaListOld) {
-                if (!materiaListNew.contains(materiaListOldMateria)) {
-                    materiaListOldMateria.getHorarioList().remove(horario);
-                    materiaListOldMateria = em.merge(materiaListOldMateria);
+            List<HorarioMateria> horarioMateriaListOld = persistentHorario.getHorarioMateriaList();
+            List<HorarioMateria> horarioMateriaListNew = horario.getHorarioMateriaList();
+            List<String> illegalOrphanMessages = null;
+            for (HorarioMateria horarioMateriaListOldHorarioMateria : horarioMateriaListOld) {
+                if (!horarioMateriaListNew.contains(horarioMateriaListOldHorarioMateria)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain HorarioMateria " + horarioMateriaListOldHorarioMateria + " since its idhorario field is not nullable.");
                 }
             }
-            for (Materia materiaListNewMateria : materiaListNew) {
-                if (!materiaListOld.contains(materiaListNewMateria)) {
-                    materiaListNewMateria.getHorarioList().add(horario);
-                    materiaListNewMateria = em.merge(materiaListNewMateria);
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<HorarioMateria> attachedHorarioMateriaListNew = new ArrayList<HorarioMateria>();
+            for (HorarioMateria horarioMateriaListNewHorarioMateriaToAttach : horarioMateriaListNew) {
+                horarioMateriaListNewHorarioMateriaToAttach = em.getReference(horarioMateriaListNewHorarioMateriaToAttach.getClass(), horarioMateriaListNewHorarioMateriaToAttach.getIdmateriahorario());
+                attachedHorarioMateriaListNew.add(horarioMateriaListNewHorarioMateriaToAttach);
+            }
+            horarioMateriaListNew = attachedHorarioMateriaListNew;
+            horario.setHorarioMateriaList(horarioMateriaListNew);
+            horario = em.merge(horario);
+            for (HorarioMateria horarioMateriaListNewHorarioMateria : horarioMateriaListNew) {
+                if (!horarioMateriaListOld.contains(horarioMateriaListNewHorarioMateria)) {
+                    Horario oldIdhorarioOfHorarioMateriaListNewHorarioMateria = horarioMateriaListNewHorarioMateria.getIdhorario();
+                    horarioMateriaListNewHorarioMateria.setIdhorario(horario);
+                    horarioMateriaListNewHorarioMateria = em.merge(horarioMateriaListNewHorarioMateria);
+                    if (oldIdhorarioOfHorarioMateriaListNewHorarioMateria != null && !oldIdhorarioOfHorarioMateriaListNewHorarioMateria.equals(horario)) {
+                        oldIdhorarioOfHorarioMateriaListNewHorarioMateria.getHorarioMateriaList().remove(horarioMateriaListNewHorarioMateria);
+                        oldIdhorarioOfHorarioMateriaListNewHorarioMateria = em.merge(oldIdhorarioOfHorarioMateriaListNewHorarioMateria);
+                    }
                 }
             }
             em.getTransaction().commit();
@@ -105,7 +122,7 @@ public class HorarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -117,10 +134,16 @@ public class HorarioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The horario with id " + id + " no longer exists.", enfe);
             }
-            List<Materia> materiaList = horario.getMateriaList();
-            for (Materia materiaListMateria : materiaList) {
-                materiaListMateria.getHorarioList().remove(horario);
-                materiaListMateria = em.merge(materiaListMateria);
+            List<String> illegalOrphanMessages = null;
+            List<HorarioMateria> horarioMateriaListOrphanCheck = horario.getHorarioMateriaList();
+            for (HorarioMateria horarioMateriaListOrphanCheckHorarioMateria : horarioMateriaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Horario (" + horario + ") cannot be destroyed since the HorarioMateria " + horarioMateriaListOrphanCheckHorarioMateria + " in its horarioMateriaList field has a non-nullable idhorario field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(horario);
             em.getTransaction().commit();

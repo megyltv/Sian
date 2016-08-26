@@ -14,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -47,10 +46,8 @@ public class Materia implements Serializable {
     private String materia;
     @Column(name = "nivel")
     private Integer nivel;
-    @ManyToMany(mappedBy = "materiaList")
-    private List<Horario> horarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
-    private List<Inscripcion> inscripcionList;
+    private List<HorarioMateria> horarioMateriaList;
 
     public Materia() {
     }
@@ -89,21 +86,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-    public List<Horario> getHorarioList() {
-        return horarioList;
+    public List<HorarioMateria> getHorarioMateriaList() {
+        return horarioMateriaList;
     }
 
-    public void setHorarioList(List<Horario> horarioList) {
-        this.horarioList = horarioList;
-    }
-
-    @XmlTransient
-    public List<Inscripcion> getInscripcionList() {
-        return inscripcionList;
-    }
-
-    public void setInscripcionList(List<Inscripcion> inscripcionList) {
-        this.inscripcionList = inscripcionList;
+    public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
+        this.horarioMateriaList = horarioMateriaList;
     }
 
     @Override

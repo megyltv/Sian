@@ -17,6 +17,7 @@ import java.util.List;
 import Entidades.Preguntas;
 import JpaControllers.exceptions.IllegalOrphanException;
 import JpaControllers.exceptions.NonexistentEntityException;
+import JpaControllers.exceptions.PreexistingEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -35,7 +36,7 @@ public class EstudianteJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Estudiante estudiante) {
+    public void create(Estudiante estudiante) throws PreexistingEntityException, Exception {
         if (estudiante.getInscripcionList() == null) {
             estudiante.setInscripcionList(new ArrayList<Inscripcion>());
         }
@@ -78,6 +79,11 @@ public class EstudianteJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findEstudiante(estudiante.getIdestudiante()) != null) {
+                throw new PreexistingEntityException("Estudiante " + estudiante + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -91,67 +97,67 @@ public class EstudianteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Estudiante persistentEstudiante = em.find(Estudiante.class, estudiante.getIdestudiante());
-//            List<Inscripcion> inscripcionListOld = persistentEstudiante.getInscripcionList();
-//            List<Inscripcion> inscripcionListNew = estudiante.getInscripcionList();
-//            List<Preguntas> preguntasListOld = persistentEstudiante.getPreguntasList();
-//            List<Preguntas> preguntasListNew = estudiante.getPreguntasList();
-//            List<String> illegalOrphanMessages = null;
-//            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
-//                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
-//                    if (illegalOrphanMessages == null) {
-//                        illegalOrphanMessages = new ArrayList<String>();
-//                    }
-//                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its idestudiante field is not nullable.");
-//                }
-//            }
-//            for (Preguntas preguntasListOldPreguntas : preguntasListOld) {
-//                if (!preguntasListNew.contains(preguntasListOldPreguntas)) {
-//                    if (illegalOrphanMessages == null) {
-//                        illegalOrphanMessages = new ArrayList<String>();
-//                    }
-//                    illegalOrphanMessages.add("You must retain Preguntas " + preguntasListOldPreguntas + " since its idestudiante field is not nullable.");
-//                }
-//            }
-//            if (illegalOrphanMessages != null) {
-//                throw new IllegalOrphanException(illegalOrphanMessages);
-//            }
-//            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
-//            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
-//                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
-//                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
-//            }
-//            inscripcionListNew = attachedInscripcionListNew;
-//            estudiante.setInscripcionList(inscripcionListNew);
-//            List<Preguntas> attachedPreguntasListNew = new ArrayList<Preguntas>();
-//            for (Preguntas preguntasListNewPreguntasToAttach : preguntasListNew) {
-//                preguntasListNewPreguntasToAttach = em.getReference(preguntasListNewPreguntasToAttach.getClass(), preguntasListNewPreguntasToAttach.getIdpreguntas());
-//                attachedPreguntasListNew.add(preguntasListNewPreguntasToAttach);
-//            }
-//            preguntasListNew = attachedPreguntasListNew;
-//            estudiante.setPreguntasList(preguntasListNew);
+            List<Inscripcion> inscripcionListOld = persistentEstudiante.getInscripcionList();
+            List<Inscripcion> inscripcionListNew = estudiante.getInscripcionList();
+            List<Preguntas> preguntasListOld = persistentEstudiante.getPreguntasList();
+            List<Preguntas> preguntasListNew = estudiante.getPreguntasList();
+            List<String> illegalOrphanMessages = null;
+            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
+                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its idestudiante field is not nullable.");
+                }
+            }
+            for (Preguntas preguntasListOldPreguntas : preguntasListOld) {
+                if (!preguntasListNew.contains(preguntasListOldPreguntas)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Preguntas " + preguntasListOldPreguntas + " since its idestudiante field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
+            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
+                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
+                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
+            }
+            inscripcionListNew = attachedInscripcionListNew;
+            estudiante.setInscripcionList(inscripcionListNew);
+            List<Preguntas> attachedPreguntasListNew = new ArrayList<Preguntas>();
+            for (Preguntas preguntasListNewPreguntasToAttach : preguntasListNew) {
+                preguntasListNewPreguntasToAttach = em.getReference(preguntasListNewPreguntasToAttach.getClass(), preguntasListNewPreguntasToAttach.getIdpreguntas());
+                attachedPreguntasListNew.add(preguntasListNewPreguntasToAttach);
+            }
+            preguntasListNew = attachedPreguntasListNew;
+            estudiante.setPreguntasList(preguntasListNew);
             estudiante = em.merge(estudiante);
-//            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
-//                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
-//                    Estudiante oldIdestudianteOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdestudiante();
-//                    inscripcionListNewInscripcion.setIdestudiante(estudiante);
-//                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
-//                    if (oldIdestudianteOfInscripcionListNewInscripcion != null && !oldIdestudianteOfInscripcionListNewInscripcion.equals(estudiante)) {
-//                        oldIdestudianteOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
-//                        oldIdestudianteOfInscripcionListNewInscripcion = em.merge(oldIdestudianteOfInscripcionListNewInscripcion);
-//                    }
-//                }
-//            }
-//            for (Preguntas preguntasListNewPreguntas : preguntasListNew) {
-//                if (!preguntasListOld.contains(preguntasListNewPreguntas)) {
-//                    Estudiante oldIdestudianteOfPreguntasListNewPreguntas = preguntasListNewPreguntas.getIdestudiante();
-//                    preguntasListNewPreguntas.setIdestudiante(estudiante);
-//                    preguntasListNewPreguntas = em.merge(preguntasListNewPreguntas);
-//                    if (oldIdestudianteOfPreguntasListNewPreguntas != null && !oldIdestudianteOfPreguntasListNewPreguntas.equals(estudiante)) {
-//                        oldIdestudianteOfPreguntasListNewPreguntas.getPreguntasList().remove(preguntasListNewPreguntas);
-//                        oldIdestudianteOfPreguntasListNewPreguntas = em.merge(oldIdestudianteOfPreguntasListNewPreguntas);
-//                    }
-//                }
-//            }
+            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
+                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
+                    Estudiante oldIdestudianteOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdestudiante();
+                    inscripcionListNewInscripcion.setIdestudiante(estudiante);
+                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
+                    if (oldIdestudianteOfInscripcionListNewInscripcion != null && !oldIdestudianteOfInscripcionListNewInscripcion.equals(estudiante)) {
+                        oldIdestudianteOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
+                        oldIdestudianteOfInscripcionListNewInscripcion = em.merge(oldIdestudianteOfInscripcionListNewInscripcion);
+                    }
+                }
+            }
+            for (Preguntas preguntasListNewPreguntas : preguntasListNew) {
+                if (!preguntasListOld.contains(preguntasListNewPreguntas)) {
+                    Estudiante oldIdestudianteOfPreguntasListNewPreguntas = preguntasListNewPreguntas.getIdestudiante();
+                    preguntasListNewPreguntas.setIdestudiante(estudiante);
+                    preguntasListNewPreguntas = em.merge(preguntasListNewPreguntas);
+                    if (oldIdestudianteOfPreguntasListNewPreguntas != null && !oldIdestudianteOfPreguntasListNewPreguntas.equals(estudiante)) {
+                        oldIdestudianteOfPreguntasListNewPreguntas.getPreguntasList().remove(preguntasListNewPreguntas);
+                        oldIdestudianteOfPreguntasListNewPreguntas = em.merge(oldIdestudianteOfPreguntasListNewPreguntas);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Inscripcion.findAll", query = "SELECT i FROM Inscripcion i"),
     @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion"),
-    @NamedQuery(name = "Inscripcion.findByCalificacion", query = "SELECT i FROM Inscripcion i WHERE i.calificacion = :calificacion")})
+    @NamedQuery(name = "Inscripcion.findByCalificacion", query = "SELECT i FROM Inscripcion i WHERE i.calificacion = :calificacion"),
+    @NamedQuery(name = "Inscripcion.findByObservacion", query = "SELECT i FROM Inscripcion i WHERE i.observacion = :observacion")})
 public class Inscripcion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,12 +43,14 @@ public class Inscripcion implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "calificacion")
     private BigDecimal calificacion;
+    @Column(name = "observacion")
+    private String observacion;
     @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
     @ManyToOne(optional = false)
     private Estudiante idestudiante;
-    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
-    @ManyToOne(optional = false)
-    private Materia idmateria;
+    @JoinColumn(name = "idmateriahorario", referencedColumnName = "idmateriahorario")
+    @ManyToOne
+    private HorarioMateria idmateriahorario;
     @JoinColumn(name = "idperiodo", referencedColumnName = "idperiodo")
     @ManyToOne(optional = false)
     private Periodo idperiodo;
@@ -75,6 +78,14 @@ public class Inscripcion implements Serializable {
         this.calificacion = calificacion;
     }
 
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
     public Estudiante getIdestudiante() {
         return idestudiante;
     }
@@ -83,12 +94,12 @@ public class Inscripcion implements Serializable {
         this.idestudiante = idestudiante;
     }
 
-    public Materia getIdmateria() {
-        return idmateria;
+    public HorarioMateria getIdmateriahorario() {
+        return idmateriahorario;
     }
 
-    public void setIdmateria(Materia idmateria) {
-        this.idmateria = idmateria;
+    public void setIdmateriahorario(HorarioMateria idmateriahorario) {
+        this.idmateriahorario = idmateriahorario;
     }
 
     public Periodo getIdperiodo() {
