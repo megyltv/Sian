@@ -11,7 +11,7 @@
     <class>Entidades.Estudiante</class>
     <class>Entidades.HorarioMateria</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Sian"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/SianF"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="12345"/>
