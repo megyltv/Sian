@@ -8,16 +8,15 @@ package Entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,7 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Horario.findByIdhorario", query = "SELECT h FROM Horario h WHERE h.idhorario = :idhorario"),
     @NamedQuery(name = "Horario.findByDia", query = "SELECT h FROM Horario h WHERE h.dia = :dia"),
     @NamedQuery(name = "Horario.findByHoraInicio", query = "SELECT h FROM Horario h WHERE h.horaInicio = :horaInicio"),
-    @NamedQuery(name = "Horario.findByEstado", query = "SELECT h FROM Horario h WHERE h.estado = :estado"),
     @NamedQuery(name = "Horario.findByHoraFin", query = "SELECT h FROM Horario h WHERE h.horaFin = :horaFin")})
 public class Horario implements Serializable {
 
@@ -49,15 +47,10 @@ public class Horario implements Serializable {
     private String dia;
     @Column(name = "hora_inicio")
     private String horaInicio;
-    @Column(name = "estado")
-    private Integer estado;
     @Column(name = "hora_fin")
     private String horaFin;
-    @JoinTable(name = "horario_materia", joinColumns = {
-        @JoinColumn(name = "idhorario", referencedColumnName = "idhorario")}, inverseJoinColumns = {
-        @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")})
-    @ManyToMany
-    private List<Materia> materiaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhorario")
+    private List<HorarioMateria> horarioMateriaList;
 
     public Horario() {
     }
@@ -95,14 +88,6 @@ public class Horario implements Serializable {
         this.horaInicio = horaInicio;
     }
 
-    public Integer getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Integer estado) {
-        this.estado = estado;
-    }
-
     public String getHoraFin() {
         return horaFin;
     }
@@ -112,12 +97,12 @@ public class Horario implements Serializable {
     }
 
     @XmlTransient
-    public List<Materia> getMateriaList() {
-        return materiaList;
+    public List<HorarioMateria> getHorarioMateriaList() {
+        return horarioMateriaList;
     }
 
-    public void setMateriaList(List<Materia> materiaList) {
-        this.materiaList = materiaList;
+    public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
+        this.horarioMateriaList = horarioMateriaList;
     }
 
     @Override
