@@ -998,7 +998,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
             //limpiar();
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"Cédula Incorrecta");
+            JOptionPane.showMessageDialog(null,"Revise los datos ingresados");
         } 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

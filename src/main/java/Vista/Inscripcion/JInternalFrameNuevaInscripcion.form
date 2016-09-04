@@ -206,7 +206,7 @@
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="lblPeriodo2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="BoxPeriodoA2" min="-2" pref="179" max="-2" attributes="0"/>
+                      <Component id="cmbPeriodo" min="-2" pref="179" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -217,7 +217,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblPeriodo2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="BoxPeriodoA2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
@@ -230,7 +230,7 @@
                 <Property name="text" type="java.lang.String" value="Periodo Acad&#xe9;mico:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="BoxPeriodoA2">
+            <Component class="javax.swing.JComboBox" name="cmbPeriodo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -428,7 +428,7 @@
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="lblPeriodo1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
-                      <Component id="BoxPeriodoA1" min="-2" pref="179" max="-2" attributes="0"/>
+                      <Component id="cmbHorario" min="-2" pref="179" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -439,7 +439,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblPeriodo1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="BoxPeriodoA1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbHorario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
@@ -452,7 +452,7 @@
                 <Property name="text" type="java.lang.String" value="Horario:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="BoxPeriodoA1">
+            <Component class="javax.swing.JComboBox" name="cmbHorario">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
