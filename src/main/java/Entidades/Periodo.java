@@ -6,8 +6,8 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 @Entity
 @Table(name = "periodo")
@@ -55,7 +55,7 @@ public class Periodo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechafin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperiodo")
-    private List<Inscripcion> inscripcionList;
+    private Collection<Inscripcion> inscripcionCollection;
 
     public Periodo() {
     }
@@ -102,12 +102,12 @@ public class Periodo implements Serializable {
     }
 
     @XmlTransient
-    public List<Inscripcion> getInscripcionList() {
-        return inscripcionList;
+    public Collection<Inscripcion> getInscripcionCollection() {
+        return inscripcionCollection;
     }
 
-    public void setInscripcionList(List<Inscripcion> inscripcionList) {
-        this.inscripcionList = inscripcionList;
+    public void setInscripcionCollection(Collection<Inscripcion> inscripcionCollection) {
+        this.inscripcionCollection = inscripcionCollection;
     }
 
     @Override

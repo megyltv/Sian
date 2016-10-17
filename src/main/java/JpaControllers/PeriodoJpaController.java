@@ -15,13 +15,14 @@ import Entidades.Periodo;
 import JpaControllers.exceptions.IllegalOrphanException;
 import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 public class PeriodoJpaController implements Serializable {
 
@@ -35,27 +36,27 @@ public class PeriodoJpaController implements Serializable {
     }
 
     public void create(Periodo periodo) {
-        if (periodo.getInscripcionList() == null) {
-            periodo.setInscripcionList(new ArrayList<Inscripcion>());
+        if (periodo.getInscripcionCollection() == null) {
+            periodo.setInscripcionCollection(new ArrayList<Inscripcion>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Inscripcion> attachedInscripcionList = new ArrayList<Inscripcion>();
-            for (Inscripcion inscripcionListInscripcionToAttach : periodo.getInscripcionList()) {
-                inscripcionListInscripcionToAttach = em.getReference(inscripcionListInscripcionToAttach.getClass(), inscripcionListInscripcionToAttach.getIdinscripcion());
-                attachedInscripcionList.add(inscripcionListInscripcionToAttach);
+            Collection<Inscripcion> attachedInscripcionCollection = new ArrayList<Inscripcion>();
+            for (Inscripcion inscripcionCollectionInscripcionToAttach : periodo.getInscripcionCollection()) {
+                inscripcionCollectionInscripcionToAttach = em.getReference(inscripcionCollectionInscripcionToAttach.getClass(), inscripcionCollectionInscripcionToAttach.getIdinscripcion());
+                attachedInscripcionCollection.add(inscripcionCollectionInscripcionToAttach);
             }
-            periodo.setInscripcionList(attachedInscripcionList);
+            periodo.setInscripcionCollection(attachedInscripcionCollection);
             em.persist(periodo);
-            for (Inscripcion inscripcionListInscripcion : periodo.getInscripcionList()) {
-                Periodo oldIdperiodoOfInscripcionListInscripcion = inscripcionListInscripcion.getIdperiodo();
-                inscripcionListInscripcion.setIdperiodo(periodo);
-                inscripcionListInscripcion = em.merge(inscripcionListInscripcion);
-                if (oldIdperiodoOfInscripcionListInscripcion != null) {
-                    oldIdperiodoOfInscripcionListInscripcion.getInscripcionList().remove(inscripcionListInscripcion);
-                    oldIdperiodoOfInscripcionListInscripcion = em.merge(oldIdperiodoOfInscripcionListInscripcion);
+            for (Inscripcion inscripcionCollectionInscripcion : periodo.getInscripcionCollection()) {
+                Periodo oldIdperiodoOfInscripcionCollectionInscripcion = inscripcionCollectionInscripcion.getIdperiodo();
+                inscripcionCollectionInscripcion.setIdperiodo(periodo);
+                inscripcionCollectionInscripcion = em.merge(inscripcionCollectionInscripcion);
+                if (oldIdperiodoOfInscripcionCollectionInscripcion != null) {
+                    oldIdperiodoOfInscripcionCollectionInscripcion.getInscripcionCollection().remove(inscripcionCollectionInscripcion);
+                    oldIdperiodoOfInscripcionCollectionInscripcion = em.merge(oldIdperiodoOfInscripcionCollectionInscripcion);
                 }
             }
             em.getTransaction().commit();
@@ -72,39 +73,39 @@ public class PeriodoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Periodo persistentPeriodo = em.find(Periodo.class, periodo.getIdperiodo());
-//            List<Inscripcion> inscripcionListOld = persistentPeriodo.getInscripcionList();
-//            List<Inscripcion> inscripcionListNew = periodo.getInscripcionList();
-//            List<String> illegalOrphanMessages = null;
-//            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
-//                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
-//                    if (illegalOrphanMessages == null) {
-//                        illegalOrphanMessages = new ArrayList<String>();
-//                    }
-//                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionListOldInscripcion + " since its idperiodo field is not nullable.");
-//                }
-//            }
-//            if (illegalOrphanMessages != null) {
-//                throw new IllegalOrphanException(illegalOrphanMessages);
-//            }
-//            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
-//            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
-//                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
-//                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
-//            }
-//            inscripcionListNew = attachedInscripcionListNew;
-//            periodo.setInscripcionList(inscripcionListNew);
+            Collection<Inscripcion> inscripcionCollectionOld = persistentPeriodo.getInscripcionCollection();
+            Collection<Inscripcion> inscripcionCollectionNew = periodo.getInscripcionCollection();
+            List<String> illegalOrphanMessages = null;
+            for (Inscripcion inscripcionCollectionOldInscripcion : inscripcionCollectionOld) {
+                if (!inscripcionCollectionNew.contains(inscripcionCollectionOldInscripcion)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionCollectionOldInscripcion + " since its idperiodo field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Collection<Inscripcion> attachedInscripcionCollectionNew = new ArrayList<Inscripcion>();
+            for (Inscripcion inscripcionCollectionNewInscripcionToAttach : inscripcionCollectionNew) {
+                inscripcionCollectionNewInscripcionToAttach = em.getReference(inscripcionCollectionNewInscripcionToAttach.getClass(), inscripcionCollectionNewInscripcionToAttach.getIdinscripcion());
+                attachedInscripcionCollectionNew.add(inscripcionCollectionNewInscripcionToAttach);
+            }
+            inscripcionCollectionNew = attachedInscripcionCollectionNew;
+            periodo.setInscripcionCollection(inscripcionCollectionNew);
             periodo = em.merge(periodo);
-//            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
-//                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
-//                    Periodo oldIdperiodoOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdperiodo();
-//                    inscripcionListNewInscripcion.setIdperiodo(periodo);
-//                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
-//                    if (oldIdperiodoOfInscripcionListNewInscripcion != null && !oldIdperiodoOfInscripcionListNewInscripcion.equals(periodo)) {
-//                        oldIdperiodoOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
-//                        oldIdperiodoOfInscripcionListNewInscripcion = em.merge(oldIdperiodoOfInscripcionListNewInscripcion);
-//                    }
-//                }
-//            }
+            for (Inscripcion inscripcionCollectionNewInscripcion : inscripcionCollectionNew) {
+                if (!inscripcionCollectionOld.contains(inscripcionCollectionNewInscripcion)) {
+                    Periodo oldIdperiodoOfInscripcionCollectionNewInscripcion = inscripcionCollectionNewInscripcion.getIdperiodo();
+                    inscripcionCollectionNewInscripcion.setIdperiodo(periodo);
+                    inscripcionCollectionNewInscripcion = em.merge(inscripcionCollectionNewInscripcion);
+                    if (oldIdperiodoOfInscripcionCollectionNewInscripcion != null && !oldIdperiodoOfInscripcionCollectionNewInscripcion.equals(periodo)) {
+                        oldIdperiodoOfInscripcionCollectionNewInscripcion.getInscripcionCollection().remove(inscripcionCollectionNewInscripcion);
+                        oldIdperiodoOfInscripcionCollectionNewInscripcion = em.merge(oldIdperiodoOfInscripcionCollectionNewInscripcion);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -135,12 +136,12 @@ public class PeriodoJpaController implements Serializable {
                 throw new NonexistentEntityException("The periodo with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Inscripcion> inscripcionListOrphanCheck = periodo.getInscripcionList();
-            for (Inscripcion inscripcionListOrphanCheckInscripcion : inscripcionListOrphanCheck) {
+            Collection<Inscripcion> inscripcionCollectionOrphanCheck = periodo.getInscripcionCollection();
+            for (Inscripcion inscripcionCollectionOrphanCheckInscripcion : inscripcionCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Periodo (" + periodo + ") cannot be destroyed since the Inscripcion " + inscripcionListOrphanCheckInscripcion + " in its inscripcionList field has a non-nullable idperiodo field.");
+                illegalOrphanMessages.add("This Periodo (" + periodo + ") cannot be destroyed since the Inscripcion " + inscripcionCollectionOrphanCheckInscripcion + " in its inscripcionCollection field has a non-nullable idperiodo field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

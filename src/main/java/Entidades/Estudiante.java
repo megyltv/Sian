@@ -6,14 +6,12 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 @Entity
 @Table(name = "estudiante")
@@ -54,7 +52,6 @@ public class Estudiante implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idestudiante")
     private Integer idestudiante;
@@ -95,9 +92,9 @@ public class Estudiante implements Serializable {
     @Column(name = "telfemerg")
     private Integer telfemerg;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
-    private List<Inscripcion> inscripcionList;
+    private Collection<Inscripcion> inscripcionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idestudiante")
-    private List<Preguntas> preguntasList;
+    private Collection<Preguntas> preguntasCollection;
 
     public Estudiante() {
     }
@@ -250,21 +247,21 @@ public class Estudiante implements Serializable {
     }
 
     @XmlTransient
-    public List<Inscripcion> getInscripcionList() {
-        return inscripcionList;
+    public Collection<Inscripcion> getInscripcionCollection() {
+        return inscripcionCollection;
     }
 
-    public void setInscripcionList(List<Inscripcion> inscripcionList) {
-        this.inscripcionList = inscripcionList;
+    public void setInscripcionCollection(Collection<Inscripcion> inscripcionCollection) {
+        this.inscripcionCollection = inscripcionCollection;
     }
 
     @XmlTransient
-    public List<Preguntas> getPreguntasList() {
-        return preguntasList;
+    public Collection<Preguntas> getPreguntasCollection() {
+        return preguntasCollection;
     }
 
-    public void setPreguntasList(List<Preguntas> preguntasList) {
-        this.preguntasList = preguntasList;
+    public void setPreguntasCollection(Collection<Preguntas> preguntasCollection) {
+        this.preguntasCollection = preguntasCollection;
     }
 
     @Override

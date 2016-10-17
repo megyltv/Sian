@@ -6,15 +6,12 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 @Entity
 @Table(name = "materia")
@@ -36,12 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Materia.findByNivel", query = "SELECT m FROM Materia m WHERE m.nivel = :nivel")})
 public class Materia implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
-    private List<HorarioMateria> horarioMateriaList;
-
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idmateria")
     private Integer idmateria;
@@ -50,10 +43,8 @@ public class Materia implements Serializable {
     private String materia;
     @Column(name = "nivel")
     private Integer nivel;
-    @ManyToMany(mappedBy = "materiaList")
-    private List<Horario> horarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
-    private List<Inscripcion> inscripcionList;
+    private Collection<HorarioMateria> horarioMateriaCollection;
 
     public Materia() {
     }
@@ -92,21 +83,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-    public List<Horario> getHorarioList() {
-        return horarioList;
+    public Collection<HorarioMateria> getHorarioMateriaCollection() {
+        return horarioMateriaCollection;
     }
 
-    public void setHorarioList(List<Horario> horarioList) {
-        this.horarioList = horarioList;
-    }
-
-    @XmlTransient
-    public List<Inscripcion> getInscripcionList() {
-        return inscripcionList;
-    }
-
-    public void setInscripcionList(List<Inscripcion> inscripcionList) {
-        this.inscripcionList = inscripcionList;
+    public void setHorarioMateriaCollection(Collection<HorarioMateria> horarioMateriaCollection) {
+        this.horarioMateriaCollection = horarioMateriaCollection;
     }
 
     @Override
@@ -132,15 +114,6 @@ public class Materia implements Serializable {
     @Override
     public String toString() {
         return "Entidades.Materia[ idmateria=" + idmateria + " ]";
-    }
-
-    @XmlTransient
-    public List<HorarioMateria> getHorarioMateriaList() {
-        return horarioMateriaList;
-    }
-
-    public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
-        this.horarioMateriaList = horarioMateriaList;
     }
     
 }

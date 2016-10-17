@@ -6,12 +6,10 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 @Entity
 @Table(name = "horario_materia")
@@ -37,7 +35,6 @@ public class HorarioMateria implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idmateriahorario")
     private Integer idmateriahorario;
@@ -50,7 +47,7 @@ public class HorarioMateria implements Serializable {
     @ManyToOne(optional = false)
     private Materia idmateria;
     @OneToMany(mappedBy = "idmateriahorario")
-    private List<Inscripcion> inscripcionList;
+    private Collection<Inscripcion> inscripcionCollection;
 
     public HorarioMateria() {
     }
@@ -92,12 +89,12 @@ public class HorarioMateria implements Serializable {
     }
 
     @XmlTransient
-    public List<Inscripcion> getInscripcionList() {
-        return inscripcionList;
+    public Collection<Inscripcion> getInscripcionCollection() {
+        return inscripcionCollection;
     }
 
-    public void setInscripcionList(List<Inscripcion> inscripcionList) {
-        this.inscripcionList = inscripcionList;
+    public void setInscripcionCollection(Collection<Inscripcion> inscripcionCollection) {
+        this.inscripcionCollection = inscripcionCollection;
     }
 
     @Override

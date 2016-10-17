@@ -3,6 +3,7 @@ package Vista;
 import Vista.Periodo.JInternalFrameNuevoPeriodo;
 import Vista.Calificacion.JInternalFrameConsultaCalificacion;
 import Vista.Calificacion.JInternalFrameIngresaCalificacion;
+import Vista.Horario.JInternalFrameConsultarHorario;
 import Vista.Horario.JInternalFrameNuevoHorario;
 import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
 import Vista.Periodo.JInternalFrameConsultarPeriodo;
@@ -23,6 +24,7 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameNuevoPeriodo internalFrameNuevoPeriodo;
     JInternalFrameConsultarPeriodo internalFrameConsultarPeriodo;
     JInternalFrameNuevoHorario internalFrameNuevoHorario;
+    JInternalFrameConsultarHorario internalFrameConsultarHorario;
     
     
     JDesktopPane dp=new JDesktopPane();
@@ -191,6 +193,11 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuAcademia.add(jMenuItem4);
 
         jMenuItem3.setText("Consultar/Actualizar horario");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         menuAcademia.add(jMenuItem3);
         menuAcademia.add(jSeparator2);
 
@@ -285,6 +292,11 @@ public class frmPrincipal extends javax.swing.JFrame{
          internalFrameNuevoHorario = new JInternalFrameNuevoHorario();
         mostrarVentana(internalFrameNuevoHorario); 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        internalFrameConsultarHorario = new JInternalFrameConsultarHorario();
+        mostrarVentana(internalFrameConsultarHorario);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
     
     private void mostrarVentana(JInternalFrame frame ){
         pnlPrincipal.removeAll();

@@ -75,7 +75,7 @@
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="401" max="32767" attributes="0"/>
+                  <EmptySpace pref="341" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -86,7 +86,7 @@
                   <Component id="lblImagPeq" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="362" max="32767" attributes="0"/>
+                  <EmptySpace pref="354" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -109,22 +109,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="btnGuardarP" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtPeriodo" pref="161" max="32767" attributes="0"/>
-                                  <Component id="jComboBoxDias" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaInicio1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="297" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtHoraInicio" pref="161" max="32767" attributes="0"/>
+                          <Component id="jComboBoxDias" max="32767" attributes="0"/>
+                          <Component id="txtHoraFin" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                      <Component id="btnGuardarP" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="241" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -139,11 +137,17 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblFechaInicio" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtPeriodo" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtHoraInicio" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnGuardarP" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnGuardarP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtHoraFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblFechaInicio1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -154,14 +158,14 @@
                 <Property name="text" type="java.lang.String" value="Dia:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtPeriodo">
+            <Component class="javax.swing.JTextField" name="txtHoraInicio">
               <Properties>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblFechaInicio">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Hora:"/>
+                <Property name="text" type="java.lang.String" value="Hora Inicio:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnGuardarP">
@@ -178,7 +182,7 @@
                   <StringArray count="7">
                     <StringItem index="0" value="Lunes "/>
                     <StringItem index="1" value="Martes"/>
-                    <StringItem index="2" value="Miercoles"/>
+                    <StringItem index="2" value="Mi&#xe9;rcoles"/>
                     <StringItem index="3" value="Jueves "/>
                     <StringItem index="4" value="Viernes "/>
                     <StringItem index="5" value="S&#xe1;bado "/>
@@ -189,6 +193,16 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblFechaInicio1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Hora Fin:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtHoraFin">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

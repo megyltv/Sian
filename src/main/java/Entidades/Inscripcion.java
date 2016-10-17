@@ -10,8 +10,6 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 @Entity
 @Table(name = "inscripcion")
@@ -30,30 +28,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Inscripcion.findAll", query = "SELECT i FROM Inscripcion i"),
     @NamedQuery(name = "Inscripcion.findByIdinscripcion", query = "SELECT i FROM Inscripcion i WHERE i.idinscripcion = :idinscripcion"),
-    @NamedQuery(name = "Inscripcion.findByCalificacion", query = "SELECT i FROM Inscripcion i WHERE i.calificacion = :calificacion")})
+    @NamedQuery(name = "Inscripcion.findByCalificacion", query = "SELECT i FROM Inscripcion i WHERE i.calificacion = :calificacion"),
+    @NamedQuery(name = "Inscripcion.findByObservacion", query = "SELECT i FROM Inscripcion i WHERE i.observacion = :observacion")})
 public class Inscripcion implements Serializable {
-
-    @Column(name = "observacion")
-    private String observacion;
-    @JoinColumn(name = "idmateriahorario", referencedColumnName = "idmateriahorario")
-    @ManyToOne
-    private HorarioMateria idmateriahorario;
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idinscripcion")
     private String idinscripcion;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "calificacion")
     private BigDecimal calificacion;
+    @Column(name = "observacion")
+    private String observacion;
     @JoinColumn(name = "idestudiante", referencedColumnName = "idestudiante")
     @ManyToOne(optional = false)
     private Estudiante idestudiante;
-    @JoinColumn(name = "idmateria", referencedColumnName = "idmateria")
-    @ManyToOne(optional = false)
-    private Materia idmateria;
+    @JoinColumn(name = "idmateriahorario", referencedColumnName = "idmateriahorario")
+    @ManyToOne
+    private HorarioMateria idmateriahorario;
     @JoinColumn(name = "idperiodo", referencedColumnName = "idperiodo")
     @ManyToOne(optional = false)
     private Periodo idperiodo;
@@ -81,6 +75,14 @@ public class Inscripcion implements Serializable {
         this.calificacion = calificacion;
     }
 
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
     public Estudiante getIdestudiante() {
         return idestudiante;
     }
@@ -89,12 +91,12 @@ public class Inscripcion implements Serializable {
         this.idestudiante = idestudiante;
     }
 
-    public Materia getIdmateria() {
-        return idmateria;
+    public HorarioMateria getIdmateriahorario() {
+        return idmateriahorario;
     }
 
-    public void setIdmateria(Materia idmateria) {
-        this.idmateria = idmateria;
+    public void setIdmateriahorario(HorarioMateria idmateriahorario) {
+        this.idmateriahorario = idmateriahorario;
     }
 
     public Periodo getIdperiodo() {
@@ -128,22 +130,6 @@ public class Inscripcion implements Serializable {
     @Override
     public String toString() {
         return "Entidades.Inscripcion[ idinscripcion=" + idinscripcion + " ]";
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
-    public HorarioMateria getIdmateriahorario() {
-        return idmateriahorario;
-    }
-
-    public void setIdmateriahorario(HorarioMateria idmateriahorario) {
-        this.idmateriahorario = idmateriahorario;
     }
     
 }

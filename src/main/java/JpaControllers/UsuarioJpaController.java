@@ -7,6 +7,7 @@ package JpaControllers;
 
 import Entidades.Usuario;
 import JpaControllers.exceptions.NonexistentEntityException;
+import JpaControllers.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 public class UsuarioJpaController implements Serializable {
 
@@ -31,13 +32,18 @@ public class UsuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Usuario usuario) {
+    public void create(Usuario usuario) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findUsuario(usuario.getIdusuario()) != null) {
+                throw new PreexistingEntityException("Usuario " + usuario + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();

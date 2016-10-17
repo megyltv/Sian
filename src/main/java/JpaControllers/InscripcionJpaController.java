@@ -11,18 +11,18 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Entidades.Estudiante;
-import Entidades.Materia;
-import Entidades.Periodo;
 import Entidades.HorarioMateria;
 import Entidades.Inscripcion;
+import Entidades.Periodo;
 import JpaControllers.exceptions.NonexistentEntityException;
+import JpaControllers.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Megan
+ * @author Iker Gael
  */
 public class InscripcionJpaController implements Serializable {
 
@@ -35,7 +35,7 @@ public class InscripcionJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Inscripcion inscripcion) {
+    public void create(Inscripcion inscripcion) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -45,39 +45,35 @@ public class InscripcionJpaController implements Serializable {
                 idestudiante = em.getReference(idestudiante.getClass(), idestudiante.getIdestudiante());
                 inscripcion.setIdestudiante(idestudiante);
             }
-            Materia idmateria = inscripcion.getIdmateria();
-            if (idmateria != null) {
-                idmateria = em.getReference(idmateria.getClass(), idmateria.getIdmateria());
-                inscripcion.setIdmateria(idmateria);
+            HorarioMateria idmateriahorario = inscripcion.getIdmateriahorario();
+            if (idmateriahorario != null) {
+                idmateriahorario = em.getReference(idmateriahorario.getClass(), idmateriahorario.getIdmateriahorario());
+                inscripcion.setIdmateriahorario(idmateriahorario);
             }
             Periodo idperiodo = inscripcion.getIdperiodo();
             if (idperiodo != null) {
                 idperiodo = em.getReference(idperiodo.getClass(), idperiodo.getIdperiodo());
                 inscripcion.setIdperiodo(idperiodo);
             }
-            HorarioMateria idmateriahorario = inscripcion.getIdmateriahorario();
-            if (idmateriahorario != null) {
-                idmateriahorario = em.getReference(idmateriahorario.getClass(), idmateriahorario.getIdmateriahorario());
-                inscripcion.setIdmateriahorario(idmateriahorario);
-            }
             em.persist(inscripcion);
             if (idestudiante != null) {
-                idestudiante.getInscripcionList().add(inscripcion);
+                idestudiante.getInscripcionCollection().add(inscripcion);
                 idestudiante = em.merge(idestudiante);
             }
-            if (idmateria != null) {
-                idmateria.getInscripcionList().add(inscripcion);
-                idmateria = em.merge(idmateria);
-            }
-            if (idperiodo != null) {
-                idperiodo.getInscripcionList().add(inscripcion);
-                idperiodo = em.merge(idperiodo);
-            }
             if (idmateriahorario != null) {
-                idmateriahorario.getInscripcionList().add(inscripcion);
+                idmateriahorario.getInscripcionCollection().add(inscripcion);
                 idmateriahorario = em.merge(idmateriahorario);
             }
+            if (idperiodo != null) {
+                idperiodo.getInscripcionCollection().add(inscripcion);
+                idperiodo = em.merge(idperiodo);
+            }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findInscripcion(inscripcion.getIdinscripcion()) != null) {
+                throw new PreexistingEntityException("Inscripcion " + inscripcion + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -93,60 +89,46 @@ public class InscripcionJpaController implements Serializable {
             Inscripcion persistentInscripcion = em.find(Inscripcion.class, inscripcion.getIdinscripcion());
             Estudiante idestudianteOld = persistentInscripcion.getIdestudiante();
             Estudiante idestudianteNew = inscripcion.getIdestudiante();
-            Materia idmateriaOld = persistentInscripcion.getIdmateria();
-            Materia idmateriaNew = inscripcion.getIdmateria();
-            Periodo idperiodoOld = persistentInscripcion.getIdperiodo();
-            Periodo idperiodoNew = inscripcion.getIdperiodo();
             HorarioMateria idmateriahorarioOld = persistentInscripcion.getIdmateriahorario();
             HorarioMateria idmateriahorarioNew = inscripcion.getIdmateriahorario();
+            Periodo idperiodoOld = persistentInscripcion.getIdperiodo();
+            Periodo idperiodoNew = inscripcion.getIdperiodo();
             if (idestudianteNew != null) {
                 idestudianteNew = em.getReference(idestudianteNew.getClass(), idestudianteNew.getIdestudiante());
                 inscripcion.setIdestudiante(idestudianteNew);
-            }
-            if (idmateriaNew != null) {
-                idmateriaNew = em.getReference(idmateriaNew.getClass(), idmateriaNew.getIdmateria());
-                inscripcion.setIdmateria(idmateriaNew);
-            }
-            if (idperiodoNew != null) {
-                idperiodoNew = em.getReference(idperiodoNew.getClass(), idperiodoNew.getIdperiodo());
-                inscripcion.setIdperiodo(idperiodoNew);
             }
             if (idmateriahorarioNew != null) {
                 idmateriahorarioNew = em.getReference(idmateriahorarioNew.getClass(), idmateriahorarioNew.getIdmateriahorario());
                 inscripcion.setIdmateriahorario(idmateriahorarioNew);
             }
+            if (idperiodoNew != null) {
+                idperiodoNew = em.getReference(idperiodoNew.getClass(), idperiodoNew.getIdperiodo());
+                inscripcion.setIdperiodo(idperiodoNew);
+            }
             inscripcion = em.merge(inscripcion);
             if (idestudianteOld != null && !idestudianteOld.equals(idestudianteNew)) {
-                idestudianteOld.getInscripcionList().remove(inscripcion);
+                idestudianteOld.getInscripcionCollection().remove(inscripcion);
                 idestudianteOld = em.merge(idestudianteOld);
             }
             if (idestudianteNew != null && !idestudianteNew.equals(idestudianteOld)) {
-                idestudianteNew.getInscripcionList().add(inscripcion);
+                idestudianteNew.getInscripcionCollection().add(inscripcion);
                 idestudianteNew = em.merge(idestudianteNew);
             }
-            if (idmateriaOld != null && !idmateriaOld.equals(idmateriaNew)) {
-                idmateriaOld.getInscripcionList().remove(inscripcion);
-                idmateriaOld = em.merge(idmateriaOld);
-            }
-            if (idmateriaNew != null && !idmateriaNew.equals(idmateriaOld)) {
-                idmateriaNew.getInscripcionList().add(inscripcion);
-                idmateriaNew = em.merge(idmateriaNew);
-            }
-            if (idperiodoOld != null && !idperiodoOld.equals(idperiodoNew)) {
-                idperiodoOld.getInscripcionList().remove(inscripcion);
-                idperiodoOld = em.merge(idperiodoOld);
-            }
-            if (idperiodoNew != null && !idperiodoNew.equals(idperiodoOld)) {
-                idperiodoNew.getInscripcionList().add(inscripcion);
-                idperiodoNew = em.merge(idperiodoNew);
-            }
             if (idmateriahorarioOld != null && !idmateriahorarioOld.equals(idmateriahorarioNew)) {
-                idmateriahorarioOld.getInscripcionList().remove(inscripcion);
+                idmateriahorarioOld.getInscripcionCollection().remove(inscripcion);
                 idmateriahorarioOld = em.merge(idmateriahorarioOld);
             }
             if (idmateriahorarioNew != null && !idmateriahorarioNew.equals(idmateriahorarioOld)) {
-                idmateriahorarioNew.getInscripcionList().add(inscripcion);
+                idmateriahorarioNew.getInscripcionCollection().add(inscripcion);
                 idmateriahorarioNew = em.merge(idmateriahorarioNew);
+            }
+            if (idperiodoOld != null && !idperiodoOld.equals(idperiodoNew)) {
+                idperiodoOld.getInscripcionCollection().remove(inscripcion);
+                idperiodoOld = em.merge(idperiodoOld);
+            }
+            if (idperiodoNew != null && !idperiodoNew.equals(idperiodoOld)) {
+                idperiodoNew.getInscripcionCollection().add(inscripcion);
+                idperiodoNew = em.merge(idperiodoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -179,23 +161,18 @@ public class InscripcionJpaController implements Serializable {
             }
             Estudiante idestudiante = inscripcion.getIdestudiante();
             if (idestudiante != null) {
-                idestudiante.getInscripcionList().remove(inscripcion);
+                idestudiante.getInscripcionCollection().remove(inscripcion);
                 idestudiante = em.merge(idestudiante);
-            }
-            Materia idmateria = inscripcion.getIdmateria();
-            if (idmateria != null) {
-                idmateria.getInscripcionList().remove(inscripcion);
-                idmateria = em.merge(idmateria);
-            }
-            Periodo idperiodo = inscripcion.getIdperiodo();
-            if (idperiodo != null) {
-                idperiodo.getInscripcionList().remove(inscripcion);
-                idperiodo = em.merge(idperiodo);
             }
             HorarioMateria idmateriahorario = inscripcion.getIdmateriahorario();
             if (idmateriahorario != null) {
-                idmateriahorario.getInscripcionList().remove(inscripcion);
+                idmateriahorario.getInscripcionCollection().remove(inscripcion);
                 idmateriahorario = em.merge(idmateriahorario);
+            }
+            Periodo idperiodo = inscripcion.getIdperiodo();
+            if (idperiodo != null) {
+                idperiodo.getInscripcionCollection().remove(inscripcion);
+                idperiodo = em.merge(idperiodo);
             }
             em.remove(inscripcion);
             em.getTransaction().commit();

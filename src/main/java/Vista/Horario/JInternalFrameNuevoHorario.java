@@ -6,11 +6,12 @@
 package Vista.Horario;
 
 
-import Controlador.Periodo.ControladorCrudPeriodo;
-import Entidades.Periodo;
+import Controlador.Horario.ControladorCrudHorario;
+import Entidades.Horario;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
+
 import javax.swing.JOptionPane;
 
 
@@ -21,11 +22,8 @@ import javax.swing.JOptionPane;
  */
 public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
     //Inicializacion de las variables 
-    Periodo nuevoPeriodo= new Periodo();
-    /**
-     * Creates new form JInternalFrameNuevoRegistro
-     */
-    //Constructor
+    Horario nuevoHorario= new Horario();
+    
     public JInternalFrameNuevoHorario() {
         initComponents();
     }
@@ -35,28 +33,19 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
     public void setDatosPeriodo() 
             {
                 try {
-            nuevoPeriodo.setPeriodo(txtPeriodo.getText().trim());
-            nuevoPeriodo.setFechainicio(dateFechaInicioPeriodo.getDate());
-            nuevoPeriodo.setFechafin(dateFechaFinPeriodo.getDate());
+            nuevoHorario.setDia(jComboBoxDias.getSelectedItem().toString());
+            nuevoHorario.setHoraInicio(txtHoraInicio.getText());
+            nuevoHorario.setHoraFin(txtHoraFin.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Verifique que los campos Nombre del periodo, Fecha de inicio y fin esten correctos");
+            JOptionPane.showMessageDialog(null, "Verifique los datos");
         }
             }
     
-    //Método para limpiar el formulario despues de que se guarda el periodo
-     public void limpiar(){
-        txtPeriodo.setText("");
-        dateFechaFinPeriodo.setCalendar(null);
-        dateFechaInicioPeriodo.setCalendar(null);
-    }
     //Método para validar los datos ingresados
-    public boolean validarDatosPeriodo()
+    public boolean validarDatos()
     {
-        boolean bandera=false; 
-        if ((dateFechaInicioPeriodo.getDate()!=null)&&(dateFechaFinPeriodo.getDate()!=null)&&(dateFechaFinPeriodo.getDate().compareTo(dateFechaInicioPeriodo.getDate())==1)){
-            bandera=true;
-        }
-        if(txtPeriodo.getText().equals(""))
+        boolean bandera=true; 
+        if(txtHoraFin.getText().equals("")&&(txtHoraFin.getText().equals("")))
         {
             bandera=false;
         }
@@ -64,6 +53,13 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
         
         return bandera; 
     }
+    
+    //Método para limpiar el formulario despues de que se guarda el periodo
+     public void limpiar(){
+        txtHoraInicio.setText("");
+        txtHoraFin.setText("");
+    }
+    
      
      
     /**
@@ -78,10 +74,12 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtPeriodo = new javax.swing.JTextField();
+        txtHoraInicio = new javax.swing.JTextField();
         lblFechaInicio = new javax.swing.JLabel();
         btnGuardarP = new javax.swing.JButton();
         jComboBoxDias = new javax.swing.JComboBox<>();
+        lblFechaInicio1 = new javax.swing.JLabel();
+        txtHoraFin = new javax.swing.JTextField();
         lblImagPeq = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -97,9 +95,9 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Dia:");
 
-        txtPeriodo.setName(""); // NOI18N
+        txtHoraInicio.setName(""); // NOI18N
 
-        lblFechaInicio.setText("Hora:");
+        lblFechaInicio.setText("Hora Inicio:");
 
         btnGuardarP.setLabel("Guardar");
         btnGuardarP.addActionListener(new java.awt.event.ActionListener() {
@@ -108,7 +106,11 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBoxDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes ", "Martes", "Miercoles", "Jueves ", "Viernes ", "Sábado ", "Domingo" }));
+        jComboBoxDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes ", "Martes", "Miércoles", "Jueves ", "Viernes ", "Sábado ", "Domingo" }));
+
+        lblFechaInicio1.setText("Hora Fin:");
+
+        txtHoraFin.setName(""); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,18 +118,18 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnGuardarP)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(lblFechaInicio))
-                        .addGap(104, 104, 104)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPeriodo, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(jComboBoxDias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(45, 45, 45)))
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(lblFechaInicio)
+                    .addComponent(lblFechaInicio1))
+                .addGap(104, 104, 104)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtHoraInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                    .addComponent(jComboBoxDias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtHoraFin))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(btnGuardarP)
+                .addGap(241, 241, 241))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,10 +141,14 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFechaInicio)
-                    .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnGuardarP)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGuardarP)
+                        .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaInicio1))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         lblImagPeq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logopeq.jpg"))); // NOI18N
@@ -159,7 +165,7 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(401, Short.MAX_VALUE))
+                .addContainerGap(341, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +174,7 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
                 .addComponent(lblImagPeq)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(362, Short.MAX_VALUE))
+                .addContainerGap(354, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,19 +199,19 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
         //Llamado al metodo para obtener los datos de la interfaz
         setDatosPeriodo();
         //instancio el controlador de los metodos crud
-         ControladorCrudPeriodo controlador = new ControladorCrudPeriodo();
+         ControladorCrudHorario controlador = new ControladorCrudHorario();
         try {
             //llamo al metodo crear del controlador crud
-            if(validarDatosPeriodo())
-            {
-            controlador.crearPeriodo(nuevoPeriodo);  
-            JOptionPane.showMessageDialog(null,"Periodo Creado");
+            if(validarDatos())
+            {            
+            controlador.crearHorario(nuevoHorario);  
+            JOptionPane.showMessageDialog(null,"Horario Creado");
             limpiar();
             }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"Verifique la información ingresada");
+            else {
+                JOptionPane.showMessageDialog(null,"Verifiqué los datos");
             }
+            
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoHorario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,7 +225,9 @@ public class JInternalFrameNuevoHorario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblFechaInicio;
+    private javax.swing.JLabel lblFechaInicio1;
     private javax.swing.JLabel lblImagPeq;
-    private javax.swing.JTextField txtPeriodo;
+    private javax.swing.JTextField txtHoraFin;
+    private javax.swing.JTextField txtHoraInicio;
     // End of variables declaration//GEN-END:variables
 }
