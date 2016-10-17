@@ -23,10 +23,10 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
      */
     //Inicializacion de variables
     Horario HorarioConsulta=new Horario();
-    
+    String id;
     List <Horario> listaHorarioConsulta;
     ControladorCrudHorario controladorHorario= new ControladorCrudHorario();
-    Periodo periodoActualizado= new Periodo();
+    Horario horarioActualizado= new Horario();
     DefaultTableModel modelo;
     Object []horario = new Object[4];
   
@@ -37,6 +37,8 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
         btnActualizar.setEnabled(false);
+        
+        
     }
 
     
@@ -48,13 +50,15 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
             modelo.addColumn("Id");
             modelo.addColumn("Día");
             modelo.addColumn("Hora de Inicio");
-            modelo.addColumn("Hora de Finalización");  
+            modelo.addColumn("Hora de Finalización"); 
+            
             ocultarColumnas();
         }catch(Exception e){
             System.out.println("No se puede crear tabla");
         } 
     }
     
+    //Método para ocultar ciertas columnas que no se quiere que vea el usuario 
     public void ocultarColumnas(){
         jTableHorario.getColumnModel().getColumn(0).setMaxWidth(0);
         jTableHorario.getColumnModel().getColumn(0).setMinWidth(0);
@@ -65,38 +69,31 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
     public void habilitarDeshabilitar (boolean estado)
     {
         txtHoraFin.setEnabled(estado);
+        txtHoraInicio.setEnabled(estado);
+        btnGuardar.setEnabled(estado);
+        btnActualizar.setEnabled(estado);
+        jComboBoxDias.setEnabled(estado);
         
     }
+    
+    
     
     //Método para obtener los datos actualizados de la interfaz
      public void setDatosPeriodoActualizado (){
          try {
-             
-//             periodoActualizado.setIdperiodo(periodoConsulta.getIdperiodo());
-//             periodoActualizado.setPeriodo(txtHoraFin.getText().trim());
-//             periodoActualizado.setFechainicio(dateFechaInicio.getDate());
-//             periodoActualizado.setFechafin(dateFechaFin.getDate());
+             horarioActualizado.setIdhorario(Integer.parseInt(id));
+             horarioActualizado.setDia(jComboBoxDias.getSelectedItem().toString());
+             horarioActualizado.setHoraInicio(txtHoraInicio.getText().trim());
+             horarioActualizado.setHoraFin(txtHoraFin.getText().trim());
          }
          catch (Exception e) {
               JOptionPane.showMessageDialog(null, "Verifique los datos Actualizados");
          }
      }
      
-     //Método para validar los datos ingresados
-     public boolean validarDatosPeriodo()
-     {
-             boolean bandera=false; 
-//             if ((dateFechaInicio.getDate()!=null)&&(dateFechaFin.getDate()!=null)&&(dateFechaFin.getDate().compareTo(dateFechaInicio.getDate())==1)){
-//                 bandera=true;
-//             }
-//             if(txtHoraFin.getText().equals(""))
-//             {
-//                 bandera=false;
-//             }        
-         return bandera; 
-     }
+     
     
-     //Método para llenar los campos de la interfaz con los datos obtenidos de la busqueda
+     //Método para llenar la tabla con los datos obtenidos de la busqueda
     public void setDatosHorarioConsulta(){
         if(listaHorarioConsulta!=null){
             
@@ -163,6 +160,8 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Hora de Finalización:");
 
+        txtHoraInicio.setName(""); // NOI18N
+
         jComboBoxDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes ", "Martes", "Miércoles", "Jueves ", "Viernes ", "Sábado ", "Domingo" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -204,17 +203,11 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
 
         lblImagPeq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logopeq.jpg"))); // NOI18N
 
-        jTableHorario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jTableHorario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableHorarioMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(jTableHorario);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -367,7 +360,7 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "No se encuentra registrados horarios");
                 }
-            btnActualizar.setEnabled(true);
+            
             habilitarDeshabilitar(false);
             btnGuardar.setEnabled(false);
         }
@@ -384,26 +377,56 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try{
-                 //Llamada al metodo validar antes de que se guarden los datos
-                 if (validarDatosPeriodo())
-                 {
-                    //Llamado al método para obtener los datos actualizados
-                     setDatosPeriodoActualizado();
-                    //controladorPeriodo.editarPeriodo(periodoActualizado);
-                    JOptionPane.showMessageDialog(null,"Periodo Actualizado");
+                       //Obtención de datos actualizados
+                     setDatosPeriodoActualizado();                     
+                    controladorHorario.editarHorario(horarioActualizado);              
+                                      
                      habilitarDeshabilitar(false);
                      btnGuardar.setEnabled(false);
                      
-                 }
-                 else {
-                     JOptionPane.showMessageDialog(null,"Verifique que los datos ingresados para la actualización sean los correctos");
-                }
+//                 
              }
          catch(Exception e){
              System.out.println(e);
              JOptionPane.showMessageDialog(null,"No se puede actualizar \n"+e);
          }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    //Método para llenar txt con lo seleccionado en la tabla.
+    private void jTableHorarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableHorarioMouseClicked
+        int row = jTableHorario.getSelectedRow();
+        id= jTableHorario.getValueAt(row, 0).toString();
+        String dias=jTableHorario.getValueAt(row, 1).toString();
+        switch (dias){
+            case "Lunes":
+             jComboBoxDias.setSelectedIndex(0);
+             break; 
+            case "Martes":
+             jComboBoxDias.setSelectedIndex(1);
+             break;
+             case "Miércoles":
+             jComboBoxDias.setSelectedIndex(2);
+             break;
+             case "Jueves":
+             jComboBoxDias.setSelectedIndex(3);
+             break;
+             case "Viernes":
+             jComboBoxDias.setSelectedIndex(4);
+             break;
+             case "Sábado":
+             jComboBoxDias.setSelectedIndex(5);
+             break;
+             case "Domingo":
+             jComboBoxDias.setSelectedIndex(6);
+             break;
+            default:
+           System.out.println("error" );
+           break;
+        }
+        txtHoraInicio.setText(jTableHorario.getValueAt(row, 2).toString());
+        txtHoraFin.setText(jTableHorario.getValueAt(row, 3).toString());
+        btnActualizar.setEnabled(true);
+    }//GEN-LAST:event_jTableHorarioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

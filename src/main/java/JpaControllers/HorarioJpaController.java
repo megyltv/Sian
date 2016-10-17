@@ -73,39 +73,39 @@ public class HorarioJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Horario persistentHorario = em.find(Horario.class, horario.getIdhorario());
-            Collection<HorarioMateria> horarioMateriaCollectionOld = persistentHorario.getHorarioMateriaCollection();
-            Collection<HorarioMateria> horarioMateriaCollectionNew = horario.getHorarioMateriaCollection();
-            List<String> illegalOrphanMessages = null;
-            for (HorarioMateria horarioMateriaCollectionOldHorarioMateria : horarioMateriaCollectionOld) {
-                if (!horarioMateriaCollectionNew.contains(horarioMateriaCollectionOldHorarioMateria)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain HorarioMateria " + horarioMateriaCollectionOldHorarioMateria + " since its idhorario field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Collection<HorarioMateria> attachedHorarioMateriaCollectionNew = new ArrayList<HorarioMateria>();
-            for (HorarioMateria horarioMateriaCollectionNewHorarioMateriaToAttach : horarioMateriaCollectionNew) {
-                horarioMateriaCollectionNewHorarioMateriaToAttach = em.getReference(horarioMateriaCollectionNewHorarioMateriaToAttach.getClass(), horarioMateriaCollectionNewHorarioMateriaToAttach.getIdmateriahorario());
-                attachedHorarioMateriaCollectionNew.add(horarioMateriaCollectionNewHorarioMateriaToAttach);
-            }
-            horarioMateriaCollectionNew = attachedHorarioMateriaCollectionNew;
-            horario.setHorarioMateriaCollection(horarioMateriaCollectionNew);
+//            Collection<HorarioMateria> horarioMateriaCollectionOld = persistentHorario.getHorarioMateriaCollection();
+//            Collection<HorarioMateria> horarioMateriaCollectionNew = horario.getHorarioMateriaCollection();
+//            List<String> illegalOrphanMessages = null;
+//            for (HorarioMateria horarioMateriaCollectionOldHorarioMateria : horarioMateriaCollectionOld) {
+//                if (!horarioMateriaCollectionNew.contains(horarioMateriaCollectionOldHorarioMateria)) {
+//                    if (illegalOrphanMessages == null) {
+//                        illegalOrphanMessages = new ArrayList<String>();
+//                    }
+//                    illegalOrphanMessages.add("You must retain HorarioMateria " + horarioMateriaCollectionOldHorarioMateria + " since its idhorario field is not nullable.");
+//                }
+//            }
+//            if (illegalOrphanMessages != null) {
+//                throw new IllegalOrphanException(illegalOrphanMessages);
+//            }
+//            Collection<HorarioMateria> attachedHorarioMateriaCollectionNew = new ArrayList<HorarioMateria>();
+//            for (HorarioMateria horarioMateriaCollectionNewHorarioMateriaToAttach : horarioMateriaCollectionNew) {
+//                horarioMateriaCollectionNewHorarioMateriaToAttach = em.getReference(horarioMateriaCollectionNewHorarioMateriaToAttach.getClass(), horarioMateriaCollectionNewHorarioMateriaToAttach.getIdmateriahorario());
+//                attachedHorarioMateriaCollectionNew.add(horarioMateriaCollectionNewHorarioMateriaToAttach);
+//            }
+//            horarioMateriaCollectionNew = attachedHorarioMateriaCollectionNew;
+//            horario.setHorarioMateriaCollection(horarioMateriaCollectionNew);
             horario = em.merge(horario);
-            for (HorarioMateria horarioMateriaCollectionNewHorarioMateria : horarioMateriaCollectionNew) {
-                if (!horarioMateriaCollectionOld.contains(horarioMateriaCollectionNewHorarioMateria)) {
-                    Horario oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria = horarioMateriaCollectionNewHorarioMateria.getIdhorario();
-                    horarioMateriaCollectionNewHorarioMateria.setIdhorario(horario);
-                    horarioMateriaCollectionNewHorarioMateria = em.merge(horarioMateriaCollectionNewHorarioMateria);
-                    if (oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria != null && !oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria.equals(horario)) {
-                        oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria.getHorarioMateriaCollection().remove(horarioMateriaCollectionNewHorarioMateria);
-                        oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria = em.merge(oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria);
-                    }
-                }
-            }
+//            for (HorarioMateria horarioMateriaCollectionNewHorarioMateria : horarioMateriaCollectionNew) {
+//                if (!horarioMateriaCollectionOld.contains(horarioMateriaCollectionNewHorarioMateria)) {
+//                    Horario oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria = horarioMateriaCollectionNewHorarioMateria.getIdhorario();
+//                    horarioMateriaCollectionNewHorarioMateria.setIdhorario(horario);
+//                    horarioMateriaCollectionNewHorarioMateria = em.merge(horarioMateriaCollectionNewHorarioMateria);
+//                    if (oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria != null && !oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria.equals(horario)) {
+//                        oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria.getHorarioMateriaCollection().remove(horarioMateriaCollectionNewHorarioMateria);
+//                        oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria = em.merge(oldIdhorarioOfHorarioMateriaCollectionNewHorarioMateria);
+//                    }
+//                }
+//            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

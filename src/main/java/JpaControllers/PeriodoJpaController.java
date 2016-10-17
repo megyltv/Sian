@@ -73,39 +73,39 @@ public class PeriodoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Periodo persistentPeriodo = em.find(Periodo.class, periodo.getIdperiodo());
-            Collection<Inscripcion> inscripcionCollectionOld = persistentPeriodo.getInscripcionCollection();
-            Collection<Inscripcion> inscripcionCollectionNew = periodo.getInscripcionCollection();
-            List<String> illegalOrphanMessages = null;
-            for (Inscripcion inscripcionCollectionOldInscripcion : inscripcionCollectionOld) {
-                if (!inscripcionCollectionNew.contains(inscripcionCollectionOldInscripcion)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionCollectionOldInscripcion + " since its idperiodo field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Collection<Inscripcion> attachedInscripcionCollectionNew = new ArrayList<Inscripcion>();
-            for (Inscripcion inscripcionCollectionNewInscripcionToAttach : inscripcionCollectionNew) {
-                inscripcionCollectionNewInscripcionToAttach = em.getReference(inscripcionCollectionNewInscripcionToAttach.getClass(), inscripcionCollectionNewInscripcionToAttach.getIdinscripcion());
-                attachedInscripcionCollectionNew.add(inscripcionCollectionNewInscripcionToAttach);
-            }
-            inscripcionCollectionNew = attachedInscripcionCollectionNew;
-            periodo.setInscripcionCollection(inscripcionCollectionNew);
+//            Collection<Inscripcion> inscripcionCollectionOld = persistentPeriodo.getInscripcionCollection();
+//            Collection<Inscripcion> inscripcionCollectionNew = periodo.getInscripcionCollection();
+//            List<String> illegalOrphanMessages = null;
+//            for (Inscripcion inscripcionCollectionOldInscripcion : inscripcionCollectionOld) {
+//                if (!inscripcionCollectionNew.contains(inscripcionCollectionOldInscripcion)) {
+//                    if (illegalOrphanMessages == null) {
+//                        illegalOrphanMessages = new ArrayList<String>();
+//                    }
+//                    illegalOrphanMessages.add("You must retain Inscripcion " + inscripcionCollectionOldInscripcion + " since its idperiodo field is not nullable.");
+//                }
+//            }
+//            if (illegalOrphanMessages != null) {
+//                throw new IllegalOrphanException(illegalOrphanMessages);
+//            }
+//            Collection<Inscripcion> attachedInscripcionCollectionNew = new ArrayList<Inscripcion>();
+//            for (Inscripcion inscripcionCollectionNewInscripcionToAttach : inscripcionCollectionNew) {
+//                inscripcionCollectionNewInscripcionToAttach = em.getReference(inscripcionCollectionNewInscripcionToAttach.getClass(), inscripcionCollectionNewInscripcionToAttach.getIdinscripcion());
+//                attachedInscripcionCollectionNew.add(inscripcionCollectionNewInscripcionToAttach);
+//            }
+//            inscripcionCollectionNew = attachedInscripcionCollectionNew;
+//            periodo.setInscripcionCollection(inscripcionCollectionNew);
             periodo = em.merge(periodo);
-            for (Inscripcion inscripcionCollectionNewInscripcion : inscripcionCollectionNew) {
-                if (!inscripcionCollectionOld.contains(inscripcionCollectionNewInscripcion)) {
-                    Periodo oldIdperiodoOfInscripcionCollectionNewInscripcion = inscripcionCollectionNewInscripcion.getIdperiodo();
-                    inscripcionCollectionNewInscripcion.setIdperiodo(periodo);
-                    inscripcionCollectionNewInscripcion = em.merge(inscripcionCollectionNewInscripcion);
-                    if (oldIdperiodoOfInscripcionCollectionNewInscripcion != null && !oldIdperiodoOfInscripcionCollectionNewInscripcion.equals(periodo)) {
-                        oldIdperiodoOfInscripcionCollectionNewInscripcion.getInscripcionCollection().remove(inscripcionCollectionNewInscripcion);
-                        oldIdperiodoOfInscripcionCollectionNewInscripcion = em.merge(oldIdperiodoOfInscripcionCollectionNewInscripcion);
-                    }
-                }
-            }
+//            for (Inscripcion inscripcionCollectionNewInscripcion : inscripcionCollectionNew) {
+//                if (!inscripcionCollectionOld.contains(inscripcionCollectionNewInscripcion)) {
+//                    Periodo oldIdperiodoOfInscripcionCollectionNewInscripcion = inscripcionCollectionNewInscripcion.getIdperiodo();
+//                    inscripcionCollectionNewInscripcion.setIdperiodo(periodo);
+//                    inscripcionCollectionNewInscripcion = em.merge(inscripcionCollectionNewInscripcion);
+//                    if (oldIdperiodoOfInscripcionCollectionNewInscripcion != null && !oldIdperiodoOfInscripcionCollectionNewInscripcion.equals(periodo)) {
+//                        oldIdperiodoOfInscripcionCollectionNewInscripcion.getInscripcionCollection().remove(inscripcionCollectionNewInscripcion);
+//                        oldIdperiodoOfInscripcionCollectionNewInscripcion = em.merge(oldIdperiodoOfInscripcionCollectionNewInscripcion);
+//                    }
+//                }
+//            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

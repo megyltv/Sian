@@ -7,6 +7,7 @@ package Controlador.Horario;
 
 import Entidades.Horario;
 import JpaControllers.HorarioJpaController;
+import JpaControllers.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -27,7 +28,7 @@ Horario horariosBuscada;
         controladorHorario.create(horario);  
     }
     
-    //Método para consultar periodopor medio de su nombre 
+    //Método para consultar el horario por medio de su dia 
     public List consultarHorarioPorDia(String dia){
         em = controladorHorario.getEntityManager();
         //ojo enviar el parametro que recibe este metodo como parametro que se le envia a la consulta
@@ -46,5 +47,11 @@ Horario horariosBuscada;
         }
         return horariosBuscada;
     }
+    
+    //Método para editar horario
+     public void editarHorario (Horario horario) throws NonexistentEntityException, Exception{
+        em = controladorHorario.getEntityManager();
+         controladorHorario.edit(horario);
+     }
     
 }
