@@ -15,16 +15,14 @@ import Entidades.HorarioMateria;
 import Entidades.Materia;
 import Entidades.Inscripcion;
 import JpaControllers.exceptions.NonexistentEntityException;
-import JpaControllers.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Iker Gael
+ * @author Megan
  */
 public class HorarioMateriaJpaController implements Serializable {
 
@@ -37,9 +35,9 @@ public class HorarioMateriaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(HorarioMateria horarioMateria) throws PreexistingEntityException, Exception {
-        if (horarioMateria.getInscripcionCollection() == null) {
-            horarioMateria.setInscripcionCollection(new ArrayList<Inscripcion>());
+    public void create(HorarioMateria horarioMateria) {
+        if (horarioMateria.getInscripcionList() == null) {
+            horarioMateria.setInscripcionList(new ArrayList<Inscripcion>());
         }
         EntityManager em = null;
         try {
@@ -55,36 +53,31 @@ public class HorarioMateriaJpaController implements Serializable {
                 idmateria = em.getReference(idmateria.getClass(), idmateria.getIdmateria());
                 horarioMateria.setIdmateria(idmateria);
             }
-            Collection<Inscripcion> attachedInscripcionCollection = new ArrayList<Inscripcion>();
-            for (Inscripcion inscripcionCollectionInscripcionToAttach : horarioMateria.getInscripcionCollection()) {
-                inscripcionCollectionInscripcionToAttach = em.getReference(inscripcionCollectionInscripcionToAttach.getClass(), inscripcionCollectionInscripcionToAttach.getIdinscripcion());
-                attachedInscripcionCollection.add(inscripcionCollectionInscripcionToAttach);
+            List<Inscripcion> attachedInscripcionList = new ArrayList<Inscripcion>();
+            for (Inscripcion inscripcionListInscripcionToAttach : horarioMateria.getInscripcionList()) {
+                inscripcionListInscripcionToAttach = em.getReference(inscripcionListInscripcionToAttach.getClass(), inscripcionListInscripcionToAttach.getIdinscripcion());
+                attachedInscripcionList.add(inscripcionListInscripcionToAttach);
             }
-            horarioMateria.setInscripcionCollection(attachedInscripcionCollection);
+            horarioMateria.setInscripcionList(attachedInscripcionList);
             em.persist(horarioMateria);
             if (idhorario != null) {
-                idhorario.getHorarioMateriaCollection().add(horarioMateria);
+                idhorario.getHorarioMateriaList().add(horarioMateria);
                 idhorario = em.merge(idhorario);
             }
             if (idmateria != null) {
-                idmateria.getHorarioMateriaCollection().add(horarioMateria);
+                idmateria.getHorarioMateriaList().add(horarioMateria);
                 idmateria = em.merge(idmateria);
             }
-            for (Inscripcion inscripcionCollectionInscripcion : horarioMateria.getInscripcionCollection()) {
-                HorarioMateria oldIdmateriahorarioOfInscripcionCollectionInscripcion = inscripcionCollectionInscripcion.getIdmateriahorario();
-                inscripcionCollectionInscripcion.setIdmateriahorario(horarioMateria);
-                inscripcionCollectionInscripcion = em.merge(inscripcionCollectionInscripcion);
-                if (oldIdmateriahorarioOfInscripcionCollectionInscripcion != null) {
-                    oldIdmateriahorarioOfInscripcionCollectionInscripcion.getInscripcionCollection().remove(inscripcionCollectionInscripcion);
-                    oldIdmateriahorarioOfInscripcionCollectionInscripcion = em.merge(oldIdmateriahorarioOfInscripcionCollectionInscripcion);
+            for (Inscripcion inscripcionListInscripcion : horarioMateria.getInscripcionList()) {
+                HorarioMateria oldIdmateriahorarioOfInscripcionListInscripcion = inscripcionListInscripcion.getIdmateriahorario();
+                inscripcionListInscripcion.setIdmateriahorario(horarioMateria);
+                inscripcionListInscripcion = em.merge(inscripcionListInscripcion);
+                if (oldIdmateriahorarioOfInscripcionListInscripcion != null) {
+                    oldIdmateriahorarioOfInscripcionListInscripcion.getInscripcionList().remove(inscripcionListInscripcion);
+                    oldIdmateriahorarioOfInscripcionListInscripcion = em.merge(oldIdmateriahorarioOfInscripcionListInscripcion);
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findHorarioMateria(horarioMateria.getIdmateriahorario()) != null) {
-                throw new PreexistingEntityException("HorarioMateria " + horarioMateria + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -102,9 +95,8 @@ public class HorarioMateriaJpaController implements Serializable {
             Horario idhorarioNew = horarioMateria.getIdhorario();
             Materia idmateriaOld = persistentHorarioMateria.getIdmateria();
             Materia idmateriaNew = horarioMateria.getIdmateria();
-<<<<<<< HEAD
-            Collection<Inscripcion> inscripcionCollectionOld = persistentHorarioMateria.getInscripcionCollection();
-            Collection<Inscripcion> inscripcionCollectionNew = horarioMateria.getInscripcionCollection();
+            /*List<Inscripcion> inscripcionListOld = persistentHorarioMateria.getInscripcionList();
+            List<Inscripcion> inscripcionListNew = horarioMateria.getInscripcionList();
             if (idhorarioNew != null) {
                 idhorarioNew = em.getReference(idhorarioNew.getClass(), idhorarioNew.getIdhorario());
                 horarioMateria.setIdhorario(idhorarioNew);
@@ -113,100 +105,47 @@ public class HorarioMateriaJpaController implements Serializable {
                 idmateriaNew = em.getReference(idmateriaNew.getClass(), idmateriaNew.getIdmateria());
                 horarioMateria.setIdmateria(idmateriaNew);
             }
-            Collection<Inscripcion> attachedInscripcionCollectionNew = new ArrayList<Inscripcion>();
-            for (Inscripcion inscripcionCollectionNewInscripcionToAttach : inscripcionCollectionNew) {
-                inscripcionCollectionNewInscripcionToAttach = em.getReference(inscripcionCollectionNewInscripcionToAttach.getClass(), inscripcionCollectionNewInscripcionToAttach.getIdinscripcion());
-                attachedInscripcionCollectionNew.add(inscripcionCollectionNewInscripcionToAttach);
+            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
+            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
+                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
+                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
             }
-            inscripcionCollectionNew = attachedInscripcionCollectionNew;
-            horarioMateria.setInscripcionCollection(inscripcionCollectionNew);
+            inscripcionListNew = attachedInscripcionListNew;
+            horarioMateria.setInscripcionList(inscripcionListNew);*/
             horarioMateria = em.merge(horarioMateria);
             if (idhorarioOld != null && !idhorarioOld.equals(idhorarioNew)) {
-                idhorarioOld.getHorarioMateriaCollection().remove(horarioMateria);
+                idhorarioOld.getHorarioMateriaList().remove(horarioMateria);
                 idhorarioOld = em.merge(idhorarioOld);
             }
             if (idhorarioNew != null && !idhorarioNew.equals(idhorarioOld)) {
-                idhorarioNew.getHorarioMateriaCollection().add(horarioMateria);
+                idhorarioNew.getHorarioMateriaList().add(horarioMateria);
                 idhorarioNew = em.merge(idhorarioNew);
             }
             if (idmateriaOld != null && !idmateriaOld.equals(idmateriaNew)) {
-                idmateriaOld.getHorarioMateriaCollection().remove(horarioMateria);
+                idmateriaOld.getHorarioMateriaList().remove(horarioMateria);
                 idmateriaOld = em.merge(idmateriaOld);
             }
             if (idmateriaNew != null && !idmateriaNew.equals(idmateriaOld)) {
-                idmateriaNew.getHorarioMateriaCollection().add(horarioMateria);
+                idmateriaNew.getHorarioMateriaList().add(horarioMateria);
                 idmateriaNew = em.merge(idmateriaNew);
             }
-            for (Inscripcion inscripcionCollectionOldInscripcion : inscripcionCollectionOld) {
-                if (!inscripcionCollectionNew.contains(inscripcionCollectionOldInscripcion)) {
-                    inscripcionCollectionOldInscripcion.setIdmateriahorario(null);
-                    inscripcionCollectionOldInscripcion = em.merge(inscripcionCollectionOldInscripcion);
+            /*for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
+                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
+                    inscripcionListOldInscripcion.setIdmateriahorario(null);
+                    inscripcionListOldInscripcion = em.merge(inscripcionListOldInscripcion);
                 }
             }
-            for (Inscripcion inscripcionCollectionNewInscripcion : inscripcionCollectionNew) {
-                if (!inscripcionCollectionOld.contains(inscripcionCollectionNewInscripcion)) {
-                    HorarioMateria oldIdmateriahorarioOfInscripcionCollectionNewInscripcion = inscripcionCollectionNewInscripcion.getIdmateriahorario();
-                    inscripcionCollectionNewInscripcion.setIdmateriahorario(horarioMateria);
-                    inscripcionCollectionNewInscripcion = em.merge(inscripcionCollectionNewInscripcion);
-                    if (oldIdmateriahorarioOfInscripcionCollectionNewInscripcion != null && !oldIdmateriahorarioOfInscripcionCollectionNewInscripcion.equals(horarioMateria)) {
-                        oldIdmateriahorarioOfInscripcionCollectionNewInscripcion.getInscripcionCollection().remove(inscripcionCollectionNewInscripcion);
-                        oldIdmateriahorarioOfInscripcionCollectionNewInscripcion = em.merge(oldIdmateriahorarioOfInscripcionCollectionNewInscripcion);
+            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
+                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
+                    HorarioMateria oldIdmateriahorarioOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdmateriahorario();
+                    inscripcionListNewInscripcion.setIdmateriahorario(horarioMateria);
+                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
+                    if (oldIdmateriahorarioOfInscripcionListNewInscripcion != null && !oldIdmateriahorarioOfInscripcionListNewInscripcion.equals(horarioMateria)) {
+                        oldIdmateriahorarioOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
+                        oldIdmateriahorarioOfInscripcionListNewInscripcion = em.merge(oldIdmateriahorarioOfInscripcionListNewInscripcion);
                     }
                 }
-            }
-=======
-//            List<Inscripcion> inscripcionListOld = persistentHorarioMateria.getInscripcionList();
-//            List<Inscripcion> inscripcionListNew = horarioMateria.getInscripcionList();
-//            if (idhorarioNew != null) {
-//                idhorarioNew = em.getReference(idhorarioNew.getClass(), idhorarioNew.getIdhorario());
-//                horarioMateria.setIdhorario(idhorarioNew);
-//            }
-//            if (idmateriaNew != null) {
-//                idmateriaNew = em.getReference(idmateriaNew.getClass(), idmateriaNew.getIdmateria());
-//                horarioMateria.setIdmateria(idmateriaNew);
-//            }
-//            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
-//            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
-//                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
-//                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
-//            }
-//            inscripcionListNew = attachedInscripcionListNew;
-//            horarioMateria.setInscripcionList(inscripcionListNew);
-            horarioMateria = em.merge(horarioMateria);
-//            if (idhorarioOld != null && !idhorarioOld.equals(idhorarioNew)) {
-//                idhorarioOld.getHorarioMateriaList().remove(horarioMateria);
-//                idhorarioOld = em.merge(idhorarioOld);
-//            }
-//            if (idhorarioNew != null && !idhorarioNew.equals(idhorarioOld)) {
-//                idhorarioNew.getHorarioMateriaList().add(horarioMateria);
-//                idhorarioNew = em.merge(idhorarioNew);
-//            }
-//            if (idmateriaOld != null && !idmateriaOld.equals(idmateriaNew)) {
-//                idmateriaOld.getHorarioMateriaList().remove(horarioMateria);
-//                idmateriaOld = em.merge(idmateriaOld);
-//            }
-//            if (idmateriaNew != null && !idmateriaNew.equals(idmateriaOld)) {
-//                idmateriaNew.getHorarioMateriaList().add(horarioMateria);
-//                idmateriaNew = em.merge(idmateriaNew);
-//            }
-//            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
-//                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
-//                    inscripcionListOldInscripcion.setIdmateriahorario(null);
-//                    inscripcionListOldInscripcion = em.merge(inscripcionListOldInscripcion);
-//                }
-//            }
-//            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
-//                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
-//                    HorarioMateria oldIdmateriahorarioOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdmateriahorario();
-//                    inscripcionListNewInscripcion.setIdmateriahorario(horarioMateria);
-//                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
-//                    if (oldIdmateriahorarioOfInscripcionListNewInscripcion != null && !oldIdmateriahorarioOfInscripcionListNewInscripcion.equals(horarioMateria)) {
-//                        oldIdmateriahorarioOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
-//                        oldIdmateriahorarioOfInscripcionListNewInscripcion = em.merge(oldIdmateriahorarioOfInscripcionListNewInscripcion);
-//                    }
-//                }
-//            }
->>>>>>> master
+            }*/
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -238,18 +177,18 @@ public class HorarioMateriaJpaController implements Serializable {
             }
             Horario idhorario = horarioMateria.getIdhorario();
             if (idhorario != null) {
-                idhorario.getHorarioMateriaCollection().remove(horarioMateria);
+                idhorario.getHorarioMateriaList().remove(horarioMateria);
                 idhorario = em.merge(idhorario);
             }
             Materia idmateria = horarioMateria.getIdmateria();
             if (idmateria != null) {
-                idmateria.getHorarioMateriaCollection().remove(horarioMateria);
+                idmateria.getHorarioMateriaList().remove(horarioMateria);
                 idmateria = em.merge(idmateria);
             }
-            Collection<Inscripcion> inscripcionCollection = horarioMateria.getInscripcionCollection();
-            for (Inscripcion inscripcionCollectionInscripcion : inscripcionCollection) {
-                inscripcionCollectionInscripcion.setIdmateriahorario(null);
-                inscripcionCollectionInscripcion = em.merge(inscripcionCollectionInscripcion);
+            List<Inscripcion> inscripcionList = horarioMateria.getInscripcionList();
+            for (Inscripcion inscripcionListInscripcion : inscripcionList) {
+                inscripcionListInscripcion.setIdmateriahorario(null);
+                inscripcionListInscripcion = em.merge(inscripcionListInscripcion);
             }
             em.remove(horarioMateria);
             em.getTransaction().commit();

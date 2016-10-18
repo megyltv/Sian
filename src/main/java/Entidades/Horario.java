@@ -6,7 +6,7 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Iker Gael
+ * @author Megan
  */
 @Entity
 @Table(name = "horario")
@@ -50,11 +50,7 @@ public class Horario implements Serializable {
     @Column(name = "hora_fin")
     private String horaFin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idhorario")
-<<<<<<< HEAD
-    private Collection<HorarioMateria> horarioMateriaCollection;
-=======
     private List<HorarioMateria> horarioMateriaList;
->>>>>>> master
 
     public Horario() {
     }
@@ -101,21 +97,12 @@ public class Horario implements Serializable {
     }
 
     @XmlTransient
-<<<<<<< HEAD
-    public Collection<HorarioMateria> getHorarioMateriaCollection() {
-        return horarioMateriaCollection;
-    }
-
-    public void setHorarioMateriaCollection(Collection<HorarioMateria> horarioMateriaCollection) {
-        this.horarioMateriaCollection = horarioMateriaCollection;
-=======
     public List<HorarioMateria> getHorarioMateriaList() {
         return horarioMateriaList;
     }
 
     public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
         this.horarioMateriaList = horarioMateriaList;
->>>>>>> master
     }
 
     @Override

@@ -408,6 +408,7 @@ public class JInternalFrameConsultarHorario extends javax.swing.JInternalFrame {
              jComboBoxDias.setSelectedIndex(2);
              break;
              case "Jueves":
+                 System.out.println(dias);
              jComboBoxDias.setSelectedIndex(3);
              break;
              case "Viernes":

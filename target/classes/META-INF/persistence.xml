@@ -10,6 +10,7 @@
     <class>Entidades.Horario</class>
     <class>Entidades.Estudiante</class>
     <class>Entidades.HorarioMateria</class>
+    <class>Entidades.NewEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/SianF"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

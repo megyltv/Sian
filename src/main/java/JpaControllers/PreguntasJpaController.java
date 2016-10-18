@@ -13,14 +13,13 @@ import javax.persistence.criteria.Root;
 import Entidades.Estudiante;
 import Entidades.Preguntas;
 import JpaControllers.exceptions.NonexistentEntityException;
-import JpaControllers.exceptions.PreexistingEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Iker Gael
+ * @author Megan
  */
 public class PreguntasJpaController implements Serializable {
 
@@ -33,7 +32,7 @@ public class PreguntasJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Preguntas preguntas) throws PreexistingEntityException, Exception {
+    public void create(Preguntas preguntas) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -45,15 +44,10 @@ public class PreguntasJpaController implements Serializable {
             }
             em.persist(preguntas);
             if (idestudiante != null) {
-                idestudiante.getPreguntasCollection().add(preguntas);
+                idestudiante.getPreguntasList().add(preguntas);
                 idestudiante = em.merge(idestudiante);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findPreguntas(preguntas.getIdpreguntas()) != null) {
-                throw new PreexistingEntityException("Preguntas " + preguntas + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -75,11 +69,11 @@ public class PreguntasJpaController implements Serializable {
             }
             preguntas = em.merge(preguntas);
             if (idestudianteOld != null && !idestudianteOld.equals(idestudianteNew)) {
-                idestudianteOld.getPreguntasCollection().remove(preguntas);
+                idestudianteOld.getPreguntasList().remove(preguntas);
                 idestudianteOld = em.merge(idestudianteOld);
             }
             if (idestudianteNew != null && !idestudianteNew.equals(idestudianteOld)) {
-                idestudianteNew.getPreguntasCollection().add(preguntas);
+                idestudianteNew.getPreguntasList().add(preguntas);
                 idestudianteNew = em.merge(idestudianteNew);
             }
             em.getTransaction().commit();
@@ -113,7 +107,7 @@ public class PreguntasJpaController implements Serializable {
             }
             Estudiante idestudiante = preguntas.getIdestudiante();
             if (idestudiante != null) {
-                idestudiante.getPreguntasCollection().remove(preguntas);
+                idestudiante.getPreguntasList().remove(preguntas);
                 idestudiante = em.merge(idestudiante);
             }
             em.remove(preguntas);

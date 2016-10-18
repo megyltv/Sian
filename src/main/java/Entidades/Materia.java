@@ -6,11 +6,13 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Iker Gael
+ * @author Megan
  */
 @Entity
 @Table(name = "materia")
@@ -35,6 +37,7 @@ public class Materia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idmateria")
     private Integer idmateria;
@@ -44,11 +47,7 @@ public class Materia implements Serializable {
     @Column(name = "nivel")
     private Integer nivel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
-<<<<<<< HEAD
-    private Collection<HorarioMateria> horarioMateriaCollection;
-=======
     private List<HorarioMateria> horarioMateriaList;
->>>>>>> master
 
     public Materia() {
     }
@@ -87,21 +86,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-<<<<<<< HEAD
-    public Collection<HorarioMateria> getHorarioMateriaCollection() {
-        return horarioMateriaCollection;
-    }
-
-    public void setHorarioMateriaCollection(Collection<HorarioMateria> horarioMateriaCollection) {
-        this.horarioMateriaCollection = horarioMateriaCollection;
-=======
     public List<HorarioMateria> getHorarioMateriaList() {
         return horarioMateriaList;
     }
 
     public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
         this.horarioMateriaList = horarioMateriaList;
->>>>>>> master
     }
 
     @Override
