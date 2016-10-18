@@ -192,7 +192,7 @@ public class JInternalFrameConsultarPeriodo extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("Ingresé el nombre de Periodo:");
+        jLabel3.setText("Ingrese el nombre de Periodo:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

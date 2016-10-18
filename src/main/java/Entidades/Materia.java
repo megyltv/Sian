@@ -44,7 +44,11 @@ public class Materia implements Serializable {
     @Column(name = "nivel")
     private Integer nivel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmateria")
+<<<<<<< HEAD
     private Collection<HorarioMateria> horarioMateriaCollection;
+=======
+    private List<HorarioMateria> horarioMateriaList;
+>>>>>>> master
 
     public Materia() {
     }
@@ -83,12 +87,21 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
+<<<<<<< HEAD
     public Collection<HorarioMateria> getHorarioMateriaCollection() {
         return horarioMateriaCollection;
     }
 
     public void setHorarioMateriaCollection(Collection<HorarioMateria> horarioMateriaCollection) {
         this.horarioMateriaCollection = horarioMateriaCollection;
+=======
+    public List<HorarioMateria> getHorarioMateriaList() {
+        return horarioMateriaList;
+    }
+
+    public void setHorarioMateriaList(List<HorarioMateria> horarioMateriaList) {
+        this.horarioMateriaList = horarioMateriaList;
+>>>>>>> master
     }
 
     @Override

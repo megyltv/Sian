@@ -102,6 +102,7 @@ public class HorarioMateriaJpaController implements Serializable {
             Horario idhorarioNew = horarioMateria.getIdhorario();
             Materia idmateriaOld = persistentHorarioMateria.getIdmateria();
             Materia idmateriaNew = horarioMateria.getIdmateria();
+<<<<<<< HEAD
             Collection<Inscripcion> inscripcionCollectionOld = persistentHorarioMateria.getInscripcionCollection();
             Collection<Inscripcion> inscripcionCollectionNew = horarioMateria.getInscripcionCollection();
             if (idhorarioNew != null) {
@@ -153,6 +154,59 @@ public class HorarioMateriaJpaController implements Serializable {
                     }
                 }
             }
+=======
+//            List<Inscripcion> inscripcionListOld = persistentHorarioMateria.getInscripcionList();
+//            List<Inscripcion> inscripcionListNew = horarioMateria.getInscripcionList();
+//            if (idhorarioNew != null) {
+//                idhorarioNew = em.getReference(idhorarioNew.getClass(), idhorarioNew.getIdhorario());
+//                horarioMateria.setIdhorario(idhorarioNew);
+//            }
+//            if (idmateriaNew != null) {
+//                idmateriaNew = em.getReference(idmateriaNew.getClass(), idmateriaNew.getIdmateria());
+//                horarioMateria.setIdmateria(idmateriaNew);
+//            }
+//            List<Inscripcion> attachedInscripcionListNew = new ArrayList<Inscripcion>();
+//            for (Inscripcion inscripcionListNewInscripcionToAttach : inscripcionListNew) {
+//                inscripcionListNewInscripcionToAttach = em.getReference(inscripcionListNewInscripcionToAttach.getClass(), inscripcionListNewInscripcionToAttach.getIdinscripcion());
+//                attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
+//            }
+//            inscripcionListNew = attachedInscripcionListNew;
+//            horarioMateria.setInscripcionList(inscripcionListNew);
+            horarioMateria = em.merge(horarioMateria);
+//            if (idhorarioOld != null && !idhorarioOld.equals(idhorarioNew)) {
+//                idhorarioOld.getHorarioMateriaList().remove(horarioMateria);
+//                idhorarioOld = em.merge(idhorarioOld);
+//            }
+//            if (idhorarioNew != null && !idhorarioNew.equals(idhorarioOld)) {
+//                idhorarioNew.getHorarioMateriaList().add(horarioMateria);
+//                idhorarioNew = em.merge(idhorarioNew);
+//            }
+//            if (idmateriaOld != null && !idmateriaOld.equals(idmateriaNew)) {
+//                idmateriaOld.getHorarioMateriaList().remove(horarioMateria);
+//                idmateriaOld = em.merge(idmateriaOld);
+//            }
+//            if (idmateriaNew != null && !idmateriaNew.equals(idmateriaOld)) {
+//                idmateriaNew.getHorarioMateriaList().add(horarioMateria);
+//                idmateriaNew = em.merge(idmateriaNew);
+//            }
+//            for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
+//                if (!inscripcionListNew.contains(inscripcionListOldInscripcion)) {
+//                    inscripcionListOldInscripcion.setIdmateriahorario(null);
+//                    inscripcionListOldInscripcion = em.merge(inscripcionListOldInscripcion);
+//                }
+//            }
+//            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
+//                if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
+//                    HorarioMateria oldIdmateriahorarioOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdmateriahorario();
+//                    inscripcionListNewInscripcion.setIdmateriahorario(horarioMateria);
+//                    inscripcionListNewInscripcion = em.merge(inscripcionListNewInscripcion);
+//                    if (oldIdmateriahorarioOfInscripcionListNewInscripcion != null && !oldIdmateriahorarioOfInscripcionListNewInscripcion.equals(horarioMateria)) {
+//                        oldIdmateriahorarioOfInscripcionListNewInscripcion.getInscripcionList().remove(inscripcionListNewInscripcion);
+//                        oldIdmateriahorarioOfInscripcionListNewInscripcion = em.merge(oldIdmateriahorarioOfInscripcionListNewInscripcion);
+//                    }
+//                }
+//            }
+>>>>>>> master
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

@@ -30,7 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "HorarioMateria.findAll", query = "SELECT h FROM HorarioMateria h"),
     @NamedQuery(name = "HorarioMateria.findByIdmateriahorario", query = "SELECT h FROM HorarioMateria h WHERE h.idmateriahorario = :idmateriahorario"),
-    @NamedQuery(name = "HorarioMateria.findByEstado", query = "SELECT h FROM HorarioMateria h WHERE h.estado = :estado")})
+    @NamedQuery(name = "HorarioMateria.findByEstado", query = "SELECT h FROM HorarioMateria h WHERE h.estado = :estado"),
+    @NamedQuery(name = "HorarioMateria.findByHorarioMateria", query = "SELECT h FROM HorarioMateria h WHERE h.idmateria = :idmateria and h.idhorario = :idhorario"),
+    @NamedQuery(name = "HorarioMateria.findByMateria", query = "SELECT h FROM HorarioMateria h WHERE h.idmateria = :idmateria")})
 public class HorarioMateria implements Serializable {
 
     private static final long serialVersionUID = 1L;

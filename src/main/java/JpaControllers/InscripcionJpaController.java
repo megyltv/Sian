@@ -61,7 +61,11 @@ public class InscripcionJpaController implements Serializable {
                 idestudiante = em.merge(idestudiante);
             }
             if (idmateriahorario != null) {
+<<<<<<< HEAD
                 idmateriahorario.getInscripcionCollection().add(inscripcion);
+=======
+                idmateriahorario.getInscripcionList().add(inscripcion);
+>>>>>>> master
                 idmateriahorario = em.merge(idmateriahorario);
             }
             if (idperiodo != null) {
@@ -115,11 +119,19 @@ public class InscripcionJpaController implements Serializable {
                 idestudianteNew = em.merge(idestudianteNew);
             }
             if (idmateriahorarioOld != null && !idmateriahorarioOld.equals(idmateriahorarioNew)) {
+<<<<<<< HEAD
                 idmateriahorarioOld.getInscripcionCollection().remove(inscripcion);
                 idmateriahorarioOld = em.merge(idmateriahorarioOld);
             }
             if (idmateriahorarioNew != null && !idmateriahorarioNew.equals(idmateriahorarioOld)) {
                 idmateriahorarioNew.getInscripcionCollection().add(inscripcion);
+=======
+                idmateriahorarioOld.getInscripcionList().remove(inscripcion);
+                idmateriahorarioOld = em.merge(idmateriahorarioOld);
+            }
+            if (idmateriahorarioNew != null && !idmateriahorarioNew.equals(idmateriahorarioOld)) {
+                idmateriahorarioNew.getInscripcionList().add(inscripcion);
+>>>>>>> master
                 idmateriahorarioNew = em.merge(idmateriahorarioNew);
             }
             if (idperiodoOld != null && !idperiodoOld.equals(idperiodoNew)) {
@@ -166,7 +178,11 @@ public class InscripcionJpaController implements Serializable {
             }
             HorarioMateria idmateriahorario = inscripcion.getIdmateriahorario();
             if (idmateriahorario != null) {
+<<<<<<< HEAD
                 idmateriahorario.getInscripcionCollection().remove(inscripcion);
+=======
+                idmateriahorario.getInscripcionList().remove(inscripcion);
+>>>>>>> master
                 idmateriahorario = em.merge(idmateriahorario);
             }
             Periodo idperiodo = inscripcion.getIdperiodo();
