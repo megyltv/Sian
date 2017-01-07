@@ -21,17 +21,25 @@ public class ControladorRegistroPreguntas {
     Preguntas pr;
     
     //Preguntas
-    public void crearPreguntas (Preguntas pregunta) throws Exception{
+    public boolean crearPreguntas (Preguntas pregunta) throws Exception{
+        boolean bandera=false;
         PreguntasJpaController controladorPreguntas = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
         em = controladorPreguntas.getEntityManager();
+        System.out.println(pregunta.getIdestudiante());
         controladorPreguntas.create(pregunta);
+        return !bandera;
     }
     
     public Preguntas consultarCedulaPreguntas(Estudiante idEstudiante){
+        System.out.println("P1");
         PreguntasJpaController controladorPreguntas = new PreguntasJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
+        System.out.println("P2");
         em = controladorPreguntas.getEntityManager();
+        System.out.println("P3");
         List <Preguntas> lstPreguntas = em.createNamedQuery("Preguntas.findByIdEstudiante",Preguntas.class).setParameter("idestudiante",idEstudiante).getResultList();
+        System.out.println("P4");
         pr = new Preguntas();
+        System.out.println("P5");
         if (!lstPreguntas.isEmpty()){
             pr=lstPreguntas.get(0);
         }

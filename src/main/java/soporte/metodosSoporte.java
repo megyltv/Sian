@@ -6,6 +6,7 @@
 package soporte;
 
 import java.awt.event.KeyEvent;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class metodosSoporte {
@@ -17,47 +18,44 @@ public class metodosSoporte {
     }
     
     public boolean validacionCedula(String cedula){
-        boolean cedulaCorrecta = false;
-
-        try {
-            if (cedula.length() == 10){
-                int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
-                if (tercerDigito < 6) {
-                    int[] coefValCedula = { 2, 1, 2, 1, 2, 1, 2, 1, 2 };
-                    int verificador = Integer.parseInt(cedula.substring(9,10));
-                    int suma = 0;
-                    int digito = 0;
-                    for (int i = 0; i < (cedula.length() - 1); i++) {
-                        digito = Integer.parseInt(cedula.substring(i, i + 1))* coefValCedula[i];
-                        suma += ((digito % 10) + (digito / 10));
-                    }
-
-                    if ((suma % 10 == 0) && (suma % 10 == verificador)) {
-                        cedulaCorrecta = true;
-                    }
-                    else if ((10 - (suma % 10)) == verificador) {
-                        cedulaCorrecta = true;
-                    } else {
-                        cedulaCorrecta = false;
-                    }
-                } else {
-                    cedulaCorrecta = false;
-                }
-            } else {
-                cedulaCorrecta = false;
+        if (cedula.length() > 10 || cedula.length() < 10
+                || !Pattern.matches("[0-9]+", cedula)) {
+            return false;
+        }
+        else{
+            char numerosCI [] = new char [10];
+            cedula.getChars(0, 10, numerosCI, 0);
+            return luhn(charsANumeros(numerosCI));
+        }
+    }
+    
+    private static int[] charsANumeros(char[] chars) {
+        int [] numeros = new int [chars.length];
+        for (int i = 0; i < numeros.length; i++) {
+                numeros[i] = (int) (chars[i]) - 48;
             }
-        } catch (NumberFormatException nfe) {
-            cedulaCorrecta = false;
-        } catch (Exception err) {
-            System.out.println("Una excepcion ocurrio en el proceso de validacion");
-            cedulaCorrecta = false;
+        return numeros;
+    }
+    
+    private static boolean luhn(int numeros[]){
+        int numVerificacion = numeros[numeros.length - 1];
+        int suma = 0;
+
+        for (int i = 0; i < numeros.length - 1; i+=2) {
+            numeros[i] = numeros[i]*2;
+            if(numeros[i] > 9){
+                numeros[i] -= 9;
+            }
         }
 
-        if (!cedulaCorrecta) {
-            System.out.println("La Cédula ingresada es Incorrecta");
-            JOptionPane.showMessageDialog(null,"La Cédula ingresada es Incorrecta");
+        for (int i = 0; i < numeros.length - 1; i++) {
+            suma += numeros[i];
         }
-        return cedulaCorrecta;
+
+        int resultado = 10 - suma%10;
+        resultado = (resultado < 10)? resultado : 0;
+
+        return (resultado == numVerificacion);
     }
     
     public void validacionCorreo(){

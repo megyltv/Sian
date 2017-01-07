@@ -134,7 +134,7 @@ public class JInternalFrameIngresaCalificacion extends javax.swing.JInternalFram
             String dia=hor.nextElement().toString();
             String horaInicio=hor.nextElement().toString();
             String horaFin=hor.nextElement().toString();
-            horario=controladorHorarioMateria.consultarHorarioCompleto(dia, horaInicio, horaFin);
+            //horario=controladorHorarioMateria.consultarHorarioCompleto(dia, horaInicio, horaFin);
             System.out.println(horario.getDia());
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,"Seleccione lo solicitado");

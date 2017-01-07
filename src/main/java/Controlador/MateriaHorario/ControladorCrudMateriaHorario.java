@@ -42,6 +42,12 @@ public class ControladorCrudMateriaHorario {
     public List consultarListaHorarios(){
         em = controladorHorario.getEntityManager();
         List <Horario> lstHorario = em.createNamedQuery("Horario.findAll", Horario.class).getResultList();  
+        
+        horariosBuscada = new Horario();
+        if (!lstHorario.isEmpty()) {
+            horariosBuscada=lstHorario.get(0);
+            System.out.println(horariosBuscada.getDia().toString());
+        }
         return lstHorario;
     }
      
@@ -61,22 +67,18 @@ public class ControladorCrudMateriaHorario {
         em = controladorHorarioMateria.getEntityManager();
         List <HorarioMateria> lstHorarioMateria = em.createNamedQuery("HorarioMateria.findByMateria", HorarioMateria.class).setParameter("idmateria", materia).getResultList();  
         
+        horarioMateria = new HorarioMateria();
+        if (!lstHorarioMateria.isEmpty()) {
+            horarioMateria=lstHorarioMateria.get(0);
+            System.out.println(horarioMateria.getIdhorario().toString());
+        }
         return lstHorarioMateria;
     }
      
     public Horario consultarHorario(int horario){
         em = controladorHorarioMateria.getEntityManager();
+        System.out.println("Entro31");
         List <Horario> lstHorario = em.createNamedQuery("Horario.findByIdhorario", Horario.class).setParameter("idhorario", horario).getResultList();  
-        horariosBuscada = new Horario();
-        if(!lstHorario.isEmpty()){
-            horariosBuscada=lstHorario.get(0);
-        }
-        return horariosBuscada;
-    }
-    
-    public Horario consultarHorarioCompleto(String dia, String inicio, String fin){
-        em = controladorHorarioMateria.getEntityManager();
-        List <Horario> lstHorario = em.createNamedQuery("Horario.findByCompleto", Horario.class).setParameter("dia", dia).setParameter("horaInicio", inicio).setParameter("horaFin", fin).getResultList();  
         horariosBuscada = new Horario();
         if(!lstHorario.isEmpty()){
             horariosBuscada=lstHorario.get(0);

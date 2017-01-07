@@ -202,9 +202,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     
     public void setPreguntas(){
         pregunta= new Preguntas();
-        pregunta.setIdestudiante(nuevo_estudiante);
         
-
         if (ButtonSi1.isSelected()){ pregunta.setOpcion1(1);} else if (ButtonNo1.isSelected()) { pregunta.setOpcion1(0);} else {pregunta.setOpcion1(0);}
         if(txtRazon1.getText()!=""){
             pregunta.setRespuesta1(txtRazon1.getText());
@@ -262,8 +260,8 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     
     public boolean validarDatos(){
         return sinCamposVacios()
-                && soporte.validacionCedula(txtCedula.getText().trim());
-                //&& validarCedulaUnica();
+                && soporte.validacionCedula(txtCedula.getText().trim())
+                && validarCedulaUnica();
     }
     
     public boolean sinCamposVacios(){
@@ -301,8 +299,12 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     }
     
     public boolean validarCedulaUnica() {
-        Estudiante enBase = controlador.consultarCedula(Integer.parseInt(txtCedula.getText()));
-        if (enBase != null) {
+        String cedula =txtCedula.getText();
+        System.out.println(cedula);
+        Estudiante enBase = controlador.consultarCedula(Integer.parseInt(cedula));
+        System.out.println(enBase);
+        if (enBase != null && enBase.getIdestudiante()!=null) {
+            System.out.println("entra");
             JOptionPane.showMessageDialog(null,"El estudiante con esa cédula ya está registrado");
             return false;
         }
@@ -399,7 +401,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
         RadioButtonSi = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        setBorder(null);
         setPreferredSize(new java.awt.Dimension(1168, 647));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -955,7 +957,7 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -986,19 +988,27 @@ public class JInternalFrameNuevoRegistro extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         setDatosEstudiante();
         try {
+            System.out.println("1");
             controlador = new ControladorRegistroUsuario();
+            System.out.println("2");
             controladorPreguntas = new ControladorRegistroPreguntas();
-            
+            System.out.println("3");
             if (validarDatos()) {
+                System.out.println("4");
                 controlador.crearEstudiante(nuevo_estudiante);  
+                System.out.println("5");
                 setPreguntas();
+                nuevo_estudiante=controlador.consultarCedula(nuevo_estudiante.getCedula());
+                pregunta.setIdestudiante(nuevo_estudiante);
+                System.out.println("6");
                 controladorPreguntas.crearPreguntas(pregunta);
+                System.out.println("7");
                 JOptionPane.showMessageDialog(null,"Estudiante Registrado");
             }
             //limpiar();
         } catch (Exception ex) {
             Logger.getLogger(JInternalFrameNuevoRegistro.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"Revise los datos ingresados");
+            JOptionPane.showMessageDialog(null,"Datos Incorrectos");
         } 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

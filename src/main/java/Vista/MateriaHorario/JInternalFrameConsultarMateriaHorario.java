@@ -77,6 +77,7 @@ public class JInternalFrameConsultarMateriaHorario extends javax.swing.JInternal
                 System.out.println(Integer.parseInt(hm.getIdhorario().toString().substring(29, 31).trim()));
                 horarioCrear=controladorHorarioMateria.consultarHorario(Integer.parseInt(hm.getIdhorario().toString().substring(29, 31).trim()));
                                
+                System.out.println("Entro4");
                 System.out.println(hm.getIdhorario().toString()+" "+horarioCrear.getIdhorario());
                 horario[0]=horarioCrear.getIdhorario();
                 horario[1]=horarioCrear.getDia();
