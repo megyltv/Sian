@@ -3,6 +3,8 @@ package Vista;
 import Vista.Periodo.JInternalFrameNuevoPeriodo;
 import Vista.Calificacion.JInternalFrameConsultaCalificacion;
 import Vista.Calificacion.JInternalFrameIngresaCalificacion;
+import Vista.Horario.JInternalFrameConsultarHorario;
+import Vista.Horario.JInternalFrameNuevoHorario;
 import Vista.Inscripcion.JInternalFrameNuevaInscripcion;
 import Vista.Materia.JInternalFrameConsultarMateria;
 import Vista.Materia.JInternalFrameNuevaMateria;
@@ -25,6 +27,8 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameGeneraReporte internalFrameGeneraReporte;
     JInternalFrameNuevoPeriodo internalFrameNuevoPeriodo;
     JInternalFrameConsultarPeriodo internalFrameConsultarPeriodo;
+    JInternalFrameNuevoHorario internalFrameNuevoHorario;
+    JInternalFrameConsultarHorario internalFrameConsultarHorario;
     JInternalFrameNuevaMateria internalFrameNuevaMateria;
     JInternalFrameConsultarMateria internalFrameConsultarMateria;
     JInternalFrameNuevaMateriaHorario internalFrameNuevaMateriaHorario;
@@ -195,6 +199,11 @@ public class frmPrincipal extends javax.swing.JFrame{
         menuAcademia.add(itemNuevoHorario);
 
         itemConsultarHorario.setText("Consultar/Actualizar horario");
+        itemConsultarHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConsultarHorarioActionPerformed(evt);
+            }
+        });
         menuAcademia.add(itemConsultarHorario);
         menuAcademia.add(jSeparator2);
 
@@ -305,8 +314,9 @@ public class frmPrincipal extends javax.swing.JFrame{
         mostrarVentana(internalFrameConsultarPeriodo); 
     }//GEN-LAST:event_itemConsultarPeriodoActionPerformed
 
-    private void itemNuevoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoHorarioActionPerformed
-        // TODO add your handling code here:
+     private void itemNuevoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoHorarioActionPerformed
+        internalFrameNuevoHorario = new JInternalFrameNuevoHorario();
+        mostrarVentana(internalFrameNuevoHorario);
     }//GEN-LAST:event_itemNuevoHorarioActionPerformed
 
     private void itemNuevaMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevaMateriaActionPerformed
@@ -328,7 +338,11 @@ public class frmPrincipal extends javax.swing.JFrame{
         internalFrameConsultaMateriaHorario = new JInternalFrameConsultarMateriaHorario();
         mostrarVentana(internalFrameConsultaMateriaHorario);
     }//GEN-LAST:event_itemConsultarHorarioMateriaActionPerformed
-    
+
+    private void itemConsultarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultarHorarioActionPerformed
+        internalFrameConsultarHorario = new JInternalFrameConsultarHorario();
+        mostrarVentana(internalFrameConsultarHorario);
+    }//GEN-LAST:event_itemConsultarHorarioActionPerformed
     private void mostrarVentana(JInternalFrame frame ){
         pnlPrincipal.removeAll();
         frame.pack();

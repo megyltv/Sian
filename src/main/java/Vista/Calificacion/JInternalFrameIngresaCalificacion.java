@@ -112,7 +112,7 @@ public class JInternalFrameIngresaCalificacion extends javax.swing.JInternalFram
             lstHorario = controladorHorarioMateria.consultarListaHorarios();
 
             for(Horario h : lstHorario){
-                cmbHorarioBuscado.addItem(h.getDia()+" "+h.getHoraInicio()+ " "+ h.getHoraFin());
+                cmbHorarioBuscado.addItem(h.getDia().toString()+" "+h.getHoraInicio().toString()+ " "+ h.getHoraFin().toString());
             }
         }catch(Exception e){
             System.out.println(e);
@@ -122,13 +122,14 @@ public class JInternalFrameIngresaCalificacion extends javax.swing.JInternalFram
     public void obtencionDatosCombos(){
         try{
             //Periodo
+            System.out.println("O1");
             periodo=controladorPeriodo.consultarPeriodoPorNombre(cmbPeriodoBuscado.getSelectedItem().toString());
             System.out.println(periodo.getPeriodo());
-
+            System.out.println("O2");
             //Materia
             materia=controladorMateria.consultarMateriaPorNombre(cmbCursoBuscado.getSelectedItem().toString());
             System.out.println(materia.getMateria());
-
+             System.out.println("O3");
             //Horario
             StringTokenizer hor=new StringTokenizer(cmbHorarioBuscado.getSelectedItem().toString());
             String dia=hor.nextElement().toString();
@@ -136,6 +137,7 @@ public class JInternalFrameIngresaCalificacion extends javax.swing.JInternalFram
             String horaFin=hor.nextElement().toString();
             //horario=controladorHorarioMateria.consultarHorarioCompleto(dia, horaInicio, horaFin);
             System.out.println(horario.getDia());
+            System.out.println("O4");
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,"Seleccione lo solicitado");
         }    
@@ -143,11 +145,15 @@ public class JInternalFrameIngresaCalificacion extends javax.swing.JInternalFram
     
     public void mostrarDatos(){
         String nombreEstudiante;
+        System.out.println("M1");
         if(lstInscripcion.isEmpty()){
             JOptionPane.showMessageDialog(null, "No se encuentran registrados estudiantes");
         }else{
+            System.out.println("M2");
             crearTabla();
+            System.out.println("M3");
             for(Inscripcion i:lstInscripcion){
+                System.out.println("M4");
                 calificacion[0]=i.getIdinscripcion();
                 calificacion[1]=i.getIdperiodo();
                 calificacion[2]=i.getIdmateriahorario();
@@ -339,17 +345,20 @@ public class JInternalFrameIngresaCalificacion extends javax.swing.JInternalFram
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         horarioMateria = new HorarioMateria();
         try{
+            System.out.println("B1");
             //Obtencion de datos a buscar
             obtencionDatosCombos();
-            
+            System.out.println("B2");
             //Consultar idhorarioMateria
             controladorHorarioMateria = new ControladorCrudMateriaHorario();
+            System.out.println("B3");
             horarioMateria = controladorHorarioMateria.consultarHorarioMateria(materia, horario);
-                    
+            System.out.println("B4");        
             //Consultar Inscripcion
             controladorInscripcion=new ControladorCrudInscripcion();
+            System.out.println("B5");
             lstInscripcion=controladorInscripcion.consultarListaMaterias(periodo, horarioMateria);
-            
+            System.out.println("B6");
             mostrarDatos();
             
         }catch(Exception e){
