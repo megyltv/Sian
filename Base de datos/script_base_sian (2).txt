@@ -1,0 +1,290 @@
+/*==============================================================*/
+/* DBMS name:      PostgreSQL 9.x                               */
+/* Created on:     16/08/2016 13:31:03                          */
+/*==============================================================*/
+
+
+drop index ESTUDIANTE_PK;
+
+drop table ESTUDIANTE;
+
+drop index HORARIO_PK;
+
+drop table HORARIO;
+
+drop index RELATIONSHIP_9_FK;
+
+drop index RELATIONSHIP_8_FK;
+
+drop index RELATIONSHIP_8_PK;
+
+drop table HORARIO_MATERIA;
+
+drop index RELATIONSHIP_5_FK;
+
+drop index SE_FK;
+
+drop index PUEDE_FK;
+
+drop index INSCRIPCION_PK;
+
+drop table INSCRIPCION;
+
+drop index MATERIA_PK;
+
+drop table MATERIA;
+
+drop index PERIODO_PK;
+
+drop table PERIODO;
+
+drop index CONTESTA_FK;
+
+drop index PREGUNTAS_PK;
+
+drop table PREGUNTAS;
+
+drop index USUARIO_PK;
+
+drop table USUARIO;
+
+/*==============================================================*/
+/* Table: ESTUDIANTE                                            */
+/*==============================================================*/
+create table ESTUDIANTE (
+   IDESTUDIANTE         INT4                 not null,
+   CEDULA               INT4                 not null,
+   NOMBRES              VARCHAR(20)          not null,
+   APELLIDOS            VARCHAR(30)          not null,
+   FECHANAC             DATE                 null,
+   TELEFONO             INT4                 null,
+   CELULAR              INT4                 null,
+   CORREO               VARCHAR(40)          null,
+   NIVELINST            VARCHAR(30)          null,
+   PROFESION            VARCHAR(30)          null,
+   SECTOR               VARCHAR(30)          null,
+   ESTADOCIVIL          VARCHAR(15)          null,
+   NOMBCONY             VARCHAR(20)          null,
+   CREYCONY             INT4                 null,
+   HIJOS                INT4                 null,
+   NOMBEMERG            VARCHAR(20)          null,
+   TELFEMERG            INT4                 null,
+   constraint PK_ESTUDIANTE primary key (IDESTUDIANTE)
+);
+
+/*==============================================================*/
+/* Index: ESTUDIANTE_PK                                         */
+/*==============================================================*/
+create unique index ESTUDIANTE_PK on ESTUDIANTE (
+IDESTUDIANTE
+);
+
+/*==============================================================*/
+/* Table: HORARIO                                               */
+/*==============================================================*/
+create table HORARIO (
+   IDHORARIO            INT4                 not null,
+   DIA                  CHAR(10)             not null,
+   HORA                 CHAR(15)             null,
+   ESTADO               INT4                 null,
+   constraint PK_HORARIO primary key (IDHORARIO)
+);
+
+/*==============================================================*/
+/* Index: HORARIO_PK                                            */
+/*==============================================================*/
+create unique index HORARIO_PK on HORARIO (
+IDHORARIO
+);
+
+/*==============================================================*/
+/* Table: HORARIO_MATERIA                                       */
+/*==============================================================*/
+create table HORARIO_MATERIA (
+   IDMATERIA            INT4                 not null,
+   IDHORARIO            INT4                 not null,
+   constraint PK_HORARIO_MATERIA primary key (IDMATERIA, IDHORARIO)
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_8_PK                                     */
+/*==============================================================*/
+create unique index RELATIONSHIP_8_PK on HORARIO_MATERIA (
+IDMATERIA,
+IDHORARIO
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_8_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_8_FK on HORARIO_MATERIA (
+IDMATERIA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_9_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_9_FK on HORARIO_MATERIA (
+IDHORARIO
+);
+
+/*==============================================================*/
+/* Table: INSCRIPCION                                           */
+/*==============================================================*/
+create table INSCRIPCION (
+   IDINSCRIPCION        CHAR(10)             not null,
+   IDPERIODO            INT4                 not null,
+   IDMATERIA            INT4                 not null,
+   IDESTUDIANTE         INT4                 not null,
+   CALIFICACION         DECIMAL(2,2)         null,
+   constraint PK_INSCRIPCION primary key (IDINSCRIPCION)
+);
+
+/*==============================================================*/
+/* Index: INSCRIPCION_PK                                        */
+/*==============================================================*/
+create unique index INSCRIPCION_PK on INSCRIPCION (
+IDINSCRIPCION
+);
+
+/*==============================================================*/
+/* Index: PUEDE_FK                                              */
+/*==============================================================*/
+create  index PUEDE_FK on INSCRIPCION (
+IDESTUDIANTE
+);
+
+/*==============================================================*/
+/* Index: SE_FK                                                 */
+/*==============================================================*/
+create  index SE_FK on INSCRIPCION (
+IDMATERIA
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_5_FK                                     */
+/*==============================================================*/
+create  index RELATIONSHIP_5_FK on INSCRIPCION (
+IDPERIODO
+);
+
+/*==============================================================*/
+/* Table: MATERIA                                               */
+/*==============================================================*/
+create table MATERIA (
+   IDMATERIA            INT4                 not null,
+   MATERIA              VARCHAR(30)          not null,
+   NIVEL                INT4                 null,
+   constraint PK_MATERIA primary key (IDMATERIA)
+);
+
+/*==============================================================*/
+/* Index: MATERIA_PK                                            */
+/*==============================================================*/
+create unique index MATERIA_PK on MATERIA (
+IDMATERIA
+);
+
+/*==============================================================*/
+/* Table: PERIODO                                               */
+/*==============================================================*/
+create table PERIODO (
+   IDPERIODO            INT4                 not null,
+   PERIODO              VARCHAR(15)          not null,
+   FECHAINICIO          DATE                 null,
+   FECHAFIN             DATE                 null,
+   constraint PK_PERIODO primary key (IDPERIODO)
+);
+
+/*==============================================================*/
+/* Index: PERIODO_PK                                            */
+/*==============================================================*/
+create unique index PERIODO_PK on PERIODO (
+IDPERIODO
+);
+
+/*==============================================================*/
+/* Table: PREGUNTAS                                             */
+/*==============================================================*/
+create table PREGUNTAS (
+   IDPREGUNTAS          INT4                 not null,
+   IDESTUDIANTE         INT4                 not null,
+   OPCION1              INT4                 not null,
+   RESPUESTA1           VARCHAR(50)          not null,
+   OPCION2              INT4                 null,
+   RESPUESTA2           VARCHAR(50)          null,
+   OPCION3              INT4                 null,
+   RESPUESTA31          VARCHAR(30)          null,
+   RESPUESTA32          VARCHAR(50)          null,
+   OPCION4              INT4                 null,
+   RESPUESTA4           VARCHAR(50)          null,
+   OPCION5              INT4                 null,
+   RESPUESTA5           VARCHAR(50)          null,
+   OPCION6              INT4                 null,
+   RESPUESTA6           VARCHAR(50)          null,
+   OPCION7              INT4                 null,
+   RESPUESTA7           VARCHAR(50)          null,
+   constraint PK_PREGUNTAS primary key (IDPREGUNTAS)
+);
+
+/*==============================================================*/
+/* Index: PREGUNTAS_PK                                          */
+/*==============================================================*/
+create unique index PREGUNTAS_PK on PREGUNTAS (
+IDPREGUNTAS
+);
+
+/*==============================================================*/
+/* Index: CONTESTA_FK                                           */
+/*==============================================================*/
+create  index CONTESTA_FK on PREGUNTAS (
+IDESTUDIANTE
+);
+
+/*==============================================================*/
+/* Table: USUARIO                                               */
+/*==============================================================*/
+create table USUARIO (
+   IDUSUARIO            INT4                 not null,
+   USUARIO              VARCHAR(20)          not null,
+   CONTRASENIA          VARCHAR(20)          null,
+   constraint PK_USUARIO primary key (IDUSUARIO)
+);
+
+/*==============================================================*/
+/* Index: USUARIO_PK                                            */
+/*==============================================================*/
+create unique index USUARIO_PK on USUARIO (
+IDUSUARIO
+);
+
+alter table HORARIO_MATERIA
+   add constraint FK_HORARIO__RELATIONS_MATERIA foreign key (IDMATERIA)
+      references MATERIA (IDMATERIA)
+      on delete restrict on update restrict;
+
+alter table HORARIO_MATERIA
+   add constraint FK_HORARIO__RELATIONS_HORARIO foreign key (IDHORARIO)
+      references HORARIO (IDHORARIO)
+      on delete restrict on update restrict;
+
+alter table INSCRIPCION
+   add constraint FK_INSCRIPC_PUEDE_ESTUDIAN foreign key (IDESTUDIANTE)
+      references ESTUDIANTE (IDESTUDIANTE)
+      on delete restrict on update restrict;
+
+alter table INSCRIPCION
+   add constraint FK_INSCRIPC_RELATIONS_PERIODO foreign key (IDPERIODO)
+      references PERIODO (IDPERIODO)
+      on delete restrict on update restrict;
+
+alter table INSCRIPCION
+   add constraint FK_INSCRIPC_SE_MATERIA foreign key (IDMATERIA)
+      references MATERIA (IDMATERIA)
+      on delete restrict on update restrict;
+
+alter table PREGUNTAS
+   add constraint FK_PREGUNTA_CONTESTA_ESTUDIAN foreign key (IDESTUDIANTE)
+      references ESTUDIANTE (IDESTUDIANTE)
+      on delete restrict on update restrict;
+

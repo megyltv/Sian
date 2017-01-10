@@ -15,9 +15,11 @@ public class ControladorRegistroUsuario {
     EstudianteJpaController controladorEstudiante = new EstudianteJpaController(Persistence.createEntityManagerFactory("com.mycompany_SianCliente_jar_1.0-SNAPSHOTPU"));
     
     //Estudiante
-    public void crearEstudiante (Estudiante estudiante) throws Exception{
+    public boolean crearEstudiante (Estudiante estudiante) throws Exception{
+        boolean bandera=false;
         em = controladorEstudiante.getEntityManager();
-        controladorEstudiante.create(estudiante);  
+        controladorEstudiante.create(estudiante); 
+        return !bandera;
     }
     
     public void editarEstudiante (Estudiante estudiante) throws NonexistentEntityException, Exception{

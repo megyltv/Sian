@@ -46,4 +46,13 @@ public class ControladorCrudPeriodo {
          controladorPeriodo.edit(periodo);
      }
     
+     //Consultar todos los periodos
+     public List consultarListaPeriodos(){
+        em = controladorPeriodo.getEntityManager();
+        List <Periodo> lstPeriodo = em.createNamedQuery("Periodo.findAll", Periodo.class).getResultList();  
+        
+        periodoBuscado = new Periodo();
+        return lstPeriodo;
+    }
 }
+

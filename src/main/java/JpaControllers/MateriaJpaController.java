@@ -72,7 +72,7 @@ public class MateriaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Materia persistentMateria = em.find(Materia.class, materia.getIdmateria());
-            /*List<HorarioMateria> horarioMateriaListOld = persistentMateria.getHorarioMateriaList();
+            List<HorarioMateria> horarioMateriaListOld = persistentMateria.getHorarioMateriaList();
             List<HorarioMateria> horarioMateriaListNew = materia.getHorarioMateriaList();
             List<String> illegalOrphanMessages = null;
             for (HorarioMateria horarioMateriaListOldHorarioMateria : horarioMateriaListOld) {
@@ -92,9 +92,9 @@ public class MateriaJpaController implements Serializable {
                 attachedHorarioMateriaListNew.add(horarioMateriaListNewHorarioMateriaToAttach);
             }
             horarioMateriaListNew = attachedHorarioMateriaListNew;
-            materia.setHorarioMateriaList(horarioMateriaListNew);*/
+            materia.setHorarioMateriaList(horarioMateriaListNew);
             materia = em.merge(materia);
-            /*for (HorarioMateria horarioMateriaListNewHorarioMateria : horarioMateriaListNew) {
+            for (HorarioMateria horarioMateriaListNewHorarioMateria : horarioMateriaListNew) {
                 if (!horarioMateriaListOld.contains(horarioMateriaListNewHorarioMateria)) {
                     Materia oldIdmateriaOfHorarioMateriaListNewHorarioMateria = horarioMateriaListNewHorarioMateria.getIdmateria();
                     horarioMateriaListNewHorarioMateria.setIdmateria(materia);
@@ -104,7 +104,7 @@ public class MateriaJpaController implements Serializable {
                         oldIdmateriaOfHorarioMateriaListNewHorarioMateria = em.merge(oldIdmateriaOfHorarioMateriaListNewHorarioMateria);
                     }
                 }
-            }*/
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

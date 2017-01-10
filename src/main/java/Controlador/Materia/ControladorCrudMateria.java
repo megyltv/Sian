@@ -34,4 +34,11 @@ public class ControladorCrudMateria {
         }
         return materiaBuscada;
      }
+     
+     //Consultar todos los periodos
+     public List consultarListaMaterias(){
+        em = controladorMateria.getEntityManager();
+        List <Materia> lstMateria = em.createNamedQuery("Materia.findAll", Materia.class).getResultList();  
+        return lstMateria;
+    }
 }

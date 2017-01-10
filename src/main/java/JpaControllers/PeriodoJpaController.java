@@ -72,7 +72,7 @@ public class PeriodoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Periodo persistentPeriodo = em.find(Periodo.class, periodo.getIdperiodo());
-            /*List<Inscripcion> inscripcionListOld = persistentPeriodo.getInscripcionList();
+            List<Inscripcion> inscripcionListOld = persistentPeriodo.getInscripcionList();
             List<Inscripcion> inscripcionListNew = periodo.getInscripcionList();
             List<String> illegalOrphanMessages = null;
             for (Inscripcion inscripcionListOldInscripcion : inscripcionListOld) {
@@ -92,9 +92,9 @@ public class PeriodoJpaController implements Serializable {
                 attachedInscripcionListNew.add(inscripcionListNewInscripcionToAttach);
             }
             inscripcionListNew = attachedInscripcionListNew;
-            periodo.setInscripcionList(inscripcionListNew);*/
+            periodo.setInscripcionList(inscripcionListNew);
             periodo = em.merge(periodo);
-            /*for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
+            for (Inscripcion inscripcionListNewInscripcion : inscripcionListNew) {
                 if (!inscripcionListOld.contains(inscripcionListNewInscripcion)) {
                     Periodo oldIdperiodoOfInscripcionListNewInscripcion = inscripcionListNewInscripcion.getIdperiodo();
                     inscripcionListNewInscripcion.setIdperiodo(periodo);
@@ -104,7 +104,7 @@ public class PeriodoJpaController implements Serializable {
                         oldIdperiodoOfInscripcionListNewInscripcion = em.merge(oldIdperiodoOfInscripcionListNewInscripcion);
                     }
                 }
-            }*/
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

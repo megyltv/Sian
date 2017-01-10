@@ -1124,22 +1124,28 @@ public class JInternalFrameConsultaRegistro extends javax.swing.JInternalFrame {
         try{
             consulta_estudiante = new Estudiante();
             pregunta_estudiante = new Preguntas();
-            
+            System.out.println("1");
             //Setear cedula para consulta
             consulta_estudiante.setCedula(Integer.parseInt(txtCedula.getText()));
             cedula=Integer.parseInt(txtCedula.getText());
-            
+            System.out.println("2");
             //Consultar estudiante por cedula
             controlador = new ControladorRegistroUsuario();
+            System.out.println("3");
             controladorPreguntas = new ControladorRegistroPreguntas();
+            System.out.println("4");
             consulta_estudiante=controlador.consultarCedula(cedula);
+            System.out.println("5");
             
             //Consulta Preguntas
+            System.out.println("6");
             pregunta_estudiante= controladorPreguntas.consultarCedulaPreguntas(consulta_estudiante);
+            System.out.println("7");
             System.out.println(txtCedula.getText());
-            
+            System.out.println("8");
             //Seteo de datos
             if(consulta_estudiante!=null){
+                System.out.println("9");
                 setConsultaEstudiante();
                 setPreguntasEstudiante();
             }

@@ -29,7 +29,6 @@ public class frmPrincipal extends javax.swing.JFrame{
     JInternalFrameConsultarPeriodo internalFrameConsultarPeriodo;
     JInternalFrameNuevoHorario internalFrameNuevoHorario;
     JInternalFrameConsultarHorario internalFrameConsultarHorario;
-
     JInternalFrameNuevaMateria internalFrameNuevaMateria;
     JInternalFrameConsultarMateria internalFrameConsultarMateria;
     JInternalFrameNuevaMateriaHorario internalFrameNuevaMateriaHorario;
@@ -69,7 +68,7 @@ public class frmPrincipal extends javax.swing.JFrame{
         itemConsultarPeriodo = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemNuevoHorario = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        itemConsultarHorario = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         itemNuevaMateria = new javax.swing.JMenuItem();
         itemConsultarMateria = new javax.swing.JMenuItem();
@@ -199,13 +198,13 @@ public class frmPrincipal extends javax.swing.JFrame{
         });
         menuAcademia.add(itemNuevoHorario);
 
-        jMenuItem1.setText("Consultar/Actualizar horario");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        itemConsultarHorario.setText("Consultar/Actualizar horario");
+        itemConsultarHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                itemConsultarHorarioActionPerformed(evt);
             }
         });
-        menuAcademia.add(jMenuItem1);
+        menuAcademia.add(itemConsultarHorario);
         menuAcademia.add(jSeparator2);
 
         itemNuevaMateria.setText("Crear nueva materia");
@@ -315,17 +314,16 @@ public class frmPrincipal extends javax.swing.JFrame{
         mostrarVentana(internalFrameConsultarPeriodo); 
     }//GEN-LAST:event_itemConsultarPeriodoActionPerformed
 
-
-    private void itemNuevoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoHorarioActionPerformed
+     private void itemNuevoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoHorarioActionPerformed
         internalFrameNuevoHorario = new JInternalFrameNuevoHorario();
         mostrarVentana(internalFrameNuevoHorario);
     }//GEN-LAST:event_itemNuevoHorarioActionPerformed
-  
+
     private void itemNuevaMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevaMateriaActionPerformed
         internalFrameNuevaMateria = new JInternalFrameNuevaMateria();
         mostrarVentana(internalFrameNuevaMateria);
     }//GEN-LAST:event_itemNuevaMateriaActionPerformed
-  
+
     private void itemConsultarMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultarMateriaActionPerformed
         internalFrameConsultarMateria = new JInternalFrameConsultarMateria();
         mostrarVentana(internalFrameConsultarMateria);
@@ -340,12 +338,11 @@ public class frmPrincipal extends javax.swing.JFrame{
         internalFrameConsultaMateriaHorario = new JInternalFrameConsultarMateriaHorario();
         mostrarVentana(internalFrameConsultaMateriaHorario);
     }//GEN-LAST:event_itemConsultarHorarioMateriaActionPerformed
-    //Consultar y actualizar horario
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+    private void itemConsultarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultarHorarioActionPerformed
         internalFrameConsultarHorario = new JInternalFrameConsultarHorario();
         mostrarVentana(internalFrameConsultarHorario);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
+    }//GEN-LAST:event_itemConsultarHorarioActionPerformed
     private void mostrarVentana(JInternalFrame frame ){
         pnlPrincipal.removeAll();
         frame.pack();
@@ -388,6 +385,7 @@ public class frmPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenuBar MenuBarPrincipal;
     private javax.swing.JMenuItem itemActualizarE;
     private javax.swing.JMenuItem itemConsultarCal;
+    private javax.swing.JMenuItem itemConsultarHorario;
     private javax.swing.JMenuItem itemConsultarHorarioMateria;
     private javax.swing.JMenuItem itemConsultarMateria;
     private javax.swing.JMenuItem itemConsultarPeriodo;
@@ -399,7 +397,6 @@ public class frmPrincipal extends javax.swing.JFrame{
     private javax.swing.JMenuItem itemNuevoHorarioMateria;
     private javax.swing.JMenuItem itemNuevoPeriodo;
     private javax.swing.JMenuItem itemReporte;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
